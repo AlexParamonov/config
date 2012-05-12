@@ -1,0 +1,15 @@
+
+[Desktop Entry]
+Comment=Edit file in Vim
+Exec=vim %f
+GenericName=Process Viewer
+Hidden=false
+Icon=vim
+Name=Vim
+Terminal=true
+Type=Application
+Version=7.3
+Categories=Utility;TextEditor;
+StartupNotify=true
+MimeType=text/plain;
+Name[en_GB]=vim

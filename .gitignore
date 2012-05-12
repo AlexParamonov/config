@@ -1,0 +1,14 @@
+# ignore ssh
+.ssh/*
+
+# Ignore vimtags
+tags
+TAGS
+
+## generic files to ignore
+*~
+*.lock
+*.DS_Store
+*.swp
+*.out
+*.swo

@@ -318,6 +318,9 @@ noremap  <Right> <NOP>
 "Time tree
 "nnoremap <F9> :GundoToggle<CR>
 
+" Better position
+imap jj <ESC>
+
 """""""""""""""""""""
 " Functions
 "

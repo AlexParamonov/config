@@ -46,19 +46,15 @@ Bundle "Lokaltog/vim-powerline"
 Bundle "scrooloose/nerdtree.git"
 Bundle "scrooloose/nerdcommenter"
 
-" Install dependencies:
 Bundle "MarcWeber/vim-addon-mw-utils"
 Bundle "tomtom/tlib_vim"
-Bundle "snipmate-snippets"
-" Install:
+Bundle "honza/snipmate-snippets"
 Bundle "garbas/vim-snipmate"
 
+
 set laststatus=2
-
-
 filetype plugin indent on
 
-" Encoding
 set encoding=utf-8
 
 " Line numbering
@@ -95,9 +91,9 @@ set scrolloff=8
 
 " Whitespace stuff
 set nowrap
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
 set expandtab
 
 "set list listchars=tab:▸\ ,eol:¬,trail:·,nbsp:·
@@ -110,20 +106,17 @@ set ignorecase
 set smartcase
 
 " Tab completion
-set wildmode=list:longest,list:full
-" set wildmode=longest,list
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*  " Linux/MacOSX
-set completeopt=longest,menuone
-
-" make tab completion for files/buffers act like bash
-" set wildmenu
+set completeopt=menu
+set dictionary-=/usr/share/dict/words dictionary+=/usr/share/dict/words
+" set complete-=k complete+=k
 
 " History & backups
 set backup
 set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
 set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
 
-set history=9000
+set history=50
 
 " Autocomd
 if has("autocmd")
@@ -186,24 +179,21 @@ let g:rubycomplete_classes_in_global = 1
 let g:rubycomplete_rails = 1
 
 " Supertab
-let g:SuperTabCompletionContexts = ['s:ContextDiscover', 's:ContextText']
-let g:SuperTabContextDiscoverDiscovery = ["&omnifunc:<c-x><c-o>", "&completefunc:<c-x><c-u>"]
-let g:SuperTabContextTextOmniPrecedence = 1
-let g:SuperTabLongestEnhanced = 1
-
-if has("autocmd")
-  autocmd FileType *
-    \ if &omnifunc != '' |
-    \   call SuperTabChain(&omnifunc, "<c-p>") |
-    \   call SuperTabSetDefaultCompletionType("<c-x><c-u>") |
-    \ endif
-endif
+let g:SuperTabDefaultCompletionType = "<c-p>"
+let g:SuperTabDefaultCompletionType = "context"
+let g:SuperTabContextDefaultCompletionType = "<c-p>"
+let g:SuperTabCompletionContexts = ['s:ContextText', 's:ContextDiscover']
+let g:SuperTabContextTextOmniPrecedence = ['&omnifunc', '&completefunc']
+" let g:SuperTabLongestEnhanced = 1
+let g:SuperTabNoCompleteAfter = ['\s', '{', '[', '(', '|']
 
 " CTRLP
 let g:ctrlp_max_files = 90000
 let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_user_command = ['.git/', 'cd %s && git ls-files']
 
+" SnipMate
+let g:snips_author = 'Alexander Paramonov'
 
 """""""""""""""""""""
 " Leader Mappings
@@ -214,35 +204,35 @@ let g:ctrlp_user_command = ['.git/', 'cd %s && git ls-files']
 let mapleader=','
 
 " Pressing ,v opens the vimrc file in a new tab.
-nmap <leader>v :e $MYVIMRC<CR>
+nnoremap <leader>v :e $MYVIMRC<CR>
 
 " CTags
-map <leader>rt :!ctags --extra=+f --exclude=tmp --exclude=log -R *<CR><CR>
+noremap <leader>rt :!ctags --extra=+f --exclude=tmp --exclude=log -R *<CR><CR>
 
 " Tabs
 if exists(":Tabularize")
-  nmap <leader>= :Tabularize /=<CR>
-  vmap <leader>= :Tabularize /=<CR>
-  nmap <leader>: :Tabularize /:\zs<CR>
-  vmap <leader>: :Tabularize /:\zs<CR>
+  nnoremap <leader>= :Tabularize /=<CR>
+  vnoremap <leader>= :Tabularize /=<CR>
+  nnoremap <leader>: :Tabularize /:\zs<CR>
+  vnoremap <leader>: :Tabularize /:\zs<CR>
 endif
 
 " Toggle spaces and tabs
-nmap <leader>l :set list!<CR>
+nnoremap <leader>l :set list!<CR>
 
 " OS clipboard
-nmap <leader>y "+y
-vmap <leader>y "+y
+nnoremap <leader>y "+y
+vnoremap <leader>y "+y
 
-nmap <leader>p "+p
-vmap <leader>p "+p
-nmap <leader>P "+P
-vmap <leader>P "+P
+nnoremap <leader>p "+p
+vnoremap <leader>p "+p
+nnoremap <leader>P "+P
+vnoremap <leader>P "+P
 
 noremap <leader>e :edit %:h/
 
 " NerdTree
-nmap <leader>n :NERDTreeToggle<CR>
+nnoremap <leader>n :NERDTreeToggle<CR>
 let NERDTreeMapOpenSplit = "s"
 let NERDTreeMapOpenVSplit = "v"
 let NERDTreeMinimalUI = 1
@@ -250,24 +240,24 @@ let NERDTreeIgnore=['\.rbc$', '\~$']
 
 " Auto indent whole file
 " TODO:  does not work
-nmap <leader>i gg=G\|
+nnoremap <leader>i gg=G\|
 
 "PHP doc
-map <leader>pd :call PhpDoc()<CR>
+noremap <leader>pd :call PhpDoc()<CR>
 
 " Debugger
 
-map <Leader>dl  :Rdebugger<CR>
-map <Leader>db  :call g:RubyDebugger.toggle_breakpoint()<CR>
-map <Leader>dv  :call g:RubyDebugger.open_variables()<CR>
-map <Leader>dm  :call g:RubyDebugger.open_breakpoints()<CR>
-map <Leader>dt  :call g:RubyDebugger.open_frames()<CR>
-map <Leader>ds  :call g:RubyDebugger.step()<CR>
-map <Leader>df  :call g:RubyDebugger.finish()<CR>
-map <Leader>dn  :call g:RubyDebugger.next()<CR>
-map <Leader>dc  :call g:RubyDebugger.continue()<CR>
-map <Leader>de  :call g:RubyDebugger.exit()<CR>
-map <Leader>dd  :call g:RubyDebugger.remove_breakpoints()<CR>
+noremap <Leader>dl  :Rdebugger<CR>
+noremap <Leader>db  :call g:RubyDebugger.toggle_breakpoint()<CR>
+noremap <Leader>dv  :call g:RubyDebugger.open_variables()<CR>
+noremap <Leader>dm  :call g:RubyDebugger.open_breakpoints()<CR>
+noremap <Leader>dt  :call g:RubyDebugger.open_frames()<CR>
+noremap <Leader>ds  :call g:RubyDebugger.step()<CR>
+noremap <Leader>df  :call g:RubyDebugger.finish()<CR>
+noremap <Leader>dn  :call g:RubyDebugger.next()<CR>
+noremap <Leader>dc  :call g:RubyDebugger.continue()<CR>
+noremap <Leader>de  :call g:RubyDebugger.exit()<CR>
+noremap <Leader>dd  :call g:RubyDebugger.remove_breakpoints()<CR>
 
 
 """""""""""""""""""""
@@ -282,30 +272,30 @@ nnoremap <silent> <Space> :noh<CR>
 " F keys
 
 "Save file
-nmap <F2> :wa<CR>
-vmap <F2> :wa<CR>
-imap <F2> <ESC>:wa<CR>
+nnoremap <F2> :wa<CR>
+vnoremap <F2> :wa<CR>
+inoremap <F2> <ESC>:wa<CR>
 
 "Close buffer
-map <F12> :bd<CR>
+noremap <F12> :bd<CR>
 
 " По <F4> открывается new buffer и выводится список каталогов и файлов текущего каталога.
-map <F4> <Esc>:e.<CR>
+noremap <F4> <Esc>:e.<CR>
 
 " Cycle buffer switch
-imap <F6> <Esc> :bn <CR>i
-map <F6> :bn <CR>
-imap <F5> <Esc> :bp <CR>i
-map <F5> :bp <CR>
+inoremap <F6> <Esc> :bn <CR>i
+noremap <F6> :bn <CR>
+inoremap <F5> <Esc> :bp <CR>i
+noremap <F5> :bp <CR>
 
 """"""""""
 " Ctrl keys
 
 " Indenting with Ctrl + h and j
-nmap <C-h> <<
-nmap <C-l> >>
-vmap <C-h> <gv
-vmap <C-l> >gv
+nnoremap <C-h> <<
+nnoremap <C-l> >>
+vnoremap <C-h> <gv
+vnoremap <C-l> >gv
 
 " Move line(s) of text using Ctrl+j/k
 nnoremap  <C-j> :m+<CR>==
@@ -357,7 +347,6 @@ function! PromoteToLet()
 endfunction
 :command! PromoteToLet :call PromoteToLet()
 :map <leader>rl :PromoteToLet<cr>
-
 
 fun! <SID>StripTrailingWhitespaces()
     let l = line(".")

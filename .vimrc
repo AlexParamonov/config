@@ -66,6 +66,11 @@ set hidden
 " We want colors!
 syntax on
 
+"no delay!
+" set timeout timeoutlen=1000 ttimeoutlen=100
+" set notimeout ttimeout ttimeoutlen=100
+imap jj <Esc>:<Esc>
+
 set t_Co=256
 set background=dark
 " colorscheme zenburn
@@ -317,9 +322,6 @@ noremap  <Right> <NOP>
 
 "Time tree
 "nnoremap <F9> :GundoToggle<CR>
-
-" Better position
-imap jj <ESC>
 
 """""""""""""""""""""
 " Functions

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-for config in `ls -1A | grep -v -E "(install.sh|.rvm|.local|.ssh|.git)$"`
+for config in `ls -1A | grep -v -E "(install.sh|.rvm|.local|.ssh|.git|.gitignore)$"`
 do
   echo "installing $config"
   rm "$HOME/$config"

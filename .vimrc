@@ -151,6 +151,9 @@ if has("autocmd")
   " Remove trailing whitespaces on save
   " autocmd FileType c,cpp,python,ruby,java autocmd BufWritePre <buffer> :%s/\s\+$//e
   autocmd FileType c,cpp,python,ruby,php,java autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
+
+  " Use 4 spaces in php files
+  autocmd FileType php setlocal shiftwidth=4 tabstop=4 softtabstop=4
 endif
 
 " Highlight characters in column >80

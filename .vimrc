@@ -12,7 +12,6 @@ Bundle 'gmarik/vundle'
 Bundle 'tpope/vim-fugitive'
 
 Bundle 'altercation/vim-colors-solarized'
-let g:solarized_termcolors=16
 Bundle 'ervandew/supertab'
 Bundle 'tpope/vim-markdown'
 
@@ -21,7 +20,6 @@ Bundle 'vim-ruby/vim-ruby'
 Bundle 'jgdavey/vim-blockle'
 Bundle 'tpope/vim-rails'
 Bundle 'astashov/vim-ruby-debugger'
-let g:ruby_debugger_no_maps = 1
 Bundle 'tpope/vim-haml'
 Bundle 'tpope/vim-cucumber'
 Bundle 'tpope/vim-bundler'
@@ -74,6 +72,7 @@ imap jj <Esc>:<Esc>
 set t_Co=256
 set background=dark
 " colorscheme zenburn
+let g:solarized_termcolors=16
 colorscheme solarized
 set guifont="Ubuntu\ Mono"
 
@@ -255,6 +254,7 @@ noremap <leader>pd :call PhpDoc()<CR>
 
 " Debugger
 
+let g:ruby_debugger_no_maps = 1
 noremap <Leader>dl  :Rdebugger<CR>
 noremap <Leader>db  :call g:RubyDebugger.toggle_breakpoint()<CR>
 noremap <Leader>dv  :call g:RubyDebugger.open_variables()<CR>

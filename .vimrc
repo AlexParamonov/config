@@ -48,7 +48,7 @@ Bundle "MarcWeber/vim-addon-mw-utils"
 Bundle "tomtom/tlib_vim"
 Bundle "honza/snipmate-snippets"
 Bundle "garbas/vim-snipmate"
-
+Bundle "scrooloose/syntastic"
 
 set laststatus=2
 filetype plugin indent on
@@ -198,9 +198,19 @@ let g:SuperTabNoCompleteAfter = ['\s', '{', '[', '(', '|']
 let g:ctrlp_max_files = 90000
 let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_user_command = ['.git/', 'cd %s && git ls-files']
+let g:ctrlp_arg_map = 0
 
 " SnipMate
 let g:snips_author = 'Alexander Paramonov'
+
+" Syntastic
+let g:syntastic_auto_loc_list=1
+let g:syntastic_auto_jump=1
+let g:syntastic_enable_highlighting = 1
+let g:syntastic_enable_balloons = 0
+let g:syntastic_enable_signs=1
+let g:syntastic_check_on_open=2
+let g:syntastic_echo_current_error=1
 
 """""""""""""""""""""
 " Leader Mappings

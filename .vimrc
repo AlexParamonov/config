@@ -11,13 +11,13 @@ Bundle 'gmarik/vundle'
 " Bundle 'jnurmine/Zenburn'
 Bundle 'tpope/vim-fugitive'
 
+Bundle 'vim-scripts/matchit.zip'
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'ervandew/supertab'
 Bundle 'tpope/vim-markdown'
 
 " ruby-related plugins
 Bundle 'vim-ruby/vim-ruby'
-Bundle 'jgdavey/vim-blockle'
 Bundle 'tpope/vim-rails'
 Bundle 'astashov/vim-ruby-debugger'
 Bundle 'tpope/vim-haml'

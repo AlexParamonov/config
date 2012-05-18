@@ -50,6 +50,8 @@ Bundle "honza/snipmate-snippets"
 Bundle "garbas/vim-snipmate"
 Bundle "scrooloose/syntastic"
 
+Bundle "kucaahbe/vim-common-tips"
+
 set laststatus=2
 filetype plugin indent on
 

@@ -71,10 +71,11 @@ syntax on
 " set notimeout ttimeout ttimeoutlen=100
 imap jj <Esc>:<Esc>
 
-set t_Co=256
+set t_Co=16
 set background=dark
 " colorscheme zenburn
 let g:solarized_termcolors=16
+let g:solarized_contrast="high"
 colorscheme solarized
 set guifont="Ubuntu\ Mono"
 

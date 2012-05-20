@@ -29,8 +29,8 @@ Bundle 'tpope/vim-endwise'
 " PHP-related plugins
 Bundle 'vexxor/phpdoc.vim'
 
-Bundle 'Townk/vim-autoclose'
-" Bundle 'jiangmiao/auto-pairs'
+" Bundle 'Townk/vim-autoclose'
+Bundle 'jiangmiao/auto-pairs'
 Bundle 'tpope/vim-unimpaired'
 Bundle 'tpope/vim-speeddating'
 Bundle 'tpope/vim-repeat'
@@ -268,6 +268,9 @@ noremap <leader>pd :call PhpDoc()<CR>
 " Debugger
 
 let g:ruby_debugger_no_maps = 1
+" let g:ruby_debugger_debug_mode=3
+" let g:ruby_debugger_fast_sender = 2
+" let g:ruby_debugger_spec_path='~/.rvm/gems/ruby-1.9.3-p194@ap/gems/rspec-core-2.10.0/exe/rspec'
 noremap <Leader>dl  :Rdebugger<CR>
 noremap <Leader>db  :call g:RubyDebugger.toggle_breakpoint()<CR>
 noremap <Leader>dv  :call g:RubyDebugger.open_variables()<CR>

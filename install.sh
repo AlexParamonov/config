@@ -13,6 +13,8 @@ echo
 echo "Updating fonts..."
 echo `fc-cache -fv | grep "fc-cache"`
 
+eval `dircolors ~/.dircolors`
+
 echo
 echo "================================================="
 echo "  WARNING! Install .ssh, .rvm, .local manually."

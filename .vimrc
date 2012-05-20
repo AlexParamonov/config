@@ -227,7 +227,7 @@ let mapleader=','
 nnoremap <leader>v :e $MYVIMRC<CR>
 
 " CTags
-noremap <leader>rt :!ctags --extra=+f --exclude=tmp --exclude=log -R *<CR><CR>
+noremap <leader>rt :!ctags -f tags --extra=+f --exclude=tmp --exclude=log -R *<CR><CR>
 
 " Tabs
 if exists(":Tabularize")

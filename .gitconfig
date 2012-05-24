@@ -28,7 +28,6 @@
   whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
 [github]
   user = AlexParamonov
-  token = 1b7f9eb72d7b65424849880b5f15b95a
 [color]
   ui = auto
 [color "branch"]
@@ -36,10 +35,6 @@
   local = yellow
   remote = green
 [color "diff"]
-  meta = yellow bold
-  frag = magenta bold
-  old = red bold
-  new = green bold
   whitespace = red reverse
 [color "status"]
   added = yellow

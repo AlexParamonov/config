@@ -43,6 +43,7 @@ Bundle 'tpope/vim-surround'
 Bundle "Lokaltog/vim-powerline"
 Bundle "scrooloose/nerdtree.git"
 Bundle "scrooloose/nerdcommenter"
+Bundle "bkad/CamelCaseMotion"
 
 Bundle "MarcWeber/vim-addon-mw-utils"
 Bundle "tomtom/tlib_vim"
@@ -242,6 +243,8 @@ endif
 
 " Toggle spaces and tabs
 nnoremap <leader>l :set list!<CR>
+
+nnoremap <leader>. :R<CR>
 
 " OS clipboard
 nnoremap <leader>y "+y
@@ -470,11 +473,6 @@ endfunction
 function! RunTests(filename)
     " Write the file and run tests for the given filename
     :w
-    :silent !echo;echo;echo;echo;echo;echo;echo;echo;echo;echo
-    :silent !echo;echo;echo;echo;echo;echo;echo;echo;echo;echo
-    :silent !echo;echo;echo;echo;echo;echo;echo;echo;echo;echo
-    :silent !echo;echo;echo;echo;echo;echo;echo;echo;echo;echo
-    :silent !echo;echo;echo;echo;echo;echo;echo;echo;echo;echo
     :silent !echo;echo;echo;echo;echo;echo;echo;echo;echo;echo
     if match(a:filename, '\.feature$') != -1
         exec ":!script/features " . a:filename

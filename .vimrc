@@ -208,7 +208,7 @@ let g:SuperTabNoCompleteAfter = ['\s', '{', '[', '(', '|']
 let g:ctrlp_max_files = 90000
 let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_user_command = ['.git/', 'cd %s && git ls-files']
-let g:ctrlp_arg_map = 0
+let g:ctrlp_arg_map = 1
 
 " SnipMate
 let g:snips_author = 'Alexander Paramonov'

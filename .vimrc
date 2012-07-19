@@ -45,6 +45,7 @@ Bundle "scrooloose/nerdtree.git"
 Bundle "scrooloose/nerdcommenter"
 Bundle "bkad/CamelCaseMotion"
 Bundle "klen/vim-taglist-plus"
+Bundle "roman/golden-ratio"
 
 Bundle "MarcWeber/vim-addon-mw-utils"
 Bundle "tomtom/tlib_vim"

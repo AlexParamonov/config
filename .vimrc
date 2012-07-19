@@ -44,6 +44,7 @@ Bundle "Lokaltog/vim-powerline"
 Bundle "scrooloose/nerdtree.git"
 Bundle "scrooloose/nerdcommenter"
 Bundle "bkad/CamelCaseMotion"
+Bundle "klen/vim-taglist-plus"
 
 Bundle "MarcWeber/vim-addon-mw-utils"
 Bundle "tomtom/tlib_vim"
@@ -309,7 +310,7 @@ inoremap <F2> <ESC>:wa<CR>
 "Close buffer
 noremap <F12> :bd<CR>
 
-" По <F4> открывается new buffer и выводится список каталогов и файлов текущего каталога.
+noremap <F4> <Esc>:TlistToggle<CR>
 noremap <F4> <Esc>:e.<CR>
 
 " Cycle buffer switch

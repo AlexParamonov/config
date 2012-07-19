@@ -259,7 +259,7 @@ vnoremap <leader>P "+P
 noremap <leader>e :edit %:h/
 
 " NerdTree
-nnoremap <leader>n :NERDTreeToggle<CR>
+" nnoremap <leader>n :NERDTreeToggle<CR>
 let NERDTreeMapOpenSplit = "s"
 let NERDTreeMapOpenVSplit = "v"
 let NERDTreeMinimalUI = 1
@@ -311,7 +311,7 @@ inoremap <F2> <ESC>:wa<CR>
 noremap <F12> :bd<CR>
 
 noremap <F4> <Esc>:TlistToggle<CR>
-noremap <F4> <Esc>:e.<CR>
+noremap <F3> <Esc>:NERDTreeToggle<CR>
 
 " Cycle buffer switch
 inoremap <F6> <Esc> :bn <CR>i

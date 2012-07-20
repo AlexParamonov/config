@@ -28,7 +28,7 @@ Bundle 'tpope/vim-endwise'
 
 " PHP-related plugins
 Bundle 'vexxor/phpdoc.vim'
-Bundle 'AlexParamonov/dbgp_xdebug'
+Bundle 'AlexParamonov/vim_dbgp_debug'
 
 " Bundle 'Townk/vim-autoclose'
 Bundle 'jiangmiao/auto-pairs'

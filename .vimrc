@@ -181,6 +181,9 @@ inoremap <buffer><silent><Bar>   <Bar><Esc>:call <SID>align()<CR>a
 "
 """""""""""""""""""""
 
+" Golden ratio
+let g:golden_ratio_autocommand = 0
+
 " Powerline
 let Powerline_symbols="fancy"
 let Powerline_colorscheme="skwp"
@@ -233,8 +236,15 @@ let mapleader=','
 " Pressing ,v opens the vimrc file in a new tab.
 nnoremap <leader>v :e $MYVIMRC<CR>
 
+
 " CTags
 noremap <leader>rt :!ctags -f tags --extra=+f --exclude=tmp --exclude=log -R *<CR><CR>
+
+
+" Golden ratio
+nnoremap <F7> :GoldenRatioToggle<CR>
+if exists("g:loaded_golden_ratio")
+endif
 
 " Tabs
 if exists(":Tabularize")

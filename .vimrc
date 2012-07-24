@@ -278,6 +278,7 @@ noremap <leader>e :edit %:h/
 
 " NerdTree
 nnoremap <leader>n :NERDTreeToggle<CR>
+let NERDTreeShowHidden=1
 let NERDTreeMapOpenSplit = "s"
 let NERDTreeMapOpenVSplit = "v"
 let NERDTreeMinimalUI = 1

@@ -277,7 +277,7 @@ vnoremap <leader>P "+P
 noremap <leader>e :edit %:h/
 
 " NerdTree
-" nnoremap <leader>n :NERDTreeToggle<CR>
+nnoremap <leader>n :NERDTreeToggle<CR>
 let NERDTreeMapOpenSplit = "s"
 let NERDTreeMapOpenVSplit = "v"
 let NERDTreeMinimalUI = 1

@@ -82,7 +82,7 @@ set background=dark
 let g:solarized_termcolors=16
 let g:solarized_contrast="high"
 colorscheme solarized
-set guifont="Ubuntu\ Mono"
+set guifont=Ubuntu\ Mono\ for\ Powerline\ 14
 
 " Set formatter gq
 set formatprg=par\ -w70

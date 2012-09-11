@@ -457,9 +457,9 @@ nnoremap <leader>ri :call InlineVariable()<cr>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " RUNNING TESTS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-map <leader>t :call RunTestFile()<cr>
-map <leader>T :call RunNearestTest()<cr>
-map <leader>a :call RunTests('')<cr>
+nmap <leader>t :call RunTestFile()<cr>
+nmap <leader>T :call RunNearestTest()<cr>
+nmap <leader>a :call RunTests('')<cr>
 " map <leader>c :w\|:!script/features<cr>
 " map <leader>w :w\|:!script/features --profile wip<cr>
 

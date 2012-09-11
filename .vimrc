@@ -40,7 +40,7 @@ Bundle 'tpope/vim-commentary'
 " Bundle 'fholgado/minibufexpl.vim'
 Bundle 'godlygeek/tabular'
 Bundle 'tpope/vim-surround'
-" Bundle 'sjl/gundo.vim'
+Bundle 'sjl/gundo.vim'
 Bundle "Lokaltog/vim-powerline"
 Bundle "scrooloose/nerdtree.git"
 Bundle "scrooloose/nerdcommenter"
@@ -366,7 +366,7 @@ noremap  <Left>  <NOP>
 noremap  <Right> <NOP>
 
 "Time tree
-"nnoremap <F9> :GundoToggle<CR>
+nnoremap <F9> :GundoToggle<CR>
 
 """""""""""""""""""""
 " Functions

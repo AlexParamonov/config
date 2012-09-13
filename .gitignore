@@ -1,5 +1,6 @@
 # ignore ssh
 .ssh/*
+.vim/*
 
 # Ignore vimtags
 tags

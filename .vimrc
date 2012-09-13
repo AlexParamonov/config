@@ -255,12 +255,10 @@ if exists("g:loaded_golden_ratio")
 endif
 
 " Tabs
-if exists(":Tabularize")
-  nnoremap <leader>= :Tabularize /=<CR>
-  vnoremap <leader>= :Tabularize /=<CR>
-  nnoremap <leader>: :Tabularize /:\zs<CR>
-  vnoremap <leader>: :Tabularize /:\zs<CR>
-endif
+nnoremap <leader>= :Tabularize /=<CR>
+vnoremap <leader>= :Tabularize /=<CR>
+nnoremap <leader>: :Tabularize /:\zs<CR>
+vnoremap <leader>: :Tabularize /:\zs<CR>
 
 " Toggle spaces and tabs
 nnoremap <leader>l :set list!<CR>

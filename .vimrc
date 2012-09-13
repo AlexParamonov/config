@@ -78,8 +78,8 @@ syntax on
 imap jj <Esc>:<Esc>
 
 set t_Co=16
-" set background=dark
-set background=light
+set background=dark
+" set background=light
 " colorscheme zenburn
 let g:solarized_termcolors=16
 let g:solarized_contrast="high"
@@ -194,7 +194,8 @@ let g:golden_ratio_autocommand = 0
 
 " Powerline
 let Powerline_symbols="fancy"
-let Powerline_colorscheme="solarizedLight"
+" let Powerline_colorscheme="solarizedLight"
+let Powerline_colorscheme="skwp"
 let Powerline_cache_enabled=1
 
 " Ruby.vim

@@ -61,7 +61,7 @@ set laststatus=2
 filetype plugin indent on
 
 set encoding=utf-8
-set number
+set relativenumber
 set numberwidth=5
 set ruler
 set hidden
@@ -172,6 +172,9 @@ if has("autocmd")
 
   " Autoclean fugitive buffers
   autocmd BufReadPost fugitive://* set bufhidden=delete
+
+  autocmd InsertEnter * :set number
+  autocmd InsertLeave * :set relativenumber
 endif
 
 " Highlight characters in column >80

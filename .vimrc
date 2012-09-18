@@ -32,6 +32,9 @@ Bundle 'nelstrom/vim-textobj-rubyblock'
 Bundle 'vexxor/phpdoc.vim'
 " Bundle 'AlexParamonov/vim_dbgp_debug'
 
+" HTML-related
+Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
+
 " Bundle 'Townk/vim-autoclose'
 Bundle 'jiangmiao/auto-pairs'
 Bundle 'tpope/vim-unimpaired'

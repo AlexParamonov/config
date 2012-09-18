@@ -84,7 +84,7 @@ set background=dark
 " set background=light
 " colorscheme zenburn
 let g:solarized_termcolors=16
-let g:solarized_contrast="high"
+" let g:solarized_contrast="high"
 colorscheme solarized
 set guifont=Ubuntu\ Mono\ for\ Powerline\ 14
 

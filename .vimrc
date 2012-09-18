@@ -25,6 +25,8 @@ Bundle 'tpope/vim-cucumber'
 Bundle 'tpope/vim-bundler'
 Bundle 'tpope/vim-rake'
 Bundle 'tpope/vim-endwise'
+Bundle 'kana/vim-textobj-user'
+Bundle 'nelstrom/vim-textobj-rubyblock'
 
 " PHP-related plugins
 Bundle 'vexxor/phpdoc.vim'

@@ -41,6 +41,8 @@ Bundle 'tpope/vim-unimpaired'
 Bundle 'tpope/vim-speeddating'
 Bundle 'tpope/vim-repeat'
 Bundle 'kien/ctrlp.vim'
+Bundle 'L9'
+Bundle 'vim-scripts/FuzzyFinder'
 Bundle 'tpope/vim-commentary'
 " Bundle 'fholgado/minibufexpl.vim'
 Bundle 'godlygeek/tabular'
@@ -50,7 +52,7 @@ Bundle 'sjl/gundo.vim'
 Bundle "pearofducks/vim-powerline"
 Bundle "scrooloose/nerdtree.git"
 Bundle "scrooloose/nerdcommenter"
-Bundle "bkad/CamelCaseMotion"
+" Bundle "bkad/CamelCaseMotion"
 Bundle "klen/vim-taglist-plus"
 Bundle "roman/golden-ratio"
 
@@ -300,6 +302,9 @@ nnoremap <leader>i gg=G\|
 
 "PHP doc
 noremap <leader>pd :call PhpDoc()<CR>
+
+" Buffer window (find file in open buffers)
+nmap <silent> <leader>b :FufBuffer<CR>
 
 " Debugger
 

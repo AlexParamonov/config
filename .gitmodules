@@ -1,0 +1,9 @@
+[submodule ".fonts/ubuntu-mono-powerline-ttf"]
+	path = .fonts/ubuntu-mono-powerline-ttf
+	url = git://github.com/pdf/ubuntu-mono-powerline-ttf.git
+[submodule "gnome-terminal-colors-solarized"]
+	path = gnome-terminal-colors-solarized
+	url = git://github.com/sigurdga/gnome-terminal-colors-solarized.git
+[submodule ".vim/bundle/vundle"]
+	path = .vim/bundle/vundle
+	url = git://github.com/gmarik/vundle.git

@@ -239,8 +239,8 @@ let g:ctrlp_root_markers = ['tags']
 let g:snips_author = 'Alexander Paramonov'
 
 " Syntastic
-let g:syntastic_auto_loc_list=1
-let g:syntastic_auto_jump=1
+let g:syntastic_warning_symbol='⚠'
+let g:syntastic_auto_loc_list=2
 let g:syntastic_enable_highlighting = 1
 let g:syntastic_enable_balloons = 0
 let g:syntastic_enable_signs=1

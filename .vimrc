@@ -272,6 +272,8 @@ nnoremap <leader>= :Tabularize /=<CR>
 vnoremap <leader>= :Tabularize /=<CR>
 nnoremap <leader>: :Tabularize /:\zs<CR>
 vnoremap <leader>: :Tabularize /:\zs<CR>
+nnoremap <leader>=> :Tabularize /=><CR>
+vnoremap <leader>=> :Tabularize /=><CR>
 
 " Toggle spaces and tabs
 nnoremap <leader>l :set list!<CR>

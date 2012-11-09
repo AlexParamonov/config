@@ -62,6 +62,8 @@ Bundle "tomtom/tlib_vim"
 " Bundle "garbas/vim-snipmate"
 Bundle "scrooloose/syntastic"
 
+" Documnetation
+Bundle "danchoi/ri.vim"
 Bundle "kucaahbe/vim-common-tips"
 
 set laststatus=2

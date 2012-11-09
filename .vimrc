@@ -58,8 +58,8 @@ Bundle "roman/golden-ratio"
 
 Bundle "MarcWeber/vim-addon-mw-utils"
 Bundle "tomtom/tlib_vim"
-Bundle "honza/snipmate-snippets"
-Bundle "garbas/vim-snipmate"
+" Bundle "honza/snipmate-snippets"
+" Bundle "garbas/vim-snipmate"
 Bundle "scrooloose/syntastic"
 
 Bundle "kucaahbe/vim-common-tips"
@@ -235,8 +235,8 @@ let g:ctrlp_user_command = ['.git/', 'cd %s && git ls-files']
 let g:ctrlp_arg_map = 1
 let g:ctrlp_root_markers = ['tags']
 
-" SnipMate
-let g:snips_author = 'Alexander Paramonov'
+" " SnipMate
+" let g:snips_author = 'Alexander Paramonov'
 
 " Syntastic
 let g:syntastic_warning_symbol='⚠'

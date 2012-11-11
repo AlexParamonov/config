@@ -479,9 +479,6 @@ nnoremap <leader>ri :call InlineVariable()<cr>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nmap <leader>t :call RunTestFile()<cr>
 nmap <leader>T :call RunNearestTest()<cr>
-nmap <leader>a :call RunTests('')<cr>
-" map <leader>c :w\|:!script/features<cr>
-" map <leader>w :w\|:!script/features --profile wip<cr>
 
 function! RunTestFile(...)
     if a:0
@@ -511,19 +508,8 @@ function! SetTestFile()
 endfunction
 
 function! RunTests(filename)
-    " Write the file and run tests for the given filename
     :w
     :silent !echo;echo;echo;echo;echo;echo;echo;echo;echo;echo
-    if match(a:filename, '\.feature$') != -1
-        exec ":!script/features " . a:filename
-    else
-        if filereadable("script/test")
-            exec ":!script/test " . a:filename
-        elseif filereadable("Gemfile")
-            exec ":!bundle exec rspec --color " . a:filename
-        else
-            exec ":!rspec --color " . a:filename
-        end
-    end
+    exec ":!rspec --color " . a:filename
 endfunction
 

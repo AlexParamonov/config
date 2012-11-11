@@ -3,7 +3,7 @@
   ci = commit
   cia = commit -am
   cim = commit -m
-  st = status
+  st = status -sb
   df = diff
   dc = diff --cached
   aa = add --all

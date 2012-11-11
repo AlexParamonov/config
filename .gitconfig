@@ -30,7 +30,7 @@
 [github]
   user = AlexParamonov
 [color]
-  ui = auto
+  ui = 1
 [color "branch"]
   current = yellow reverse
   local = yellow

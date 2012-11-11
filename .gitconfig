@@ -45,3 +45,5 @@
   fontui = -family verdana -size 9 -weight bold -slant roman -underline 0 -overstrike 0
 [apply]
   whitespace = nowarn
+[rerere]
+  enabled = 1

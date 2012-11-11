@@ -6,6 +6,7 @@
   st = status -sb
   df = diff
   dc = diff --cached
+  a = add
   aa = add --all
   pullff = pull --ff-only
   unstage = reset HEAD --

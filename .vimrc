@@ -1,70 +1,129 @@
-filetype off                   " required!
-" No need for vi compatibility
+filetype off
 set nocompatible
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
-
-" let Vundle manage Vundle
 Bundle 'gmarik/vundle'
 
-" Custom bundles
-" Bundle 'jnurmine/Zenburn'
+"#############################################
+"                  Plugins
+"#############################################
+
+"----------------
+" Unprocessed
+"----------------
+Bundle 'L9'
+Bundle 'godlygeek/tabular'
+Bundle "scrooloose/nerdtree.git"
+Bundle "scrooloose/nerdcommenter"
+Bundle "klen/vim-taglist-plus"
+Bundle "MarcWeber/vim-addon-mw-utils"
+Bundle "tomtom/tlib_vim"
+
+
+"----------------
+" Utils
+"----------------
+" Git wrapper
 Bundle 'tpope/vim-fugitive'
 
-Bundle 'vim-scripts/matchit.zip'
-Bundle 'altercation/vim-colors-solarized'
-Bundle 'ervandew/supertab'
-Bundle 'tpope/vim-markdown'
 
-" ruby-related plugins
-Bundle 'vim-ruby/vim-ruby'
-Bundle 'tpope/vim-rails'
-Bundle 'astashov/vim-ruby-debugger'
-Bundle 'tpope/vim-haml'
-Bundle 'tpope/vim-cucumber'
-Bundle 'tpope/vim-bundler'
-Bundle 'tpope/vim-rake'
-Bundle 'tpope/vim-endwise'
+"----------------
+" Text processing
+"----------------
+" matching with "%"
+Bundle 'vim-scripts/matchit.zip'
+" tabcompletition
+Bundle 'ervandew/supertab'
+" Ruby text objects vir var
 Bundle 'kana/vim-textobj-user'
 Bundle 'nelstrom/vim-textobj-rubyblock'
-
-" PHP-related plugins
-Bundle 'vexxor/phpdoc.vim'
-" Bundle 'AlexParamonov/vim_dbgp_debug'
-
-" HTML-related
-Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
-
-" Bundle 'Townk/vim-autoclose'
+" Other
 Bundle 'jiangmiao/auto-pairs'
 Bundle 'tpope/vim-unimpaired'
 Bundle 'tpope/vim-speeddating'
 Bundle 'tpope/vim-repeat'
-Bundle 'kien/ctrlp.vim'
-Bundle 'L9'
-Bundle 'vim-scripts/FuzzyFinder'
-Bundle 'tpope/vim-commentary'
-" Bundle 'fholgado/minibufexpl.vim'
-Bundle 'godlygeek/tabular'
 Bundle 'tpope/vim-surround'
-Bundle 'sjl/gundo.vim'
-" Bundle "Lokaltog/vim-powerline"
+" Comments
+Bundle 'tpope/vim-commentary'
+
+
+"----------------
+" Colors
+"----------------
+" color scheme
+Bundle 'altercation/vim-colors-solarized'
+" colorize fileformats, setomnifuncs, etc
+Bundle 'tpope/vim-markdown'
+Bundle 'tpope/vim-haml'
+Bundle 'tpope/vim-cucumber'
+Bundle 'bbommarito/vim-slim'
+Bundle 'tpope/vim-rake'
+
+
+"----------------
+" UI
+"----------------
 Bundle "pearofducks/vim-powerline"
-Bundle "scrooloose/nerdtree.git"
-Bundle "scrooloose/nerdcommenter"
-" Bundle "bkad/CamelCaseMotion"
-Bundle "klen/vim-taglist-plus"
 Bundle "roman/golden-ratio"
-
-Bundle "MarcWeber/vim-addon-mw-utils"
-Bundle "tomtom/tlib_vim"
-" Bundle "honza/snipmate-snippets"
-" Bundle "garbas/vim-snipmate"
+Bundle 'kien/ctrlp.vim'
+" Semantic
 Bundle "scrooloose/syntastic"
+" Undo tree
+Bundle 'sjl/gundo.vim'
+" find buffer
+Bundle 'vim-scripts/FuzzyFinder'
 
+
+"----------------
+" Ruby
+"----------------
+" Ruby motions (]m ]M ]]) and Ruby text objects (am im aM iM)
+Bundle 'vim-ruby/vim-ruby'
+" Rails navigation
+Bundle 'tpope/vim-rails'
+" refactoring http://relishapp.com/despo/vim-ruby-refactoring
+Bundle 'AlexParamonov/vim-ruby-refactoring'
+" gem-ctags call gem ctags to generate tags
+Bundle 'tpope/vim-bundler'
+" Smart end
+Bundle 'tpope/vim-endwise'
+
+
+"----------------
+" PHP
+"----------------
+" Bundle 'vexxor/phpdoc.vim'
+
+
+"----------------
+" HTML
+"----------------
+Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
+
+
+"----------------
 " Documnetation
+"----------------
 Bundle "danchoi/ri.vim"
 Bundle "kucaahbe/vim-common-tips"
+
+
+"----------------
+" Deprecated
+"----------------
+" Bundle 'astashov/vim-ruby-debugger'
+" Bundle "Lokaltog/vim-powerline"
+" Bundle "bkad/CamelCaseMotion"
+" Bundle "honza/snipmate-snippets"
+" Bundle "garbas/vim-snipmate"
+" Bundle 'fholgado/minibufexpl.vim'
+" Bundle 'Townk/vim-autoclose'
+
+
+"#############################################
+"             Configuration
+"#############################################
+
 
 set laststatus=2
 filetype plugin indent on
@@ -81,9 +140,6 @@ set showcmd
 " Enable highlighting for syntax
 syntax on
 
-"no delay!
-" set timeout timeoutlen=1000 ttimeoutlen=100
-" set notimeout ttimeout ttimeoutlen=100
 imap jj <Esc>:<Esc>
 
 set t_Co=16
@@ -119,7 +175,6 @@ set softtabstop=2
 set shiftwidth=2
 set expandtab
 
-"set list listchars=tab:▸\ ,eol:¬,trail:·,nbsp:·
 set list listchars=tab:▸\ ,trail:·,nbsp:·
 
 " Searching
@@ -131,8 +186,9 @@ set smartcase
 " Tab completion
 set wildignore+=.git/*,.svn/*
 set completeopt=menu
-set dictionary-=/usr/share/dict/words dictionary+=/usr/share/dict/words
-" set complete-=k complete+=k
+set pumheight=15
+" Cmd menu
+set wildmenu
 
 " History & backups
 set backup
@@ -141,13 +197,21 @@ set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
 
 set history=50
 
-" Autocomd
+" allow backspacing over everything in insert mode
+set backspace=indent,eol,start
+
+" added '<buffer>' to guard against this mapping from being used in other
+" filetypes
+inoremap <buffer><silent><Bar>   <Bar><Esc>:call <SID>align()<CR>a
+
+
+"#############################################
+"                  Autocmd
+"#############################################
+
 if has("autocmd")
   autocmd InsertEnter * set nocul
   autocmd InsertLeave * set cul
-
-  " Source the vimrc file after saving it
-  autocmd bufwritepost .vimrc source $MYVIMRC
 
   " save all buffers when (g)vim looses focus
   au FocusLost * :wa
@@ -167,7 +231,6 @@ if has("autocmd")
   autocmd BufEnter * let &titlestring = "vim " . expand("%")
 
   " Remove trailing whitespaces on save
-  " autocmd FileType c,cpp,python,ruby,java autocmd BufWritePre <buffer> :%s/\s\+$//e
   autocmd FileType c,cpp,python,ruby,php,java autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
 
   " Use 4 spaces in php files
@@ -187,60 +250,74 @@ if has("autocmd")
   " autocmd InsertLeave * :set relativenumber
 endif
 
-" Highlight characters in column >80
-" set colorcolumn=80
+"#############################################
+"            Plugins configs
+"#############################################
 
-" allow backspacing over everything in insert mode
-set backspace=indent,eol,start
+"----------------
+" Ruby refactoring
+"----------------
+let g:ruby_refactoring_map_keys=0
 
-" added '<buffer>' to guard against this mapping from being used in other
-" filetypes
-inoremap <buffer><silent><Bar>   <Bar><Esc>:call <SID>align()<CR>a
+"----------------
+" NerdTree
+"----------------
+let NERDTreeShowHidden=1
+let NERDTreeMapOpenSplit = "s"
+let NERDTreeMapOpenVSplit = "v"
+let NERDTreeMinimalUI = 1
+let NERDTreeIgnore=['\.rbc$', '\~$', '\.git$', '\.bundle$']
 
-"""""""""""""""""""""
-" Plugins configs
-"
-"""""""""""""""""""""
-
+"----------------
 " Golden ratio
+"----------------
 let g:golden_ratio_autocommand = 0
 
+"----------------
 " Powerline
+"----------------
 let Powerline_symbols="fancy"
 " let Powerline_colorscheme="solarizedLight"
 let Powerline_colorscheme="skwp"
 let Powerline_cache_enabled=1
 
+"----------------
 " Ruby.vim
+"----------------
 let ruby_minlines = 600
 let ruby_operators = 1
 let ruby_space_errors = 1
 
+"----------------
 " Ruby.vim omni complete
+"----------------
 let g:rubycomplete_buffer_loading = 1
 let g:rubycomplete_classes_in_global = 1
 let g:rubycomplete_rails = 1
 
+"----------------
 " Supertab
+"----------------
 let g:SuperTabDefaultCompletionType = "<c-p>"
 let g:SuperTabDefaultCompletionType = "context"
 let g:SuperTabContextDefaultCompletionType = "<c-p>"
 let g:SuperTabCompletionContexts = ['s:ContextText', 's:ContextDiscover']
-let g:SuperTabContextTextOmniPrecedence = ['&omnifunc', '&completefunc']
-" let g:SuperTabLongestEnhanced = 1
-let g:SuperTabNoCompleteAfter = ['\s', '{', '[', '(', '|']
+let g:SuperTabLongestEnhanced = 1
+let g:SuperTabNoCompleteAfter = ['^', '\s', '{', '[', '(', '|']
 
+"----------------
 " CTRLP
+"----------------
 let g:ctrlp_max_files = 90000
 let g:ctrlp_clear_cache_on_exit = 0
 " let g:ctrlp_user_command = ['.git/', 'cd %s && git ls-files']
 let g:ctrlp_arg_map = 1
-let g:ctrlp_root_markers = ['tags']
+let g:ctrlp_show_hidden = 1
+" let g:ctrlp_root_markers = ['tags']
 
-" " SnipMate
-" let g:snips_author = 'Alexander Paramonov'
-
+"----------------
 " Syntastic
+"----------------
 let g:syntastic_warning_symbol='⚠'
 let g:syntastic_auto_loc_list=2
 let g:syntastic_enable_highlighting = 1
@@ -248,28 +325,26 @@ let g:syntastic_enable_balloons = 0
 let g:syntastic_enable_signs=1
 let g:syntastic_echo_current_error=1
 
-"""""""""""""""""""""
-" Leader Mappings
-"
-"""""""""""""""""""""
+"#############################################
+"             Leader Mappings
+"#############################################
 
 " Leader key
 let mapleader=','
 
-" Pressing ,v opens the vimrc file in a new tab.
-nnoremap <leader>v :e $MYVIMRC<CR>
-
-
+"----------------
 " CTags
+"----------------
 noremap <leader>rt :!ctags -f tags --extra=+f --exclude=tmp --exclude=log -R *<CR><CR>
 
-
+"----------------
 " Golden ratio
+"----------------
 nnoremap <F7> :GoldenRatioToggle<CR>
-if exists("g:loaded_golden_ratio")
-endif
 
-" Tabs
+"----------------
+" Tabularize
+"----------------
 nnoremap <leader>= :Tabularize /=<CR>
 vnoremap <leader>= :Tabularize /=<CR>
 nnoremap <leader>: :Tabularize /:\zs<CR>
@@ -277,10 +352,50 @@ vnoremap <leader>: :Tabularize /:\zs<CR>
 nnoremap <leader>=> :Tabularize /=><CR>
 vnoremap <leader>=> :Tabularize /=><CR>
 
+"----------------
+" Rails
+"----------------
+nnoremap <leader>. :R<CR>
+
+"----------------
+" NerdTree
+"----------------
+nnoremap <leader>n :NERDTreeToggle<CR>
+
+"----------------
+" PHP doc
+"----------------
+noremap <leader>pd :call PhpDoc()<CR>
+
+"----------------
+" Buffer window (find file in open buffers)
+"----------------
+nmap <silent> <leader>b :FufBuffer<CR>
+
+"----------------
+" Ruby refactoring
+"----------------
+:nnoremap <leader>rp  :RAddParameter<cr>
+:nnoremap <leader>rl  :RExtractLet<cr>
+:nnoremap <leader>ri  :RInlineTemp<cr>
+:nnoremap <leader>rf  :RConvertPostConditional<cr>
+
+:vnoremap <leader>rl  :RExtractLocalVariable<cr>
+:vnoremap <leader>rc  :RExtractConstant<cr>
+:vnoremap <leader>rrl :RRenameLocalVariable<cr>
+:vnoremap <leader>rri :RRenameInstanceVariable<cr>
+:vnoremap <leader>rm  :RExtractMethod<cr>
+
+"----------------
+" General
+"----------------
+" Pressing ,v opens the vimrc file in a new tab.
+nnoremap <leader>v :e $MYVIMRC<CR>
+
 " Toggle spaces and tabs
 nnoremap <leader>l :set list!<CR>
 
-nnoremap <leader>. :R<CR>
+noremap <leader>e :edit %:h/
 
 " OS clipboard
 nnoremap <leader>y "+y
@@ -291,56 +406,20 @@ vnoremap <leader>p "+p
 nnoremap <leader>P "+P
 vnoremap <leader>P "+P
 
-noremap <leader>e :edit %:h/
-
-" NerdTree
-nnoremap <leader>n :NERDTreeToggle<CR>
-let NERDTreeShowHidden=1
-let NERDTreeMapOpenSplit = "s"
-let NERDTreeMapOpenVSplit = "v"
-let NERDTreeMinimalUI = 1
-let NERDTreeIgnore=['\.rbc$', '\~$']
-
 " Auto indent whole file
 " TODO:  does not work
 nnoremap <leader>i gg=G\|
 
-"PHP doc
-noremap <leader>pd :call PhpDoc()<CR>
-
-" Buffer window (find file in open buffers)
-nmap <silent> <leader>b :FufBuffer<CR>
-
-" Debugger
-
-let g:ruby_debugger_no_maps = 1
-" let g:ruby_debugger_debug_mode=3
-" let g:ruby_debugger_fast_sender = 2
-" let g:ruby_debugger_spec_path='~/.rvm/gems/ruby-1.9.3-p194@ap/gems/rspec-core-2.10.0/exe/rspec'
-noremap <Leader>dl  :Rdebugger<CR>
-noremap <Leader>db  :call g:RubyDebugger.toggle_breakpoint()<CR>
-noremap <Leader>dv  :call g:RubyDebugger.open_variables()<CR>
-noremap <Leader>dm  :call g:RubyDebugger.open_breakpoints()<CR>
-noremap <Leader>dt  :call g:RubyDebugger.open_frames()<CR>
-noremap <Leader>ds  :call g:RubyDebugger.step()<CR>
-noremap <Leader>df  :call g:RubyDebugger.finish()<CR>
-noremap <Leader>dn  :call g:RubyDebugger.next()<CR>
-noremap <Leader>dc  :call g:RubyDebugger.continue()<CR>
-noremap <Leader>de  :call g:RubyDebugger.exit()<CR>
-noremap <Leader>dd  :call g:RubyDebugger.remove_breakpoints()<CR>
-
-
-"""""""""""""""""""""
-" Key bindings
-"
-"""""""""""""""""""""
+"#############################################
+"               Key bindings
+"#############################################
 
 " Hide search highlighting
 nnoremap <silent> <Space> :noh<CR>
 
-""""""""""
+"----------------
 " F keys
-
+"----------------
 "Save file
 nnoremap <F2> :wa<CR>
 vnoremap <F2> :wa<CR>
@@ -358,8 +437,12 @@ noremap <F6> :bn <CR>
 inoremap <F5> <Esc> :bp <CR>i
 noremap <F5> :bp <CR>
 
-""""""""""
+"----------------
 " Ctrl keys
+"----------------
+" Omni complete by Ctrl + Space
+imap <C-Space> <C-x><C-o>
+imap <C-@> <C-Space>
 
 " Indenting with Ctrl + h and j
 nnoremap <C-h> <<
@@ -376,10 +459,6 @@ vnoremap  <C-j> :m'>+<CR>gv=gv
 vnoremap  <C-k> :m-2<CR>gv=gv
 
 " disable arrow keys
-"inoremap <Up>    <NOP>
-"inoremap <Down>  <NOP>
-"inoremap <Left>  <NOP>
-"inoremap <Right> <NOP>
 noremap  <Up>    <NOP>
 noremap  <Down>  <NOP>
 noremap  <Left>  <NOP>
@@ -388,10 +467,9 @@ noremap  <Right> <NOP>
 "Time tree
 nnoremap <F9> :GundoToggle<CR>
 
-"""""""""""""""""""""
-" Functions
-"
-"""""""""""""""""""""
+"#############################################
+"                 Functions
+"#############################################
 
 " smart file rename
 " stolen from: https://github.com/garybernhardt/dotfiles/blob/master/.vimrc
@@ -406,77 +484,9 @@ function! RenameFile()
 endfunction
 map <leader>m :call RenameFile()<cr>
 
-" convert var assignment to rspec let
-" stolen from: https://github.com/garybernhardt/dotfiles/blob/master/.vimrc
-function! PromoteToLet()
-  :normal! dd
-  :exec '?^\s*it\>'
-  :normal! P
-  :.s/\(\w\+\) = \(.*\)$/let(:\1) { \2 }/
-  :normal ==
-endfunction
-:command! PromoteToLet :call PromoteToLet()
-:map <leader>rl :PromoteToLet<cr>
-
-fun! <SID>StripTrailingWhitespaces()
-    let l = line(".")
-    let c = col(".")
-    %s/\s\+$//e
-    call cursor(l, c)
-endfun
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" EXTRACT VARIABLE (SKETCHY)
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-function! ExtractVariable()
-    let name = input("Variable name: ")
-    if name == ''
-        return
-    endif
-    " Enter visual mode (not sure why this is needed since we're already in
-    " visual mode anyway)
-    normal! gv
-
-    " Replace selected text with the variable name
-    exec "normal c" . name
-    " Define the variable on the line above
-    exec "normal! O" . name . " = "
-    " Paste the original selected text to be the variable value
-    normal! $p
-endfunction
-vnoremap <leader>rv :call ExtractVariable()<cr>
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" INLINE VARIABLE (SKETCHY)
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-function! InlineVariable()
-    " Copy the variable under the cursor into the 'a' register
-    :let l:tmp_a = @a
-    :normal "ayiw
-    " Delete variable and equals sign
-    :normal 2daW
-    " Delete the expression into the 'b' register
-    :let l:tmp_b = @b
-    :normal "bd$
-    " Delete the remnants of the line
-    :normal dd
-    " Go to the end of the previous line so we can start our search for the
-    " usage of the variable to replace. Doing '0' instead of 'k$' doesn't
-    " work; I'm not sure why.
-    normal k$
-    " Find the next occurence of the variable
-    exec '/\<' . @a . '\>'
-    " Replace that occurence with the text we yanked
-    exec ':.s/\<' . @a . '\>/' . @b
-    :let @a = l:tmp_a
-    :let @b = l:tmp_b
-endfunction
-nnoremap <leader>ri :call InlineVariable()<cr>
-
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" RUNNING TESTS
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"----------------
+" Running tests
+"----------------
 nmap <leader>t :call RunTestFile()<cr>
 nmap <leader>T :call RunNearestTest()<cr>
 

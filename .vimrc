@@ -9,12 +9,8 @@ runtime ../.vim-bundles.vim
 "               Configuration
 "#############################################
 
-
 set laststatus=2
 set encoding=utf-8
-set number
-set numberwidth=5
-set ruler
 set hidden
 set cmdheight=2
 set switchbuf=useopen
@@ -23,12 +19,13 @@ set showcmd
 " Enable highlighting for syntax
 syntax on
 
-imap jj <Esc>:<Esc>
+set number
+set numberwidth=5
+set ruler
 
 set t_Co=16
 set background=dark
 " set background=light
-" colorscheme zenburn
 let g:solarized_termcolors=16
 " let g:solarized_contrast="high"
 colorscheme solarized
@@ -41,6 +38,7 @@ set formatprg=par\ -w70
 set cindent
 set smartindent
 set autoindent
+set ttyfast " Indicates a fast terminal connection
 
 " Enable Spell Checking
 " set spell
@@ -72,6 +70,7 @@ set completeopt=menu
 set pumheight=15
 " Cmd menu
 set wildmenu
+set wildmode=list:longest
 
 " History & backups
 set backup
@@ -248,7 +247,7 @@ nnoremap <leader>n :NERDTreeToggle<CR>
 "----------------
 " PHP doc
 "----------------
-noremap <leader>pd :call PhpDoc()<CR>
+" noremap <leader>pd :call PhpDoc()<CR>
 
 "----------------
 " Buffer window (find file in open buffers)
@@ -299,6 +298,8 @@ nnoremap <leader>ccd :call ChangeColorShemaToDark()<CR>
 "#############################################
 "               Key bindings
 "#############################################
+
+imap jj <Esc>:<Esc>
 
 " Hide search highlighting
 nnoremap <silent> <Space> :noh<CR>

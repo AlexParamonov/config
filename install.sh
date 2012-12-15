@@ -3,7 +3,7 @@
 for config in `ls -1A | grep -v -E "(install.sh|.rvm|.local|.ssh|.git|.gitignore|.gitmodules)$"`
 do
   echo "installing $config"
-  rm "$HOME/$config"
+  rm -r "$HOME/$config"
   ln -s "`pwd`/$config" "$HOME/$config"
 done
 

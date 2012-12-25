@@ -3,7 +3,7 @@ set nocompatible               " be iMproved
 "#############################################
 "                 Plugins
 "#############################################
-runtime ../.vim-bundles.vim
+runtime .vim-bundles.vim
 
 "#############################################
 "               Configuration

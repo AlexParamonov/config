@@ -24,7 +24,7 @@ set numberwidth=5
 set ruler
 
 set t_Co=16
-set background=dark
+set background=light
 " set background=light
 let g:solarized_termcolors=16
 " let g:solarized_contrast="high"
@@ -159,8 +159,8 @@ let g:golden_ratio_autocommand = 0
 " Powerline
 "----------------
 let Powerline_symbols="fancy"
-" let Powerline_colorscheme="solarizedLight"
-let Powerline_colorscheme="skwp"
+let Powerline_colorscheme="solarizedLight"
+" let Powerline_colorscheme="skwp"
 let Powerline_cache_enabled=1
 
 "----------------
@@ -419,4 +419,11 @@ function! ChangeColorShemaToDark()
   set background=dark
   let g:Powerline_colorscheme = 'skwp'
 endfunction
+
+function! <SID>StripTrailingWhitespaces()
+    let l = line(".")
+    let c = col(".")
+    %s/\s\+$//e
+    call cursor(l, c)
+endfun
 

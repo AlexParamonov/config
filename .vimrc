@@ -332,24 +332,24 @@ imap <C-Space> <C-x><C-o>
 imap <C-@> <C-Space>
 
 " Indenting with Ctrl + h and j
-nnoremap <C-h> <<
-nnoremap <C-l> >>
-vnoremap <C-h> <gv
-vnoremap <C-l> >gv
+nnoremap <C-Right> <<
+nnoremap <C-Left> >>
+vnoremap <C-Right> <gv
+vnoremap <C-Left> >gv
 
 " Move line(s) of text using Ctrl+j/k
-nnoremap  <C-j> :m+<CR>==
-nnoremap  <C-k> :m-2<CR>==
-inoremap  <C-j> <Esc>:m+<CR>==gi
-inoremap  <C-k> <Esc>:m-2<CR>==gi
-vnoremap  <C-j> :m'>+<CR>gv=gv
-vnoremap  <C-k> :m-2<CR>gv=gv
+nnoremap  <C-Down> :m+<CR>==
+nnoremap  <C-Up> :m-2<CR>==
+inoremap  <C-Down> <Esc>:m+<CR>==gi
+inoremap  <C-Up> <Esc>:m-2<CR>==gi
+vnoremap  <C-Down> :m'>+<CR>gv=gv
+vnoremap  <C-Up> :m-2<CR>gv=gv
 
 " disable arrow keys
-noremap  <Up>    <NOP>
-noremap  <Down>  <NOP>
-noremap  <Left>  <NOP>
-noremap  <Right> <NOP>
+" noremap  <Down>  <NOP>
+" noremap  <Left>  <NOP>
+" noremap  <Up>    <NOP>
+" noremap  <Right> <NOP>
 
 "Time tree
 nnoremap <F9> :GundoToggle<CR>

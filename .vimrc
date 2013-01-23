@@ -299,6 +299,10 @@ nnoremap <leader>ccd :call ChangeColorShemaToDark()<CR>
 "               Key bindings
 "#############################################
 
+inoremap <Del> <Esc>
+nnoremap <Del> <Esc>
+vnoremap <Del> <Esc>
+
 imap jj <Esc>:<Esc>
 
 " Hide search highlighting

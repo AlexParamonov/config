@@ -261,7 +261,7 @@ xkb_symbols "dvorak-apk" {
     // Alphanumeric section
 
     key <AE01> { [  asciicircum,    1  ]  };
-    key <AE02> { [  at,             2  ]  };
+    key <AE02> { [  dollar,         2  ]  };
     key <AE03> { [  braceleft,      3  ]  };
     key <AE04> { [  braceright,     4  ]  };
     key <AE05> { [  equal,          5  ]  };
@@ -274,7 +274,7 @@ xkb_symbols "dvorak-apk" {
     key <AE12> { [  Super_L ] };
 
     key <AD01> { [  period  ] };
-    key <AD02> { [  comma  ] };
+    key <AD02> { [  comma,          at   ]  };
     key <AD03> { [  apostrophe,     quotedbl,          grave  ] };
     key <AD04> { [  p,              P    ]  };
     key <AD05> { [  y,              Y    ]  };
@@ -286,7 +286,7 @@ xkb_symbols "dvorak-apk" {
     key <AD11> { [  bracketleft,    less  ]  };
     key <AD12> { [  bracketright,   greater  ]  };
 
-    key <AC01> { [  a,              A     ]  };
+    key <AC01> { [  a,              A    ]  };
     key <AC02> { [  o,              O    ]  };
     key <AC03> { [  e,              E,                 EuroSign    ]  };
     key <AC04> { [  u,              U    ]  };

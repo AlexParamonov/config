@@ -3,7 +3,7 @@ set nocompatible               " be iMproved
 "#############################################
 "                 Plugins
 "#############################################
-runtime .vim-bundles.vim
+runtime .vimrc-bundles.vim
 
 "#############################################
 "               Configuration
@@ -23,13 +23,7 @@ set number
 set numberwidth=5
 set ruler
 
-set t_Co=16
-set background=light
-" set background=light
-let g:solarized_termcolors=16
-" let g:solarized_contrast="high"
-colorscheme solarized
-set guifont=Ubuntu\ Mono\ for\ Powerline\ 14
+runtime .vimrc-colors.vim
 
 " Set formatter gq
 set formatprg=par\ -w70
@@ -163,8 +157,6 @@ let g:golden_ratio_autocommand = 0
 " Powerline
 "----------------
 let Powerline_symbols="fancy"
-let Powerline_colorscheme="solarizedLight"
-" let Powerline_colorscheme="skwp"
 let Powerline_cache_enabled=1
 
 "----------------

@@ -4,6 +4,11 @@ alias tf="tail -f"
 alias gi="gem install"
 alias gv="guard --clear -g"
 
+# easier cd
+alias .='pwd'
+alias ..='cd ..'
+alias ....='cd ../..'
+alias ......='cd ../../..'
 
 # some more ls aliases
 alias ll='ls -alF'

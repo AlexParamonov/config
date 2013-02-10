@@ -288,9 +288,6 @@ vnoremap <leader>P "+P
 " TODO:  does not work
 nnoremap <leader>i gg=G\|
 
-nnoremap <leader>ccl :call ChangeColorShemaToLight()<CR>
-nnoremap <leader>ccd :call ChangeColorShemaToDark()<CR>
-
 "#############################################
 "               Key bindings
 "#############################################
@@ -408,16 +405,6 @@ function! RunTests(filename)
     :w
     :silent !echo;echo;echo;echo;echo;echo;echo;echo;echo;echo
     exec ":!rspec --color " . a:filename
-endfunction
-
-function! ChangeColorShemaToLight()
-  set background=light
-  let g:Powerline_colorscheme = 'solarizedLight'
-endfunction
-
-function! ChangeColorShemaToDark()
-  set background=dark
-  let g:Powerline_colorscheme = 'skwp'
 endfunction
 
 function! <SID>StripTrailingWhitespaces()

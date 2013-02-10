@@ -273,6 +273,7 @@ nnoremap <leader>v :e $MYVIMRC<CR>
 " Toggle spaces and tabs
 nnoremap <leader>l :set list!<CR>
 
+" Edit file in same directory
 noremap <leader>e :edit %:h/
 
 " OS clipboard
@@ -331,12 +332,11 @@ imap <C-@> <C-Space>
 "Time tree
 nnoremap <F9> :GundoToggle<CR>
 
+"#############################################
+"                 Enviroment
+"#############################################
+runtime .vimrc-environment.vim
 
-"#############################################
-"                 Keyboards
-"#############################################
-" runtime .vimrc-keyboard-default.vim
-runtime .vimrc-keyboard-advantage.vim
 
 "#############################################
 "                 Functions
@@ -354,45 +354,6 @@ function! RenameFile()
   endif
 endfunction
 map <leader>m :call RenameFile()<cr>
-
-"----------------
-" Running tests
-"----------------
-nmap <leader>t :call RunTestFile()<cr>
-nmap <leader>T :call RunNearestTest()<cr>
-
-function! RunTestFile(...)
-    if a:0
-        let command_suffix = a:1
-    else
-        let command_suffix = ""
-    endif
-
-    " Run the tests for the previously-marked file.
-    let in_test_file = match(expand("%"), '\(.feature\|_spec.rb\)$') != -1
-    if in_test_file
-        call SetTestFile()
-    elseif !exists("t:grb_test_file")
-        return
-    end
-    call RunTests(t:grb_test_file . command_suffix)
-endfunction
-
-function! RunNearestTest()
-    let spec_line_number = line('.')
-    call RunTestFile(":" . spec_line_number . " -b")
-endfunction
-
-function! SetTestFile()
-    " Set the spec file that tests will be run for.
-    let t:grb_test_file=@%
-endfunction
-
-function! RunTests(filename)
-    :w
-    :silent !echo;echo;echo;echo;echo;echo;echo;echo;echo;echo
-    exec ":!rspec --color " . a:filename
-endfunction
 
 function! <SID>StripTrailingWhitespaces()
     let l = line(".")

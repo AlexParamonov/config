@@ -1,6 +1,7 @@
 # ignore ssh
 .ssh/*
 .vim/bundle/*
+.vim/.vimrc-environment.vim
 
 # Ignore vimtags
 tags

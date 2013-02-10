@@ -336,10 +336,10 @@ imap <C-Space> <C-x><C-o>
 imap <C-@> <C-Space>
 
 " Indenting with Ctrl + h and j
-nnoremap <C-Right> <<
-nnoremap <C-Left> >>
-vnoremap <C-Right> <gv
-vnoremap <C-Left> >gv
+nnoremap <C-Right> >>
+nnoremap <C-Left> <<
+vnoremap <C-Right> >gv
+vnoremap <C-Left> <gv
 
 " Move line(s) of text using Ctrl+j/k
 nnoremap  <C-Down> :m+<CR>==

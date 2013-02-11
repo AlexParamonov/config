@@ -1,5 +1,5 @@
 # ignore ssh
-env/desktop/.ssh/*
+.ssh
 lib/.vim/bundle/*
 lib/.vim/.vimrc-environment.vim
 

@@ -1,5 +1,6 @@
 #!/bin/bash
 ENV_DIR=env/
+BASE_ENV=base
 
 for config in `ls -1A lib`
 do
@@ -26,9 +27,16 @@ while true; do
     esac
 done
 
+for config in `ls -1A $ENV_DIR$BASE_ENV`
+do
+  echo "linking base $config"
+  rm -r "$HOME/$config" 2> /dev/null
+  ln -s "`pwd`/$ENV_DIR$BASE_ENV/$config" "$HOME/$config"
+done
+
 for config in `ls -1A $ENV_DIR$SELECTED_ENV`
 do
-  echo "linking $config"
+  echo "linking $SELECTED_ENV $config"
   rm -r "$HOME/$config" 2> /dev/null
   ln -s "`pwd`/$ENV_DIR$SELECTED_ENV/$config" "$HOME/$config"
 done

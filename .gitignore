@@ -1,7 +1,7 @@
 # ignore ssh
-link_install/.ssh/*
-link_install/.vim/bundle/*
-link_install/.vim/.vimrc-environment.vim
+env/desktop/.ssh/*
+lib/.vim/bundle/*
+lib/.vim/.vimrc-environment.vim
 
 # Ignore vimtags
 tags

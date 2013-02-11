@@ -1,6 +1,4 @@
-export TERM='xterm-256color'
-export EDITOR=vim
-export VISUAL=vim
+source $BASH_USER_CONFIGS/env/base.sh
 
 export PATH=$PATH:/usr/lib/jvm/java-6-sun/bin
 export PATH=$PATH:$HOME/.rvm/bin

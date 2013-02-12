@@ -73,11 +73,13 @@ Bundle "pearofducks/vim-powerline"
 Bundle "roman/golden-ratio"
 Bundle 'kien/ctrlp.vim'
 " Semantic
-Bundle "scrooloose/syntastic"
+Bundle 'scrooloose/syntastic'
 " Undo tree
 Bundle 'sjl/gundo.vim'
 " find buffer
 Bundle 'vim-scripts/FuzzyFinder'
+" Ack search
+Bundle 'mileszs/ack.vim'
 
 
 "----------------

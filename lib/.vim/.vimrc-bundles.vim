@@ -92,6 +92,7 @@ Bundle 'tpope/vim-rails'
 " refactoring http://relishapp.com/despo/vim-ruby-refactoring
 Bundle 'AlexParamonov/vim-ruby-refactoring'
 " gem-ctags call gem ctags to generate tags
+"install gem-browse for opening a gems
 Bundle 'tpope/vim-bundler'
 " Smart end
 Bundle 'tpope/vim-endwise'

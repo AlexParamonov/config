@@ -111,7 +111,7 @@ if has("autocmd")
 
   " Try to remap minus and underscore for ruby files only. It works globally
   " right now
-  autocmd FileType ruby imap - _| imap _ -
+  " autocmd FileType ruby imap - _| imap _ -
 
   " Use 4 spaces in php files
   autocmd FileType php setlocal shiftwidth=4 tabstop=4 softtabstop=4

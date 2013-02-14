@@ -223,12 +223,14 @@ nnoremap <F7> :GoldenRatioToggle<CR>
 "----------------
 " Tabularize
 "----------------
-nnoremap <leader>= :Tabularize /=<CR>
-vnoremap <leader>= :Tabularize /=<CR>
-nnoremap <leader>: :Tabularize /:\zs<CR>
-vnoremap <leader>: :Tabularize /:\zs<CR>
-nnoremap <leader>=> :Tabularize /=><CR>
-vnoremap <leader>=> :Tabularize /=><CR>
+nnoremap <leader>t= :tabularize /=<cr>
+vnoremap <leader>t= :Tabularize /=<CR>
+nnoremap <leader>t: :Tabularize /:\zs<CR>
+vnoremap <leader>t: :Tabularize /:\zs<CR>
+vnoremap <leader>t, :Tabularize /,\zs<CR>
+nnoremap <leader>t, :Tabularize /,\zs<CR>
+nnoremap <leader>t=> :Tabularize /=><CR>
+vnoremap <leader>t=> :Tabularize /=><CR>
 
 "----------------
 " Rails

@@ -273,30 +273,30 @@ xkb_symbols "dvorak-apk" {
     key <AE11> { [  backslash,      plus  ]   };
     key <AE12> { [  Super_L ] };
 
-    key <AD01> { [  period  ] };
-    key <AD02> { [  comma,          at   ]  };
-    key <AD03> { [  apostrophe,     quotedbl,          grave  ] };
-    key <AD04> { [  p,              P    ]  };
-    key <AD05> { [  y,              Y    ]  };
-    key <AD06> { [  f,              F    ]  };
-    key <AD07> { [  g,              G    ]  };
-    key <AD08> { [  c,              C    ]  };
-    key <AD09> { [  r,              R    ]  };
-    key <AD10> { [  l,              L    ]  };
-    key <AD11> { [  bracketleft,    less  ]  };
-    key <AD12> { [  bracketright,   greater  ]  };
+    key <AD01> { [  quotedbl,      apostrophe,     grave  ] };
+    key <AD02> { [  comma,         at   ]  };
+    key <AD03> { [  period  ] };
+    key <AD04> { [  p,             P    ]  };
+    key <AD05> { [  y,             Y    ]  };
+    key <AD06> { [  f,             F    ]  };
+    key <AD07> { [  g,             G    ]  };
+    key <AD08> { [  c,             C    ]  };
+    key <AD09> { [  r,             R    ]  };
+    key <AD10> { [  l,             L    ]  };
+    key <AD11> { [  bracketleft,   less  ]  };
+    key <AD12> { [  bracketright,  greater  ]  };
 
-    key <AC01> { [  a,              A    ]  };
-    key <AC02> { [  o,              O    ]  };
-    key <AC03> { [  e,              E,                 EuroSign    ]  };
-    key <AC04> { [  u,              U    ]  };
-    key <AC05> { [  i,              I    ]  };
-    key <AC06> { [  d,              D,                 dollar    ]  };
-    key <AC07> { [  h,              H    ]  };
-    key <AC08> { [  t,              T    ]  };
-    key <AC09> { [  n,              N    ]  };
-    key <AC10> { [  s,              S,                 sterling    ]  };
-    key <AC11> { [  minus,          underscore  ]  };
+    key <AC01> { [  a,           A    ]  };
+    key <AC02> { [  o,           O    ]  };
+    key <AC03> { [  e,           E,            EuroSign    ]  };
+    key <AC04> { [  u,           U    ]  };
+    key <AC05> { [  i,           I    ]  };
+    key <AC06> { [  d,           D,            dollar    ]  };
+    key <AC07> { [  h,           H    ]  };
+    key <AC08> { [  t,           T    ]  };
+    key <AC09> { [  n,           N    ]  };
+    key <AC10> { [  s,           S,            sterling    ]  };
+    key <AC11> { [  underscore,  minus  ]  };
 
     key <AB01> { [  colon,          semicolon  ] };
     key <AB02> { [  q,              Q    ]  };
@@ -309,12 +309,11 @@ xkb_symbols "dvorak-apk" {
     key <AB09> { [  v,              V    ]  };
     key <AB10> { [  z,              Z    ]  };
 
-    key <LSGT> { [  bar,            ampersand  ] };
-    key <TLDE> { [  slash,          question ] };
-    key <BKSL> { [  asciitilde,     numbersign ] };
+    key <LSGT> { [  bar,         ampersand  ] };
+    key <TLDE> { [  slash,       question ] };
+    key <BKSL> { [  numbersign,  asciitilde ] };
 
     include "level3(ralt_switch)"
-    modifier_map Mod4   { <AE12>, Super_L };
 };
 
 

@@ -9,6 +9,9 @@ runtime .vimrc-bundles.vim
 "               Configuration
 "#############################################
 
+" Leader key
+let mapleader=','
+
 set laststatus=2
 set encoding=utf-8
 set hidden
@@ -206,9 +209,6 @@ let g:syntastic_echo_current_error=1
 "#############################################
 "             Leader Mappings
 "#############################################
-
-" Leader key
-let mapleader=','
 
 "----------------
 " CTags

@@ -20,7 +20,7 @@ Bundle 'gmarik/vundle'
 Bundle 'L9'
 Bundle 'godlygeek/tabular'
 Bundle "scrooloose/nerdtree.git"
-Bundle "scrooloose/nerdcommenter"
+" Bundle "scrooloose/nerdcommenter"
 Bundle "klen/vim-taglist-plus"
 Bundle "MarcWeber/vim-addon-mw-utils"
 Bundle "tomtom/tlib_vim"

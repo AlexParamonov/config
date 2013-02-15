@@ -180,7 +180,6 @@ let g:rubycomplete_rails = 1
 " Supertab
 "----------------
 let g:SuperTabDefaultCompletionType = "<c-p>"
-let g:SuperTabDefaultCompletionType = "context"
 let g:SuperTabContextDefaultCompletionType = "<c-p>"
 let g:SuperTabCompletionContexts = ['s:ContextText', 's:ContextDiscover']
 let g:SuperTabLongestEnhanced = 1

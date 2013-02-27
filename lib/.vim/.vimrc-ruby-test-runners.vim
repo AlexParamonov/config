@@ -1,5 +1,5 @@
-nmap <leader>t :call RunTestFile()<cr>
-nmap <leader>T :call RunNearestTest()<cr>
+nmap <leader>tf :call RunTestFile()<cr>
+nmap <leader>tn :call RunNearestTest()<cr>
 
 function! RunTestFile(...)
     if a:0

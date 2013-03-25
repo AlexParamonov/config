@@ -41,8 +41,14 @@ do
   ln -s "`pwd`/$ENV_DIR$SELECTED_ENV/$config" "$HOME/$config"
 done
 
-echo "Applying default VIM environment"
-cp "$HOME/.vim/.vimrc-environment.default.vim" "$HOME/.vim/.vimrc-environment.vim"
+while true; do
+    read -p "Apply default VIM environment?" yn
+    case $yn in
+        [Yy]* ) cp "$HOME/.vim/.vimrc-environment.default.vim" "$HOME/.vim/.vimrc-environment.vim"; echo "--> default VIM environment installed."; break;;
+        [Nn]* ) break;;
+        * ) echo "Please answer yes or no.";;
+    esac
+done
 
 while true; do
     read -p "Load VIM plugins now? " yn

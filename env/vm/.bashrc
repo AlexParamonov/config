@@ -9,4 +9,5 @@ source $BASH_USER_CONFIGS/completion.sh
 source $BASH_USER_CONFIGS/promt.sh
 source $BASH_USER_CONFIGS/rvm.sh
 source $BASH_USER_CONFIGS/ruby_tweaks.sh
+source $BASH_USER_CONFIGS/putty.sh
 

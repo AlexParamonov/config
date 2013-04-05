@@ -31,6 +31,6 @@ endfunction
 function! RunTests(filename)
     :w
     :silent !echo;echo;echo;echo;echo;echo;echo;echo;echo;echo
-    exec ":!rspec --color --drb " . a:filename
+    exec ":!NO_CODE_COVERAGE=1 rspec --color " . a:filename
 endfunction
 

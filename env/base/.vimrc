@@ -120,7 +120,7 @@ if has("autocmd")
   autocmd FileType php setlocal shiftwidth=4 tabstop=4 softtabstop=4
 
   " Indent p tags
-  autocmd FileType html,eruby if g:html_indent_tags !~ '\\|p\>' | let g:html_indent_tags .= '\|p\|li\|dt\|dd' | endif
+  " autocmd FileType html,eruby if g:html_indent_tags !~ '\\|p\>' | let g:html_indent_tags .= '\|p\|li\|dt\|dd' | endif
 
   "maps .. to go to parent command, but only for buffers containing a git blob or tree TODO it not actually working
   autocmd BufReadPost fugitive://* if fugitive#buffer().type() =~# '^\%(tree\|blob\)$' | nnoremap <buffer> .. :edit %:h<CR> | endif

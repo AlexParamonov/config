@@ -128,6 +128,8 @@ if has("autocmd")
   " Autoclean fugitive buffers
   autocmd BufReadPost fugitive://* set bufhidden=delete
 
+  autocmd BufNewFile,BufRead COMMIT_EDITMSG setlocal spell
+
   " Handle relative numbers
   " autocmd InsertEnter * :set number
   " autocmd InsertLeave * :set relativenumber

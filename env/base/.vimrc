@@ -118,6 +118,7 @@ if has("autocmd")
 
   " Use 4 spaces in php files
   autocmd FileType php setlocal shiftwidth=4 tabstop=4 softtabstop=4
+  autocmd FileType eruby setlocal shiftwidth=4 tabstop=4 softtabstop=4
 
   " Indent p tags
   " autocmd FileType html,eruby if g:html_indent_tags !~ '\\|p\>' | let g:html_indent_tags .= '\|p\|li\|dt\|dd' | endif

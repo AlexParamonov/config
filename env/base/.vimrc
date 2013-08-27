@@ -89,51 +89,54 @@ inoremap <buffer><silent><Bar>   <Bar><Esc>:call <SID>align()<CR>a
 "#############################################
 
 if has("autocmd")
-  autocmd InsertEnter * set nocul
-  autocmd InsertLeave * set cul
+  augroup EditVim
+    autocmd!
+    autocmd InsertEnter * set nocul
+    autocmd InsertLeave * set cul
 
-  " save all buffers when (g)vim looses focus
-  au FocusLost * :wa
+    " save all buffers when (g)vim looses focus
+    au FocusLost * :wa
 
-  " make and python use real tabs
-  au FileType make   set noexpandtab
-  au FileType python set noexpandtab
+    " make and python use real tabs
+    au FileType make   set noexpandtab
+    au FileType python set noexpandtab
 
-  " Thorfile, Rakefile and Gemfile are Ruby
-  au BufRead,BufNewFile {Gemfile,Gemfile.local,Rakefile,Thorfile,config.ru} set ft=ruby
+    " Thorfile, Rakefile and Gemfile are Ruby
+    au BufRead,BufNewFile {Gemfile,Gemfile.local,Rakefile,Thorfile,config.ru} set ft=ruby
 
-  " Remember last location in file
-  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
-        \| exe "normal g'\"" | endif
+    " Remember last location in file
+    au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+          \| exe "normal g'\"" | endif
 
-  set title
-  autocmd BufEnter * let &titlestring = "vim " . expand("%")
+    set title
+    autocmd BufEnter * let &titlestring = "vim " . expand("%")
 
-  " Remove trailing whitespaces on save
-  autocmd FileType c,cpp,python,ruby,php,java autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
+    " Remove trailing whitespaces on save
+    autocmd FileType c,cpp,python,ruby,php,java autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
 
-  " Try to remap minus and underscore for ruby files only. It works globally
-  " right now
-  " autocmd FileType ruby imap - _| imap _ -
+    " Try to remap minus and underscore for ruby files only. It works globally
+    " right now
+    " autocmd FileType ruby imap - _| imap _ -
 
-  " Use 4 spaces in php files
-  autocmd FileType php setlocal shiftwidth=4 tabstop=4 softtabstop=4
-  autocmd FileType eruby setlocal shiftwidth=4 tabstop=4 softtabstop=4
+    " Use 4 spaces in php files
+    autocmd FileType php setlocal shiftwidth=4 tabstop=4 softtabstop=4
+    autocmd FileType eruby setlocal shiftwidth=4 tabstop=4 softtabstop=4
 
-  " Indent p tags
-  " autocmd FileType html,eruby if g:html_indent_tags !~ '\\|p\>' | let g:html_indent_tags .= '\|p\|li\|dt\|dd' | endif
+    " Indent p tags
+    " autocmd FileType html,eruby if g:html_indent_tags !~ '\\|p\>' | let g:html_indent_tags .= '\|p\|li\|dt\|dd' | endif
 
-  "maps .. to go to parent command, but only for buffers containing a git blob or tree TODO it not actually working
-  autocmd BufReadPost fugitive://* if fugitive#buffer().type() =~# '^\%(tree\|blob\)$' | nnoremap <buffer> .. :edit %:h<CR> | endif
+    "maps .. to go to parent command, but only for buffers containing a git blob or tree TODO it not actually working
+    autocmd BufReadPost fugitive://* if fugitive#buffer().type() =~# '^\%(tree\|blob\)$' | nnoremap <buffer> .. :edit %:h<CR> | endif
 
-  " Autoclean fugitive buffers
-  autocmd BufReadPost fugitive://* set bufhidden=delete
+    " Autoclean fugitive buffers
+    autocmd BufReadPost fugitive://* set bufhidden=delete
 
-  autocmd BufNewFile,BufRead COMMIT_EDITMSG setlocal spell
+    autocmd BufNewFile,BufRead COMMIT_EDITMSG setlocal spell
 
-  " Handle relative numbers
-  " autocmd InsertEnter * :set number
-  " autocmd InsertLeave * :set relativenumber
+    " Handle relative numbers
+    " autocmd InsertEnter * :set number
+    " autocmd InsertLeave * :set relativenumber
+  augroup END
 endif
 
 "#############################################

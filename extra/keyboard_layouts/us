@@ -298,7 +298,7 @@ xkb_symbols "dvorak-apk" {
     key <AC10> { [  s,           S,            sterling    ]  };
     key <AC11> { [  underscore,  minus  ]  };
 
-    key <AB01> { [  colon,          semicolon  ] };
+    key <AB01> { [  slash,       question  ] };
     key <AB02> { [  q,              Q    ]  };
     key <AB03> { [  j,              J    ]  };
     key <AB04> { [  k,              K    ]  };
@@ -310,7 +310,7 @@ xkb_symbols "dvorak-apk" {
     key <AB10> { [  z,              Z    ]  };
 
     key <LSGT> { [  bar,         ampersand  ] };
-    key <TLDE> { [  slash,       question ] };
+    key <TLDE> { [  colon,       semicolon  ] };
     key <BKSL> { [  numbersign,  asciitilde ] };
 
     include "level3(ralt_switch)"

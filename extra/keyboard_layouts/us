@@ -260,18 +260,18 @@ xkb_symbols "dvorak-apk" {
 
     // Alphanumeric section
 
-    key <AE01> { [  asciicircum,    1  ]  };
-    key <AE02> { [  dollar,         2  ]  };
-    key <AE03> { [  braceleft,      3  ]  };
-    key <AE04> { [  braceright,     4  ]  };
-    key <AE05> { [  equal,          5  ]  };
-    key <AE06> { [  percent,        6  ]  };
-    key <AE07> { [  parenright,     7  ]  };
-    key <AE08> { [  parenleft,      8  ]  };
-    key <AE09> { [  exclam,         9  ]  };
-    key <AE10> { [  asterisk,       0  ]  };
+    key <AE01> { [  asciicircum,    1  ], type[Group1] = "FOUR_LEVEL_ALPHABETIC" };
+    key <AE02> { [  dollar,         2  ], type[Group1] = "FOUR_LEVEL_ALPHABETIC" };
+    key <AE03> { [  braceleft,      3  ], type[Group1] = "FOUR_LEVEL_ALPHABETIC" };
+    key <AE04> { [  braceright,     4  ], type[Group1] = "FOUR_LEVEL_ALPHABETIC" };
+    key <AE05> { [  equal,          5  ], type[Group1] = "FOUR_LEVEL_ALPHABETIC" };
+    key <AE06> { [  percent,        6  ], type[Group1] = "FOUR_LEVEL_ALPHABETIC" };
+    key <AE07> { [  parenright,     7  ], type[Group1] = "FOUR_LEVEL_ALPHABETIC" };
+    key <AE08> { [  parenleft,      8  ], type[Group1] = "FOUR_LEVEL_ALPHABETIC" };
+    key <AE09> { [  exclam,         9  ], type[Group1] = "FOUR_LEVEL_ALPHABETIC" };
+    key <AE10> { [  asterisk,       0  ], type[Group1] = "FOUR_LEVEL_ALPHABETIC" };
     key <AE11> { [  backslash,      plus  ]   };
-    key <AE12> { [  Super_L ] };
+    key <AE12> { [  plus,           minus ] };
 
     key <AD01> { [  quotedbl,      apostrophe,     grave  ] };
     key <AD02> { [  comma,         at   ]  };

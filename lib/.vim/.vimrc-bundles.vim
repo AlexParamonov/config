@@ -51,6 +51,7 @@ Bundle 'tpope/vim-repeat'
 Bundle 'tpope/vim-surround'
 " Comments
 Bundle 'tpope/vim-commentary'
+Bundle 'sheerun/vim-polyglot'
 
 
 "----------------

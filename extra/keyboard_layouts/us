@@ -271,7 +271,7 @@ xkb_symbols "dvorak-apk" {
     key <AE09> { [  exclam,         9  ], type[Group1] = "FOUR_LEVEL_ALPHABETIC" };
     key <AE10> { [  asterisk,       0  ], type[Group1] = "FOUR_LEVEL_ALPHABETIC" };
     key <AE11> { [  backslash,      plus  ]   };
-    key <AE12> { [  plus,           minus ] };
+    key <AE12> { [  minus,          plus ] };
 
     key <AD01> { [  quotedbl,      apostrophe,     grave  ] };
     key <AD02> { [  comma,         at   ]  };

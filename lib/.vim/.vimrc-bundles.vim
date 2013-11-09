@@ -117,9 +117,9 @@ Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
 
 
 "----------------
-" Documnetation
+" Documentation
 "----------------
-Bundle "danchoi/ri.vim"
+" Bundle "danchoi/ri.vim"
 Bundle "kucaahbe/vim-common-tips"
 
 

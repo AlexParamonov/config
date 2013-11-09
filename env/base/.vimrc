@@ -272,6 +272,12 @@ nmap <silent> <leader>b :FufBuffer<CR>
 :vnoremap <leader>rri :RRenameInstanceVariable<cr>
 :vnoremap <leader>rm  :RExtractMethod<cr>
 
+
+"----------------
+" Large file
+"----------------
+let g:LargeFile = 2
+
 "----------------
 " General
 "----------------

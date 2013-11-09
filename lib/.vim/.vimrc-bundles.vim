@@ -98,6 +98,11 @@ Bundle 'tpope/vim-bundler'
 " Smart end
 Bundle 'tpope/vim-endwise'
 
+"----------------
+" Perfomance
+"----------------
+" alternative: Bundle 'vim-hugefile'
+Bundle 'markwu/LargeFile'
 
 "----------------
 " PHP

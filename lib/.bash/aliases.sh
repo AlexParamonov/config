@@ -1,4 +1,12 @@
 alias g="git"
+alias gf="git fetch"
+alias gp="git push"
+alias gpu="git push --set-upstream origin \$(git branch | awk '/^\\* / { print \$2 }')"
+alias gpf="git pullff"
+alias gs="git status"
+alias gl="git l"
+
+alias v="vim"
 alias b="bundle"
 alias tf="tail -f"
 alias gi="gem install"

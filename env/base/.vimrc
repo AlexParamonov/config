@@ -217,6 +217,12 @@ let g:syntastic_echo_current_error=1
 "#############################################
 
 "----------------
+" Fugitive
+"----------------
+nnoremap <leader>gc :Gst<CR>
+nnoremap <leader>gl :Glog -- %<CR>
+
+"----------------
 " CTags
 "----------------
 noremap <leader>rt :!ctags -f tags --extra=+f --exclude=tmp --exclude=log -R *<CR><CR>

@@ -221,6 +221,9 @@ let g:syntastic_echo_current_error=1
 "----------------
 nnoremap <leader>gc :Gst<CR>
 nnoremap <leader>gl :Glog -- %<CR>
+" Search for word under the cursor using git
+nnoremap <leader>gs :Ggrep <C-r><C-w><CR>
+
 
 "----------------
 " CTags
@@ -308,9 +311,6 @@ vnoremap <leader>P "+P
 " Auto indent whole file
 " TODO:  does not work
 nnoremap <leader>i gg=G\|
-
-" Search for word under the cursor using git
-nnoremap <leader>sg :Ggrep <C-r><C-w><CR>
 
 "#############################################
 "               Key bindings

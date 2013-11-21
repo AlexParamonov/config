@@ -35,6 +35,6 @@ endfunction
 function! RunTests(command_prefix, command_suffix, filename)
   :w
   :silent !echo;echo;echo;echo;echo;echo;echo;echo;echo;echo
-  exec ":!NO_CODE_COVERAGE=1 " . a:command_prefix . " rspec --color " . a:filename . a:command_suffix
+  exec ":!NO_CODE_COVERAGE=1 " . a:command_prefix . " spec --color --format=nested " . a:filename . a:command_suffix
 endfunction
 

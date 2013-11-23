@@ -11,6 +11,8 @@ alias b="bundle"
 alias tf="tail -f"
 alias gi="gem install"
 alias gv="guard --clear -g"
+alias work="tmuxinator sofo"
+alias rest="~/.tmuxinator/stop_dev_stuff.sh"
 
 # easier cd
 alias .='pwd'

@@ -52,6 +52,7 @@ Bundle 'tpope/vim-surround'
 " Comments
 Bundle 'tpope/vim-commentary'
 Bundle 'sheerun/vim-polyglot'
+Bundle 'nelstrom/vim-markdown-folding.git'
 
 
 "----------------

@@ -360,6 +360,7 @@ nnoremap <F9> :GundoToggle<CR>
 "#############################################
 runtime .vimrc-environment.vim
 
+runtime .vimrc-folding.vim
 
 "#############################################
 "                 Functions

@@ -1,12 +1,13 @@
+" vim: foldmethod=marker
 set nocompatible               " be iMproved
 
 "#############################################
-"                 Plugins
+"                 Plugins                 {{{1
 "#############################################
 runtime .vimrc-bundles.vim
 
 "#############################################
-"               Configuration
+"               Configuration             {{{1
 "#############################################
 
 " Leader key
@@ -85,7 +86,7 @@ inoremap <buffer><silent><Bar>   <Bar><Esc>:call <SID>align()<CR>a
 
 
 "#############################################
-"                  Autocmd
+"                  Autocmd                {{{1
 "#############################################
 
 if has("autocmd")
@@ -121,6 +122,7 @@ if has("autocmd")
     " Use 4 spaces in php files
     autocmd FileType php setlocal shiftwidth=4 tabstop=4 softtabstop=4
     autocmd FileType eruby setlocal shiftwidth=4 tabstop=4 softtabstop=4
+    autocmd FileType vim normal zM
 
     " Indent p tags
     " autocmd FileType html,eruby if g:html_indent_tags !~ '\\|p\>' | let g:html_indent_tags .= '\|p\|li\|dt\|dd' | endif
@@ -140,7 +142,7 @@ if has("autocmd")
 endif
 
 "#############################################
-"            Plugins configs
+"            Plugins configs              {{{1
 "#############################################
 
 "----------------
@@ -213,7 +215,7 @@ let g:syntastic_enable_signs=1
 let g:syntastic_echo_current_error=1
 
 "#############################################
-"             Leader Mappings
+"             Leader Mappings             {{{1
 "#############################################
 
 "----------------
@@ -313,7 +315,7 @@ vnoremap <leader>P "+P
 nnoremap <leader>i gg=G\|
 
 "#############################################
-"               Key bindings
+"               Key bindings              {{{1
 "#############################################
 
 inoremap <Del> <Esc>
@@ -356,14 +358,17 @@ imap <C-@> <C-Space>
 nnoremap <F9> :GundoToggle<CR>
 
 "#############################################
-"                 Enviroment
+"                 Enviroment              {{{1
 "#############################################
 runtime .vimrc-environment.vim
 
+"#############################################
+"                 Folding                 {{{1
+"#############################################
 runtime .vimrc-folding.vim
 
 "#############################################
-"                 Functions
+"                 Functions              {{{1
 "#############################################
 
 " smart file rename

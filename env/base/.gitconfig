@@ -10,6 +10,7 @@
   aa = add --all
   pullff = pull --ff-only
   unstage = reset HEAD --
+  uncommit = reset --soft HEAD^
   undo = checkout --
   last = log -1 HEAD -p
   l = log --graph --decorate --pretty=tformat:'%C(blue)%h%Creset%C(yellow bold)%d%Creset %s %C(green)(%ar)%Creset %C(cyan)%an%Creset' #--pretty=oneline --abbrev-commit

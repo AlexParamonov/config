@@ -13,3 +13,9 @@ source $BASH_USER_CONFIGS/aliases.sh
 source $BASH_USER_CONFIGS/completion.sh
 # source $BASH_USER_CONFIGS/rbenv.sh
 source $BASH_USER_CONFIGS/rvm.sh
+
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"
+
+fortune
+echo

@@ -82,6 +82,8 @@ Bundle 'sjl/gundo.vim'
 Bundle 'vim-scripts/FuzzyFinder'
 " Ack search
 Bundle 'mileszs/ack.vim'
+" Startup screen
+Bundle 'mhinz/vim-startify'
 
 
 "----------------

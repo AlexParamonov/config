@@ -83,7 +83,7 @@ Bundle 'vim-scripts/FuzzyFinder'
 " Ack search
 Bundle 'mileszs/ack.vim'
 " Startup screen
-Bundle 'mhinz/vim-startify'
+" Bundle 'mhinz/vim-startify'
 
 
 "----------------

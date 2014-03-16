@@ -370,8 +370,7 @@ runtime .vimrc-folding.vim
 "#############################################
 "                 Startup                 {{{1
 "#############################################
-runtime .vimrc-startup.vim
-
+" runtime .vimrc-startup.vim
 
 "#############################################
 "                 Functions              {{{1

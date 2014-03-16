@@ -1,0 +1,49 @@
+[alias]
+  co = checkout
+  ci = commit
+  cia = commit -am
+  cim = commit -m
+  st = status -sb
+  df = diff
+  dc = diff --cached
+  a = add
+  aa = add --all
+  pullff = pull --ff-only
+  unstage = reset HEAD --
+  undo = checkout --
+  last = log -1 HEAD -p
+  l = log --graph --decorate --pretty=tformat:'%C(blue)%h%Creset%C(yellow bold)%d%Creset %s %C(green)(%ar)%Creset %C(cyan)%an%Creset' #--pretty=oneline --abbrev-commit
+  ls = !git l --stat #--name-status
+  la = !git l --all
+  las = !git ls --all
+  lsa = !git las
+  ll = !git l origin/develop..HEAD
+
+  # Show files ignored by git:
+  ign = ls-files -o -i --exclude-standard
+[user]
+  name = Alexander Paramonov
+  email = alexander.n.paramonov@gmail.com
+[core]
+  editor = vim
+  whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
+[github]
+  user = AlexParamonov
+[color]
+  ui = 1
+[color "branch"]
+  current = yellow reverse
+  local = yellow
+  remote = green
+[color "diff"]
+  whitespace = red reverse
+[color "status"]
+  added = yellow
+  changed = green
+  untracked = cyan
+[gui]
+  fontui = -family verdana -size 9 -weight bold -slant roman -underline 0 -overstrike 0
+[apply]
+  whitespace = nowarn
+[rerere]
+  enabled = 1

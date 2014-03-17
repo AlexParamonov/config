@@ -165,10 +165,9 @@ let NERDTreeIgnore=['\.rbc$', '\~$', '\.git$', '\.bundle$']
 let g:golden_ratio_autocommand = 0
 
 "----------------
-" Powerline
+" Airline
 "----------------
-let Powerline_symbols="fancy"
-let Powerline_cache_enabled=1
+let g:airline_powerline_fonts = 1
 
 "----------------
 " Ruby.vim

@@ -71,7 +71,7 @@ Bundle 'tpope/vim-rake'
 "----------------
 " UI
 "----------------
-Bundle "pearofducks/vim-powerline"
+Bundle "bling/vim-airline"
 Bundle "roman/golden-ratio"
 Bundle 'kien/ctrlp.vim'
 " Semantic

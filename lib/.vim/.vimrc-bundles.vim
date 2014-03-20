@@ -60,6 +60,8 @@ Bundle 'nelstrom/vim-markdown-folding.git'
 "----------------
 " color scheme
 Bundle 'altercation/vim-colors-solarized'
+" Bundle 'wesgibbs/vim-irblack'
+" Bundle 'lminaudier/grb256-vim'
 " colorize fileformats, setomnifuncs, etc
 Bundle 'tpope/vim-markdown'
 Bundle 'tpope/vim-haml'

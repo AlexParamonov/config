@@ -6,12 +6,26 @@
 # follow symlinks
 --follow
 
+# lexically sort filenames
+--sort-files
+
+--ignore-dir=.sass-cache
+
 # Ack Type Settings
 ####################################################################
 
 # add some more zope files to the plone type
---type-add=js=.coffee
+--type-add=js=.coffee,json
 # add specific type for page templates
 # add markdown, textile, and reStructuredText
 --type-set=pt=.md,.mdown,.markdown,.mkdn,.textile,.rst,.txt
 
+
+--type-add=ruby=rake,haml
+--type-add=vim=vimrc
+--type-set=css=sass
+
+# add types ack doesn't know about
+--type-set=MARKDOWN=md,mkd,markdown
+--type-set=RDOC=rdoc
+--type-set=slim=slim

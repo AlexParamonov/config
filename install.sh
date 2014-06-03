@@ -81,7 +81,7 @@ done
 while true; do
     read -p "Install fonts in your system to match with VIM configuration? " yn
     case $yn in
-        [Yy]* ) cp -R "`pwd`/extra/.fonts" "$HOME/" ;echo "Updating fonts..."; echo `fc-cache -fv | grep "fc-cache"`; echo "--> Fonts updated"; break;;
+        [Yy]* ) cp -R "`pwd`/extra/powerline-fonts" "$HOME/.fonts" ;echo "Updating fonts..."; echo `fc-cache -fv | grep "fc-cache"`; echo "--> Fonts updated"; break;;
         [Nn]* ) break;;
         * ) echo "Please answer yes or no.";;
     esac

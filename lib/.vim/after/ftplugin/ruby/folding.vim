@@ -8,6 +8,9 @@ function! PrivateFolds()
   if thisline =~ "^ *def"
     let g:last_indent = IndentLevel(v:lnum)
     return "a1"
+  elseif thisline =~ "^ *describe"
+    let g:last_indent = IndentLevel(v:lnum)
+    return "a1"
   elseif match(thisline, "^ *private$") >= 0
     return ">3"
   elseif match(thisline, "^ *class << self$") >= 0

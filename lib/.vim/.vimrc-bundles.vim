@@ -54,6 +54,9 @@ Bundle 'tpope/vim-commentary'
 Bundle 'sheerun/vim-polyglot'
 Bundle 'nelstrom/vim-markdown-folding.git'
 
+" Exchange text
+Bundle 'tommcdo/vim-exchange'
+
 
 "----------------
 " Colors

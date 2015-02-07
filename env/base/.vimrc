@@ -157,7 +157,7 @@ let NERDTreeShowHidden=1
 let NERDTreeMapOpenSplit = "s"
 let NERDTreeMapOpenVSplit = "v"
 let NERDTreeMinimalUI = 1
-let NERDTreeIgnore=['\.rbc$', '\~$', '\.git$', '\.bundle$']
+let NERDTreeIgnore=['\.rbc$', '\~$', '\.git$', '\.bundle$', '\.elasticbeanstalk$', '\.ebextensions$']
 
 "----------------
 " Golden ratio

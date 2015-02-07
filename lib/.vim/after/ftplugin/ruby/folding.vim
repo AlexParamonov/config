@@ -30,5 +30,13 @@ function! PrivateFolds()
     return "="
   endif
 endfunction
+
+function! PrivateFoldText()
+  let foldsize = v:foldend-v:foldstart
+  return getline(v:foldstart).' '. repeat('-', foldsize)
+endfunction
+
+setlocal foldtext=PrivateFoldText()
 setlocal foldmethod=expr
 setlocal foldexpr=PrivateFolds()
+setlocal fillchars="fold: "

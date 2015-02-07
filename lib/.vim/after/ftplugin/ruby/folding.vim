@@ -34,8 +34,10 @@ endfunction
 
 function! PrivateFoldText()
   let foldsize = v:foldend-v:foldstart - 1
+  let name = substitute(getline(v:foldstart)," do$","",1)
+
   " return getline(v:foldstart).' '. repeat("-", foldsize)
-  return getline(v:foldstart).' '. repeat("\u2219", foldsize)
+  return name .' '. repeat("\u2219", foldsize)
   " return getline(v:foldstart).' '. repeat("\u2744 ", foldsize)
   " return getline(v:foldstart).' '. repeat("\u238E", foldsize)
   " return getline(v:foldstart).' '. repeat("\u2699 ", foldsize)

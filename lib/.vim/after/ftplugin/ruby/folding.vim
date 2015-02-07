@@ -8,32 +8,37 @@ function! PrivateFolds()
   if thisline =~ "^ *def" || thisline =~ "^ *describe"
     let g:last_indent = IndentLevel(v:lnum)
     return "a1"
+
   elseif thisline =~ "^ *private$"
     return ">3"
+
   elseif thisline =~ "^ *class << self$"
     return "a1"
+
   elseif thisline =~ "^ *end"
     if ! exists("g:last_indent")
       return '='
-    endif
-
-    if IndentLevel(v:lnum) == g:last_indent
+    elseif IndentLevel(v:lnum) == g:last_indent
       return 's1'
-    endif
-
-    if IndentLevel(v:lnum) < g:last_indent
+    elseif IndentLevel(v:lnum) < g:last_indent
       return '0'
+    else
+      return '-1'
     endif
 
-    return '-1'
   else
     return "="
+
   endif
 endfunction
 
 function! PrivateFoldText()
-  let foldsize = v:foldend-v:foldstart
-  return getline(v:foldstart).' '. repeat('-', foldsize)
+  let foldsize = v:foldend-v:foldstart - 1
+  " return getline(v:foldstart).' '. repeat("-", foldsize)
+  return getline(v:foldstart).' '. repeat("\u2219", foldsize)
+  " return getline(v:foldstart).' '. repeat("\u2744 ", foldsize)
+  " return getline(v:foldstart).' '. repeat("\u238E", foldsize)
+  " return getline(v:foldstart).' '. repeat("\u2699 ", foldsize)
 endfunction
 
 setlocal foldtext=PrivateFoldText()

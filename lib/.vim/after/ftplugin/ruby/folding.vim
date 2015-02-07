@@ -5,17 +5,14 @@ endfunction
 function! PrivateFolds()
   let thisline = getline(v:lnum)
 
-  if thisline =~ "^ *def"
+  if thisline =~ "^ *def" || thisline =~ "^ *describe"
     let g:last_indent = IndentLevel(v:lnum)
     return "a1"
-  elseif thisline =~ "^ *describe"
-    let g:last_indent = IndentLevel(v:lnum)
-    return "a1"
-  elseif match(thisline, "^ *private$") >= 0
+  elseif thisline =~ "^ *private$"
     return ">3"
-  elseif match(thisline, "^ *class << self$") >= 0
+  elseif thisline =~ "^ *class << self$"
     return "a1"
-  elseif match(thisline, "^ *end") >= 0
+  elseif thisline =~ "^ *end"
     if ! exists("g:last_indent")
       return '='
     endif

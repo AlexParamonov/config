@@ -121,7 +121,6 @@ if has("autocmd")
 
     " Use 4 spaces in php files
     autocmd FileType php setlocal shiftwidth=4 tabstop=4 softtabstop=4
-    autocmd FileType eruby setlocal shiftwidth=4 tabstop=4 softtabstop=4
     autocmd FileType vim normal zM
 
     " Indent p tags
@@ -157,7 +156,7 @@ let NERDTreeShowHidden=1
 let NERDTreeMapOpenSplit = "s"
 let NERDTreeMapOpenVSplit = "v"
 let NERDTreeMinimalUI = 1
-let NERDTreeIgnore=['\.rbc$', '\~$', '\.git$', '\.bundle$', '\.elasticbeanstalk$', '\.ebextensions$']
+let NERDTreeIgnore=['\.rbc$', '\~$', '\.git$', '\.bundle$', '\.elasticbeanstalk$']
 
 "----------------
 " Golden ratio
@@ -229,7 +228,7 @@ nnoremap <leader>gs :Ggrep <C-r><C-w><CR>
 "----------------
 " CTags
 "----------------
-noremap <leader>rt :!ctags -f tags --extra=+f --exclude=tmp --exclude=log --exclude=app/assets --exclude=vendor -R *<CR><CR>
+noremap <leader>rt :!ctags -f tags --extra=+f --exclude=tmp --exclude=log --exclude=node_modules --exclude=vendor -R *<CR><CR>
 
 "----------------
 " Golden ratio

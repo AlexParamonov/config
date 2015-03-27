@@ -7,3 +7,4 @@ fi
 
 # git flow completion
 source $BASH_USER_CONFIGS/vendor/git-flow-completion.sh
+source $BASH_USER_CONFIGS/vendor/hub.bash_completion.sh

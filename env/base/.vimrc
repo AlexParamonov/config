@@ -212,6 +212,11 @@ let g:syntastic_enable_balloons = 0
 let g:syntastic_enable_signs=1
 let g:syntastic_echo_current_error=1
 
+"----------------
+" Ack
+"----------------
+let g:ack_default_options = " -H --nocolor --nogroup --column --smart-case --follow"
+
 "#############################################
 "             Leader Mappings             {{{1
 "#############################################

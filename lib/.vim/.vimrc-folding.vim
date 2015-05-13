@@ -7,4 +7,6 @@ nmap + zA
 if has("autocmd")
   autocmd BufNewFile,BufRead *_spec.rb setlocal foldmethod=syntax
   autocmd BufNewFile,BufRead */factories/*.rb setlocal foldmethod=syntax
+  autocmd BufNewFile,BufRead *.html setlocal foldmethod=indent
+  autocmd BufNewFile,BufRead *.html.erb setlocal foldmethod=indent
 endif

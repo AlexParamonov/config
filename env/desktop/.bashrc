@@ -17,9 +17,6 @@ source $BASH_USER_CONFIGS/rvm.sh
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
 
-fortune
-echo
-
 source ~/.nvm/nvm.sh
 # export NVM_DIR="/home/ap/.nvm"
 # [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm

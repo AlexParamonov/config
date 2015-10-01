@@ -201,6 +201,10 @@ let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_arg_map = 1
 let g:ctrlp_show_hidden = 1
 " let g:ctrlp_root_markers = ['tags']
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v(tmp|log|\.git|\.hg|\.svn|\.bundle)$',
+  \ 'file': '\v(\.log|tags)$',
+  \ }
 
 "----------------
 " Syntastic

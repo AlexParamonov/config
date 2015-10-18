@@ -63,6 +63,7 @@ Bundle 'tommcdo/vim-exchange'
 "----------------
 " color scheme
 Bundle 'altercation/vim-colors-solarized'
+Bundle 'morhetz/gruvbox'
 " Bundle 'wesgibbs/vim-irblack'
 " Bundle 'lminaudier/grb256-vim'
 " colorize fileformats, setomnifuncs, etc

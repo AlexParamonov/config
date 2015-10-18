@@ -1,9 +1,10 @@
 " set t_Co=256 " 256 colors
 " set background=dark
 " colorscheme grb256
-set t_Co=16
+" set t_Co=16
 let g:solarized_termcolors=16
 let g:solarized_degrad=0
+" colorscheme gruvbox
 colorscheme solarized
 " set background=light
 set background=dark

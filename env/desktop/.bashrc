@@ -18,5 +18,6 @@ source $BASH_USER_CONFIGS/rvm.sh
 export PATH="/usr/local/heroku/bin:$PATH"
 
 source ~/.nvm/nvm.sh
+source ~/.vim/bundle/gruvbox/gruvbox_256palette.sh
 # export NVM_DIR="/home/ap/.nvm"
 # [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm

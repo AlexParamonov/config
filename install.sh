@@ -2,6 +2,7 @@
 ENV_DIR=env/
 BASE_ENV=base
 
+# core: quiet i915.i915_enable_rc6=1 i915.i915_enable_fbc=1
 for config in `ls -1A lib`
 do
   echo "linking library $config"

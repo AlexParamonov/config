@@ -65,6 +65,7 @@ set smartcase
 " Tab completion
 set wildignore+=.git/*,.svn/*
 set completeopt=menu
+set complete-=i " do not hang on included files
 set pumheight=15
 " Cmd menu
 set wildmenu

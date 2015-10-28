@@ -18,6 +18,7 @@ set encoding=utf-8
 set hidden
 set cmdheight=2
 set switchbuf=useopen
+set clipboard=unnamed
 " display incomplete commands
 set showcmd
 " Enable highlighting for syntax

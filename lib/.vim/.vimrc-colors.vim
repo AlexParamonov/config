@@ -4,8 +4,9 @@
 " set t_Co=16
 let g:solarized_termcolors=16
 let g:solarized_degrad=0
-" colorscheme gruvbox
-colorscheme solarized
+let g:gruvbox_contrast_dark="hard"
+colorscheme gruvbox
+" colorscheme solarized
 " set background=light
 set background=dark
 " let g:solarized_contrast="high"

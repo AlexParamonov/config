@@ -10,7 +10,7 @@ colorscheme gruvbox
 " set background=light
 set background=dark
 " let g:solarized_contrast="high"
-set guifont=Ubuntu\ Mono\ for\ Powerline\ 14
+set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 14
 
 let g:airline_theme= "base16"
 

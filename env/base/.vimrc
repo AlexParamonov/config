@@ -65,12 +65,6 @@ set smartcase
 
 " Tab completion
 set wildignore+=.git/*,.svn/*
-set completeopt=menu
-set complete-=i " do not hang on included files
-set pumheight=15
-" Cmd menu
-set wildmenu
-set wildmode=list:longest
 
 " History & backups
 set backup
@@ -184,14 +178,10 @@ let g:rubycomplete_buffer_loading = 1
 let g:rubycomplete_classes_in_global = 1
 let g:rubycomplete_rails = 1
 
-"----------------
-" Supertab
-"----------------
-let g:SuperTabDefaultCompletionType = "<c-p>"
-let g:SuperTabContextDefaultCompletionType = "<c-p>"
-let g:SuperTabCompletionContexts = ['s:ContextText', 's:ContextDiscover']
-let g:SuperTabLongestEnhanced = 1
-let g:SuperTabNoCompleteAfter = ['^', '\s', '{', '[', '(', '|']
+" ---------------
+" You complete me
+" ---------------
+let g:ycm_collect_identifiers_from_tags_files = 1
 
 "----------------
 " CTRLP
@@ -242,7 +232,7 @@ nnoremap <leader>gs :Ggrep <C-r><C-w><CR>
 "----------------
 " CTags
 "----------------
-noremap <leader>rt :!ctags -f tags --extra=+f --exclude=tmp --exclude=log --exclude=node_modules --exclude=vendor -R *<CR><CR>
+noremap <leader>rt :!ctags -f tags --extra=+f --fields=+l --exclude=tmp --exclude=log --exclude=node_modules --exclude=vendor -R *<CR><CR>
 
 "----------------
 " Golden ratio
@@ -407,4 +397,3 @@ function! <SID>StripTrailingWhitespaces()
     %s/\s\+$//e
     call cursor(l, c)
 endfun
-

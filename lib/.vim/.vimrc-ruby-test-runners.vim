@@ -35,6 +35,6 @@ endfunction
 function! RunTests(command_prefix, command_suffix, filename)
   :w
   :silent !echo;echo;echo;echo;echo;echo;echo;echo;echo;echo
-  exec ":!NO_CODE_COVERAGE=1 " . a:command_prefix . " spring rspec --color --format documentation " . a:filename . a:command_suffix
+  exec ":!NO_CODE_COVERAGE=1 " . a:command_prefix . "bundle exec bin/rspec --color --format documentation " . a:filename . a:command_suffix
 endfunction
 

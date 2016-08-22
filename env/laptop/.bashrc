@@ -16,3 +16,6 @@ source $BASH_USER_CONFIGS/wimdu.sh
 # source $BASH_USER_CONFIGS/rvm.sh
 source ~/.vim/bundle/gruvbox/gruvbox_256palette.sh
 clear
+
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"

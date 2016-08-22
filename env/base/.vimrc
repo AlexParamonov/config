@@ -222,6 +222,9 @@ let g:syntastic_echo_current_error=1
 " Ack
 "----------------
 let g:ack_default_options = " -H --nocolor --nogroup --column --smart-case --follow"
+if executable('ag')
+  let g:ackprg = 'ag'
+endif
 
 "#############################################
 "             Leader Mappings             {{{1

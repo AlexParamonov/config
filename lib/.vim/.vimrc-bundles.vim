@@ -36,11 +36,10 @@ Bundle 'tpope/vim-fugitive'
 "----------------
 " Text processing
 "----------------
-" tabcompletition
-Bundle 'Valloric/YouCompleteMe'
-
 " matching with "%"
 Bundle 'vim-scripts/matchit.zip'
+" tabcompletition
+Bundle 'ervandew/supertab'
 " Ruby text objects vir var
 Bundle 'kana/vim-textobj-user'
 Bundle 'nelstrom/vim-textobj-rubyblock'

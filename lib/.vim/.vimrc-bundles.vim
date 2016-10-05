@@ -78,6 +78,7 @@ Bundle 'tpope/vim-rake'
 " UI
 "----------------
 Bundle "bling/vim-airline"
+Bundle "vim-airline/vim-airline-themes"
 Bundle "roman/golden-ratio"
 Bundle 'kien/ctrlp.vim'
 " Semantic

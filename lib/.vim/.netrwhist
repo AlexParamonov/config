@@ -1,0 +1,10 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =8
+let g:netrw_dirhist_1='/home/ap/config'
+let g:netrw_dirhist_2='/home/ap/config/extra'
+let g:netrw_dirhist_3='/home/ap/config/extra/.fonts'
+let g:netrw_dirhist_4='/home/ap/config/extra/.fonts/ubuntu-mono-powerline-ttf'
+let g:netrw_dirhist_5='/home/ap/config/extra/.fonts'
+let g:netrw_dirhist_6='/home/ap/config/extra'
+let g:netrw_dirhist_7='/home/ap/config/extra/powerline-fonts'
+let g:netrw_dirhist_8='/home/ap/config/extra'

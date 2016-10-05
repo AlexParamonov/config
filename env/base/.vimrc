@@ -242,7 +242,7 @@ nnoremap <leader>gs :Ggrep <C-r><C-w><CR>
 "----------------
 " CTags
 "----------------
-noremap <leader>rt :!ctags -f tags --extra=+f --exclude=tmp --exclude=log --exclude=node_modules --exclude=vendor -R *<CR><CR>
+noremap <leader>rt :!ctags -f tags --extra=+f --fields=+l --exclude=tmp --exclude=log --exclude=node_modules --exclude=vendor -R *<CR><CR>
 
 "----------------
 " Golden ratio

@@ -3,7 +3,7 @@
 
 BASH_USER_CONFIGS=~/.bash
 
-source $BASH_USER_CONFIGS/env/desktop.sh
+source $BASH_USER_CONFIGS/env/base.sh
 source $BASH_USER_CONFIGS/color_table.sh
 source $BASH_USER_CONFIGS/color_setup.sh
 source $BASH_USER_CONFIGS/config.sh
@@ -21,4 +21,6 @@ source ~/.nvm/nvm.sh
 source ~/.vim/bundle/gruvbox/gruvbox_256palette.sh
 # export NVM_DIR="/home/ap/.nvm"
 # [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
+source $BASH_USER_CONFIGS/env/desktop.sh
 clear

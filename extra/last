@@ -9,10 +9,10 @@ pane	6	1	:bash	1	:*	1	:/home/ap/homeday-de/homeday	1	bash	:
 pane	8	1	:bash	1	:*	1	:/home/ap/homeday-de/homeday	1	bash	:
 pane	work	1	:editor	1	:*	1	:/home/ap/homeday-de/homeday	1	vim	:vim
 pane	work	2	:playground	0	:-	1	:/home/ap/homeday-de/homeday	1	bash	:
-pane	work	3	:homeday server	0	: 	1	:/home/ap/homeday-de/homeday	1	puma	:puma 3.6.0 (tcp://localhost:3000) [homeday]        
-pane	work	4	:suggestor+	0	: 	1	:/home/ap/homeday-de/suggestor	1	puma	:puma 3.4.0 (tcp://localhost:3001) [suggestor]              
-pane	work	4	:suggestor+	0	: 	2	:/home/ap/homeday-de/suggestor	0	sidekiq	:sidekiq 4.2.0 suggestor [0 of 25 busy]         
-pane	work	4	:suggestor+	0	: 	3	:/home/ap/homeday-de	0	redis-server	:redis-server *:6379
+pane	work	3	:homeday server	0	: 	1	:/home/ap/homeday-de/homeday	1	puma	:rails server
+pane	work	4	:suggestor+	0	: 	1	:/home/ap/homeday-de/suggestor	1	puma	:rails server -p 3001
+pane	work	4	:suggestor+	0	: 	2	:/home/ap/homeday-de/suggestor	0	sidekiq	:sidekiq
+pane	work	4	:suggestor+	0	: 	3	:/home/ap/homeday-de	0	redis-server	:redis-server
 window	0	1	1	:*	cafd,120x29,0,0,0
 window	10	1	1	:*	65b5,120x29,0,0,35
 window	12	1	1	:*	e5b2,120x29,0,0,42

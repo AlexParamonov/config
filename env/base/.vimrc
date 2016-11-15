@@ -24,9 +24,13 @@ set showcmd
 " Enable highlighting for syntax
 syntax on
 
+" a bit faster vim
+set lazyredraw 
+highlight NonText cterm=NONE ctermfg=NONE
+
 set number
 set numberwidth=5
-set ruler
+set noruler
 
 runtime .vimrc-colors.vim
 
@@ -97,9 +101,6 @@ if has("autocmd")
     autocmd InsertEnter * set nocul
     autocmd InsertLeave * set cul
 
-    " save all buffers when (g)vim looses focus
-    au FocusLost * :wa
-
     " make and python use real tabs
     au FileType make   set noexpandtab
     au FileType python set noexpandtab
@@ -111,25 +112,17 @@ if has("autocmd")
     au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
           \| exe "normal g'\"" | endif
 
-    set title
-    autocmd BufEnter * let &titlestring = "vim " . expand("%")
-
     " Remove trailing whitespaces on save
     autocmd FileType c,cpp,python,ruby,php,java autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
 
-    " Try to remap minus and underscore for ruby files only. It works globally
-    " right now
-    " autocmd FileType ruby imap - _| imap _ -
-
     " Use 4 spaces in php files
     autocmd FileType php setlocal shiftwidth=4 tabstop=4 softtabstop=4
+
+    " collapse .vimrc
     autocmd FileType vim normal zM
 
     " Indent p tags
     " autocmd FileType html,eruby if g:html_indent_tags !~ '\\|p\>' | let g:html_indent_tags .= '\|p\|li\|dt\|dd' | endif
-
-    "maps .. to go to parent command, but only for buffers containing a git blob or tree TODO it not actually working
-    autocmd BufReadPost fugitive://* if fugitive#buffer().type() =~# '^\%(tree\|blob\)$' | nnoremap <buffer> .. :edit %:h<CR> | endif
 
     " Autoclean fugitive buffers
     autocmd BufReadPost fugitive://* set bufhidden=delete

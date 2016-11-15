@@ -1,1 +1,11 @@
-tmux_resurrect_2016-10-10T10:24:04.txt
+pane	work	1	:editor	1	:*	1	:/home/ap/homeday-de/core	1	vim	:vim
+pane	work	2	:playground	0	:-	1	:/home/ap/homeday-de/homeday	1	bash	:
+pane	work	3	:homeday server	0	: 	1	:/home/ap/homeday-de/homeday	1	puma	:rails server
+pane	work	4	:suggestor+	0	: 	1	:/home/ap/homeday-de/suggestor	1	puma	:rails server
+pane	work	4	:suggestor+	0	: 	2	:/home/ap/homeday-de/suggestor	0	sidekiq	:bundle exec sidekiq
+pane	work	4	:suggestor+	0	: 	3	:/home/ap/homeday-de	0	redis-server	:redis-server
+window	work	1	1	:*	5b67,213x52,0,0,56
+window	work	2	0	:-	5b68,213x52,0,0,57
+window	work	3	0	: 	5b69,213x52,0,0,58
+window	work	4	0	: 	4401,213x52,0,0{106x52,0,0,59,106x52,107,0[106x26,107,0,60,106x25,107,27,61]}
+state	work	18

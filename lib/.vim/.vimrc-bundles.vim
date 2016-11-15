@@ -9,7 +9,7 @@ set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
 "#############################################
-"                  Plugins
+"                  Bundleins
 "#############################################
 
 Bundle 'gmarik/vundle'
@@ -36,36 +36,25 @@ Bundle 'tpope/vim-fugitive'
 "----------------
 " Text processing
 "----------------
-" matching with "%"
-Bundle 'vim-scripts/matchit.zip'
+Bundle 'will133/vim-dirdiff'
 " tabcompletition
 Bundle 'ervandew/supertab'
-" Ruby text objects vir var
-Bundle 'kana/vim-textobj-user'
-Bundle 'nelstrom/vim-textobj-rubyblock'
 " Other
 Bundle 'jiangmiao/auto-pairs'
 Bundle 'tpope/vim-unimpaired'
 Bundle 'tpope/vim-speeddating'
-Bundle 'tpope/vim-repeat'
 Bundle 'tpope/vim-surround'
 " Comments
 Bundle 'tpope/vim-commentary'
 Bundle 'sheerun/vim-polyglot'
 Bundle 'nelstrom/vim-markdown-folding.git'
 
-" Exchange text
-Bundle 'tommcdo/vim-exchange'
-
 
 "----------------
 " Colors
 "----------------
 " color scheme
-Bundle 'altercation/vim-colors-solarized'
 Bundle 'morhetz/gruvbox'
-" Bundle 'wesgibbs/vim-irblack'
-" Bundle 'lminaudier/grb256-vim'
 " colorize fileformats, setomnifuncs, etc
 Bundle 'tpope/vim-markdown'
 Bundle 'tpope/vim-haml'
@@ -89,8 +78,6 @@ Bundle 'sjl/gundo.vim'
 Bundle 'vim-scripts/FuzzyFinder'
 " Ack search
 Bundle 'mileszs/ack.vim'
-" Startup screen
-" Bundle 'mhinz/vim-startify'
 
 
 "----------------
@@ -107,6 +94,8 @@ Bundle 'AlexParamonov/vim-ruby-refactoring'
 Bundle 'tpope/vim-bundler'
 " Smart end
 Bundle 'tpope/vim-endwise'
+" Test runner
+Bundle 'janko-m/vim-test'
 
 "----------------
 " Perfomance
@@ -131,18 +120,6 @@ Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
 "----------------
 " Bundle "danchoi/ri.vim"
 Bundle "kucaahbe/vim-common-tips"
-
-
-"----------------
-" Deprecated
-"----------------
-" Bundle 'astashov/vim-ruby-debugger'
-" Bundle "Lokaltog/vim-powerline"
-" Bundle "bkad/CamelCaseMotion"
-" Bundle "honza/snipmate-snippets"
-" Bundle "garbas/vim-snipmate"
-" Bundle 'fholgado/minibufexpl.vim'
-" Bundle 'Townk/vim-autoclose'
 
 
 filetype plugin indent on

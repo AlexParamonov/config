@@ -219,6 +219,12 @@ if executable('ag')
   let g:ackprg = 'ag'
 endif
 
+"----------------
+" Markdown
+" ---------------
+let vim_markdown_preview_github=1
+let vim_markdown_preview_hotkey='<C-m>'
+
 "#############################################
 "             Leader Mappings             {{{1
 "#############################################

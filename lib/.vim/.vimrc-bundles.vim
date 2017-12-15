@@ -78,6 +78,7 @@ Bundle 'sjl/gundo.vim'
 Bundle 'vim-scripts/FuzzyFinder'
 " Ack search
 Bundle 'mileszs/ack.vim'
+Bundle 'JamshedVesuna/vim-markdown-preview'
 
 
 "----------------

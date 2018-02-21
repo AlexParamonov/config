@@ -101,9 +101,9 @@ if has("autocmd")
     autocmd InsertEnter * set nocul
     autocmd InsertLeave * set cul
 
-    " make and python use real tabs
+    " make uses real tabs
     au FileType make   set noexpandtab
-    au FileType python set noexpandtab
+    " au FileType python set noexpandtab
 
     " Thorfile, Rakefile and Gemfile are Ruby
     au BufRead,BufNewFile {Gemfile,Gemfile.local,Rakefile,Thorfile,config.ru} set ft=ruby
@@ -210,6 +210,8 @@ let g:syntastic_enable_highlighting = 1
 let g:syntastic_enable_balloons = 0
 let g:syntastic_enable_signs=1
 let g:syntastic_echo_current_error=1
+let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_javascript_eslint_exec = '~/.bash/.eslint_npm.sh'
 
 "----------------
 " Ack
@@ -224,6 +226,12 @@ endif
 " ---------------
 let vim_markdown_preview_github=1
 let vim_markdown_preview_hotkey='<C-m>'
+
+
+"---------------
+" Polyglot
+"---------------
+let g:jsx_ext_required = 1
 
 "#############################################
 "             Leader Mappings             {{{1

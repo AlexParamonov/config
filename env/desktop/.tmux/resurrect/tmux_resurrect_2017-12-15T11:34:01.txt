@@ -1,0 +1,15 @@
+pane	work	1	:price_service	1	:*	1	:/home/ap/homeday-de/price_service	1	vim	:vim
+pane	work	2	:stats_service	0	:	1	:/home/ap/homeday-de/stats_service	1	vim	:vim
+pane	work	3	:geo_service	0	:	1	:/home/ap/homeday-de/geo_service	1	vim	:vim
+pane	work	4	:playground	0	:	1	:/home/ap/homeday-de/homeday	1	bash	:
+pane	work	5	:ssh	0	:	1	:/home/ap/homeday-de	1	bash	:
+pane	work	6	:servers+	0	:-	1	:/home/ap/homeday-de/price_service	1	rails	:"~rails server"
+pane	work	6	:servers+	0	:-	2	:/home/ap/homeday-de/stats_service	1	rails	:"~rails server"
+pane	work	6	:servers+	0	:-	3	:/home/ap/homeday-de	1	redis-server	:redis-server
+window	work	1	1	:*	e195,190x55,0,0,26
+window	work	2	0	:	e196,190x55,0,0,27
+window	work	3	0	:	e197,190x55,0,0,28
+window	work	4	0	:	e198,190x55,0,0,29
+window	work	5	0	:	6190,190x55,0,0,30
+window	work	6	0	:-	585b,190x55,0,0{94x55,0,0,31,95x55,95,0[95x27,95,0,32,95x27,95,28,33]}
+state	work	18

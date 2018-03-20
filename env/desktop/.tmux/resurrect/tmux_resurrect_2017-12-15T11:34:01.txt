@@ -1,4 +1,4 @@
-pane	work	1	:price_service	1	:*	1	:/home/ap/homeday-de/price_service	1	vim	:vim
+pane	work	1	:preisatlas-lambda	1	:*	1	:/home/ap/homeday-de/property-explorer-api	1	vim	:vim
 pane	work	2	:stats_service	0	:	1	:/home/ap/homeday-de/stats_service	1	vim	:vim
 pane	work	3	:geo_service	0	:	1	:/home/ap/homeday-de/geo_service	1	vim	:vim
 pane	work	4	:playground	0	:	1	:/home/ap/homeday-de/homeday	1	bash	:

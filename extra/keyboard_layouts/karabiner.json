@@ -1,0 +1,413 @@
+{
+  "profiles": [
+    {
+      "name": "Dvorak AP",
+      "selected": true,
+      "simple_modifications": {
+        "q": "quote",
+        "w": "comma",
+        "e": "period",
+        "r": "p",
+        "t": "y",
+        "y": "f",
+        "u": "g",
+        "i": "c",
+        "o": "r",
+        "p": "l",
+        "open_bracket": "slash",
+        "close_bracket": "equal_sign",
+        "backslash": "backslash",
+        "a": "a",
+        "s": "o",
+        "d": "e",
+        "f": "u",
+        "g": "i",
+        "h": "d",
+        "j": "h",
+        "k": "t",
+        "l": "n",
+        "semicolon": "s",
+        "quote": "hyphen",
+        "z": "semicolon",
+        "x": "q",
+        "c": "j",
+        "v": "k",
+        "b": "x",
+        "n": "b",
+        "m": "m",
+        "comma": "w",
+        "period": "v",
+        "slash": "z",
+        "hyphen": "open_bracket",
+        "equal_sign": "close_bracket"
+      },
+
+      "complex_modifications": {
+        "rules": [
+          {
+            "description": "Exchange numbers and symbols (1234567890 and ^${}=%)(!*)",
+            "manipulators": [
+              {
+                "from": {
+                  "key_code": "1",
+                  "modifiers": {
+                    "optional": "caps_lock"
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "6",
+                    "modifiers": [
+                      "left_shift"
+                    ]
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "2",
+                  "modifiers": {
+                    "optional": "caps_lock"
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "4",
+                    "modifiers": [
+                      "left_shift"
+                    ]
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "3",
+                  "modifiers": {
+                    "optional": "caps_lock"
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "[",
+                    "modifiers": [
+                      "left_shift"
+                    ]
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "4",
+                  "modifiers": {
+                    "optional": "caps_lock"
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "]",
+                    "modifiers": [
+                      "left_shift"
+                    ]
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "5",
+                  "modifiers": {
+                    "optional": "caps_lock"
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "="
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "6",
+                  "modifiers": {
+                    "optional": "caps_lock"
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "5",
+                    "modifiers": [
+                      "left_shift"
+                    ]
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "7",
+                  "modifiers": {
+                    "optional": "caps_lock"
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "0",
+                    "modifiers": [
+                      "left_shift"
+                    ]
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "8",
+                  "modifiers": {
+                    "optional": "caps_lock"
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "9",
+                    "modifiers": [
+                      "left_shift"
+                    ]
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "9",
+                  "modifiers": {
+                    "optional": "caps_lock"
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "1",
+                    "modifiers": [
+                      "left_shift"
+                    ]
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "0",
+                  "modifiers": {
+                    "optional": "caps_lock"
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "8",
+                    "modifiers": [
+                      "left_shift"
+                    ]
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "1",
+                  "modifiers": {
+                    "mandatory": [
+                      "shift"
+                    ],
+                    "optional": [
+                      "caps_lock"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "1"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "2",
+                  "modifiers": {
+                    "mandatory": [
+                      "shift"
+                    ],
+                    "optional": [
+                      "caps_lock"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "2"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "3",
+                  "modifiers": {
+                    "mandatory": [
+                      "shift"
+                    ],
+                    "optional": [
+                      "caps_lock"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "3"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "4",
+                  "modifiers": {
+                    "mandatory": [
+                      "shift"
+                    ],
+                    "optional": [
+                      "caps_lock"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "4"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "5",
+                  "modifiers": {
+                    "mandatory": [
+                      "shift"
+                    ],
+                    "optional": [
+                      "caps_lock"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "5"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "6",
+                  "modifiers": {
+                    "mandatory": [
+                      "shift"
+                    ],
+                    "optional": [
+                      "caps_lock"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "6"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "7",
+                  "modifiers": {
+                    "mandatory": [
+                      "shift"
+                    ],
+                    "optional": [
+                      "caps_lock"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "7"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "8",
+                  "modifiers": {
+                    "mandatory": [
+                      "shift"
+                    ],
+                    "optional": [
+                      "caps_lock"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "8"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "9",
+                  "modifiers": {
+                    "mandatory": [
+                      "shift"
+                    ],
+                    "optional": [
+                      "caps_lock"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "9"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "0",
+                  "modifiers": {
+                    "mandatory": [
+                      "shift"
+                    ],
+                    "optional": [
+                      "caps_lock"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "0"
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

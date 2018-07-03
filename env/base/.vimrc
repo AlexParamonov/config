@@ -341,7 +341,7 @@ inoremap <Del> <Esc>
 nnoremap <Del> <Esc>
 vnoremap <Del> <Esc>
 
-imap jj <Esc>:<Esc>
+imap jj <Esc>l
 
 " Hide search highlighting
 nnoremap <silent> <Space> :noh<CR>

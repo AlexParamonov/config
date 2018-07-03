@@ -12,13 +12,13 @@ source $BASH_USER_CONFIGS/promt.sh
 source $BASH_USER_CONFIGS/aliases.sh
 source $BASH_USER_CONFIGS/completion.sh
 source $BASH_USER_CONFIGS/rbenv.sh
-source $BASH_USER_CONFIGS/vault.sh
+# source $BASH_USER_CONFIGS/vault.sh
 # source $BASH_USER_CONFIGS/rvm.sh
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
 
-source ~/.nvm/nvm.sh
+# source ~/.nvm/nvm.sh
 source ~/.vim/bundle/gruvbox/gruvbox_256palette.sh
 # export NVM_DIR="/home/ap/.nvm"
 # [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm

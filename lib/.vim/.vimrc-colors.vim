@@ -1,7 +1,10 @@
-" set t_Co=256 " 256 colors
+set t_Co=256 " 256 colors
 " set background=dark
 " colorscheme grb256
 " set t_Co=16
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+
 let g:solarized_termcolors=16
 let g:solarized_degrad=0
 let g:gruvbox_contrast_dark="hard"
@@ -10,7 +13,7 @@ colorscheme gruvbox
 " set background=light
 set background=dark
 " let g:solarized_contrast="high"
-set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 14
+set guifont=Source\ Code\ Pro\ Light\ for\ Powerline\ 14
 
 let g:airline_theme= "base16"
 

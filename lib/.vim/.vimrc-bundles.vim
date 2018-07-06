@@ -71,7 +71,9 @@ Bundle "vim-airline/vim-airline-themes"
 Bundle "roman/golden-ratio"
 Bundle 'kien/ctrlp.vim'
 " Semantic
-Bundle 'scrooloose/syntastic'
+" Bundle 'scrooloose/syntastic'
+Plugin 'w0rp/ale'
+
 " Undo tree
 Bundle 'sjl/gundo.vim'
 " find buffer

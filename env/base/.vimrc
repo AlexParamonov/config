@@ -88,7 +88,7 @@ set backspace=indent,eol,start
 
 " added '<buffer>' to guard against this mapping from being used in other
 " filetypes
-inoremap <buffer><silent><Bar>   <Bar><Esc>:call <SID>align()<CR>a
+" inoremap <buffer><silent><Bar>   <Bar><Esc>:call <SID>align()<CR>a
 
 
 "#############################################
@@ -204,14 +204,23 @@ let g:ctrlp_custom_ignore = {
 "----------------
 " Syntastic
 "----------------
-let g:syntastic_warning_symbol='⚠'
-let g:syntastic_auto_loc_list=2
-let g:syntastic_enable_highlighting = 1
-let g:syntastic_enable_balloons = 0
-let g:syntastic_enable_signs=1
-let g:syntastic_echo_current_error=1
-let g:syntastic_javascript_checkers = ['eslint']
-let g:syntastic_javascript_eslint_exec = '~/.bash/.eslint_npm.sh'
+let g:airline#extensions#ale#enabled = 1
+let g:ale_fixers = {
+      \   'elixir': ['mix_format'],
+      \}
+let g:ale_sign_error='⚠'
+
+" let g:syntastic_warning_symbol='⚠'
+" let g:syntastic_auto_loc_list=2
+" let g:syntastic_enable_highlighting = 1
+" let g:syntastic_enable_balloons = 0
+" let g:syntastic_enable_signs=1
+" let g:syntastic_echo_current_error=1
+" let g:syntastic_javascript_checkers = ['eslint']
+" let g:syntastic_javascript_eslint_exec = '~/.bash/.eslint_npm.sh'
+
+" let g:syntastic_elixir_checkers = ['elixir']
+" let g:syntastic_enable_elixir_checker = 1
 
 "----------------
 " Ack

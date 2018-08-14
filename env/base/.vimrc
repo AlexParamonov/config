@@ -26,8 +26,9 @@ set showcmd
 syntax on
 
 " a bit faster vim
-set lazyredraw 
+set lazyredraw
 highlight NonText cterm=NONE ctermfg=NONE
+set nocursorline
 
 set number
 set numberwidth=5
@@ -46,9 +47,6 @@ set ttyfast " Indicates a fast terminal connection
 
 " Enable Spell Checking
 " set spell
-
-" Cursor styles
-set cul
 
 " visible lines
 set scrolloff=8

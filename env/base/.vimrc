@@ -1,5 +1,6 @@
 " vim: foldmethod=marker
 set nocompatible               " be iMproved
+set re=1
 
 "#############################################
 "                 Plugins                 {{{1
@@ -117,8 +118,6 @@ if has("autocmd")
 
     " Use 4 spaces in php files
     autocmd FileType php setlocal shiftwidth=4 tabstop=4 softtabstop=4
-
-    autocmd FileType ruby setlocal re=1
 
     " collapse .vimrc
     autocmd FileType vim normal zM

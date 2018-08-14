@@ -89,7 +89,7 @@ Bundle 'JamshedVesuna/vim-markdown-preview'
 " Ruby motions (]m ]M ]]) and Ruby text objects (am im aM iM)
 Bundle 'vim-ruby/vim-ruby'
 " Rails navigation
-Bundle 'tpope/vim-rails'
+" Bundle 'tpope/vim-rails'
 " refactoring http://relishapp.com/despo/vim-ruby-refactoring
 Bundle 'AlexParamonov/vim-ruby-refactoring'
 " gem-ctags call gem ctags to generate tags

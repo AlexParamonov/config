@@ -282,7 +282,7 @@ vnoremap <leader>t=> :Tabularize /=><CR>
 "----------------
 " Rails
 "----------------
-nnoremap <leader>. :R<CR>
+nnoremap <leader>. :call AlternativeFile()<CR>
 
 "----------------
 " NerdTree
@@ -426,3 +426,18 @@ function! <SID>StripTrailingWhitespaces()
     call cursor(l, c)
 endfun
 
+function! AlternativeFile()
+  let current_path = expand('%')
+
+  if current_path =~ '^app/'
+    let spec_folder = substitute(current_path, "^app/", "spec/", "")
+    let spec_file = substitute(spec_folder, ".rb$", "_spec.rb", "")
+    exec ':e ' . spec_file
+  endif
+
+  if current_path =~ '^spec/'
+    let app_folder = substitute(current_path, "^spec/", "app/", "")
+    let app_file = substitute(app_folder, "_spec.rb$", ".rb", "")
+    exec ':e ' . app_file
+  endif
+endfunction

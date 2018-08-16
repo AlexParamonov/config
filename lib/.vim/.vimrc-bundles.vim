@@ -20,7 +20,6 @@ Bundle 'gmarik/vundle'
 Bundle 'L9'
 Bundle 'godlygeek/tabular'
 Bundle "scrooloose/nerdtree.git"
-" Bundle "scrooloose/nerdcommenter"
 Bundle "yazug/vim-taglist-plus"
 Bundle "MarcWeber/vim-addon-mw-utils"
 Bundle "tomtom/tlib_vim"
@@ -87,7 +86,7 @@ Bundle 'JamshedVesuna/vim-markdown-preview'
 " Ruby
 "----------------
 " Ruby motions (]m ]M ]]) and Ruby text objects (am im aM iM)
-Bundle 'vim-ruby/vim-ruby'
+" Bundle 'vim-ruby/vim-ruby'
 " Rails navigation
 " Bundle 'tpope/vim-rails'
 " refactoring http://relishapp.com/despo/vim-ruby-refactoring
@@ -105,6 +104,7 @@ Bundle 'janko-m/vim-test'
 "----------------
 " alternative: Bundle 'vim-hugefile'
 Bundle 'markwu/LargeFile'
+Bundle 'Konfekt/FastFold'
 
 "----------------
 " PHP

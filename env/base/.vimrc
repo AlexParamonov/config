@@ -29,6 +29,7 @@ syntax on
 set lazyredraw
 highlight NonText cterm=NONE ctermfg=NONE
 set nocursorline
+set synmaxcol=200
 
 set number
 set numberwidth=5
@@ -97,8 +98,8 @@ set backspace=indent,eol,start
 if has("autocmd")
   augroup EditVim
     autocmd!
-    autocmd InsertEnter * set nocul
-    autocmd InsertLeave * set cul
+    " autocmd InsertEnter * set nocul
+    " autocmd InsertLeave * set cul
 
     " make uses real tabs
     au FileType make   set noexpandtab

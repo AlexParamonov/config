@@ -431,11 +431,27 @@ function! AlternativeFile()
     let spec_folder = substitute(current_path, "^app/", "spec/", "")
     let spec_file = substitute(spec_folder, ".rb$", "_spec.rb", "")
     exec ':e ' . spec_file
+    return
+  endif
+
+  if current_path =~ '^lib/'
+    let spec_folder = substitute(current_path, "^lib/", "spec/lib", "")
+    let spec_file = substitute(spec_folder, ".rb$", "_spec.rb", "")
+    exec ':e ' . spec_file
+    return
+  endif
+
+  if current_path =~ '^spec/lib'
+    let app_folder = substitute(current_path, "^spec/lib", "lib/", "")
+    let app_file = substitute(app_folder, "_spec.rb$", ".rb", "")
+    exec ':e ' . app_file
+    return
   endif
 
   if current_path =~ '^spec/'
     let app_folder = substitute(current_path, "^spec/", "app/", "")
     let app_file = substitute(app_folder, "_spec.rb$", ".rb", "")
     exec ':e ' . app_file
+    return
   endif
 endfunction

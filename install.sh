@@ -1,7 +1,8 @@
 #!/bin/bash
 ENV_DIR=env/
 BASE_ENV=base
-
+# sudo apt-get build-dep vim
+# sudo apt-get build-dep libx11-dev libxtst-dev
 # core: quiet i915.i915_enable_rc6=1 i915.i915_enable_fbc=1
 for config in `ls -1A lib`
 do

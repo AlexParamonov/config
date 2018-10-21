@@ -384,6 +384,13 @@ imap <C-@> <C-Space>
 
 "Time tree
 nnoremap <F9> :GundoToggle<CR>
+noremap ]g <C-w>j<C-w>q<C-w>k<C-n>
+noremap [g <C-w>j<C-w>q<C-w>k<C-p>
+
+"----------------
+" [] keys
+"----------------
+
 
 "#############################################
 "                 Enviroment              {{{1

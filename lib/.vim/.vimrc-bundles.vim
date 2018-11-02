@@ -124,5 +124,4 @@ Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
 " Bundle "danchoi/ri.vim"
 Bundle "kucaahbe/vim-common-tips"
 
-
 filetype plugin indent on

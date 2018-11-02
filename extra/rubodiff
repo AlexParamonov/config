@@ -1,3 +1,5 @@
 #!/bin/bash
-shopt -s globstar
-comm <(git diff --name-only --cached HEAD --diff-filter=ACMR -- *.rb **/*.rb | sort) <(git diff --name-only master HEAD --diff-filter=ACMR -- *.rb **/*.rb | sort) | xargs --no-run-if-empty rubocop "$@"
+comm <(git diff --name-only --cached HEAD --diff-filter=ACMR | sort) <(git diff --name-only develop HEAD --diff-filter=ACMR | sort) | xargs rubocop "$@"
+
+# shopt -s globstar
+# comm <(git diff --name-only --cached HEAD --diff-filter=ACMR -- *.rb **/*.rb | sort) <(git diff --name-only master HEAD --diff-filter=ACMR -- *.rb **/*.rb | sort) | xargs --no-run-if-empty rubocop "$@"

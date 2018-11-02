@@ -3074,7 +3074,10 @@
                                 },
                                 "to": [
                                     {
-                                        "key_code": "quote"
+                                        "key_code": "quote",
+                                        "modifiers": [
+                                            "left_shift"
+                                        ]
                                     }
                                 ],
                                 "type": "basic"
@@ -3093,10 +3096,7 @@
                                 },
                                 "to": [
                                     {
-                                        "key_code": "quote",
-                                        "modifiers": [
-                                            "left_shift"
-                                        ]
+                                        "key_code": "quote"
                                     }
                                 ],
                                 "type": "basic"

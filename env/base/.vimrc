@@ -192,12 +192,12 @@ let g:SuperTabNoCompleteAfter = ['^', '\s', '{', '[', '(', '|']
 let g:ctrlp_use_caching = 1
 let g:ctrlp_max_files = 100000
 let g:ctrlp_clear_cache_on_exit = 0
-" let g:ctrlp_user_command = ['.git/', 'cd %s && git ls-files']
+let g:ctrlp_user_command = ['.git/', 'cd %s && git ls-files']
 let g:ctrlp_arg_map = 1
 let g:ctrlp_show_hidden = 1
 " let g:ctrlp_root_markers = ['tags']
 
-let g:ctrlp_user_command = 'find %s -type f'       " MacOSX/Linux
+" let g:ctrlp_user_command = 'find %s -type f'       " MacOSX/Linux
 let g:ctrlp_mruf_max = 100
 let g:ctrlp_custom_ignore = {
   \ 'dir':  '\v(tmp|log|\.git|\.hg|\.svn|\.bundle)$',
@@ -212,6 +212,7 @@ let g:ale_fixers = {
       \   'elixir': ['mix_format'],
       \}
 let g:ale_sign_error='⚠'
+let g:ale_lint_on_text_changed = 'never'
 
 " let g:syntastic_warning_symbol='⚠'
 " let g:syntastic_auto_loc_list=2
@@ -445,7 +446,7 @@ function! AlternativeFile()
   endif
 
   if current_path =~ '^lib/'
-    let spec_folder = substitute(current_path, "^lib/", "spec/lib", "")
+    let spec_folder = substitute(current_path, "^lib/", "spec/lib/", "")
     let spec_file = substitute(spec_folder, ".rb$", "_spec.rb", "")
     exec ':e ' . spec_file
     return

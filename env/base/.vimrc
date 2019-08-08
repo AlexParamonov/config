@@ -241,7 +241,7 @@ let g:ale_linters = {
 \       'ktlint',
 \   ],
 \   'typescript': [
-\       'eslint',
+\       'tsserver',
 \   ]
 \}
 
@@ -293,6 +293,7 @@ nnoremap <leader>gc :Gst<CR>
 nnoremap <leader>gl :Glog -- %<CR>
 " Search for word under the cursor using git
 nnoremap <leader>gs :Ggrep <C-r><C-w><CR>
+nnoremap <leader>as :ALEFindReferences<CR>
 
 "----------------
 " CTags
@@ -380,6 +381,7 @@ vnoremap <leader>P "+P
 " Auto indent whole file
 " TODO:  does not work
 nnoremap <leader>i gg=G\|
+noremap <leader>h :ALEHover<CR>
 
 "#############################################
 "               Key bindings              {{{1
@@ -430,6 +432,7 @@ noremap [g <C-w>j<C-w>q<C-w>k<C-p>
 " [] keys
 "----------------
 
+noremap <C-]> :ALEGoToDefinition<CR>
 
 "#############################################
 "                 Enviroment              {{{1

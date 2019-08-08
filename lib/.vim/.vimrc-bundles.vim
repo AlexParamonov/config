@@ -72,7 +72,7 @@ Bundle 'kien/ctrlp.vim'
 " Semantic
 " Bundle 'scrooloose/syntastic'
 Plugin 'w0rp/ale'
-Plugin 'prettier/vim-prettier', { 'do': 'yarn install' }
+" Plugin 'zxqfl/tabnine-vim'
 
 " Undo tree
 Bundle 'sjl/gundo.vim'

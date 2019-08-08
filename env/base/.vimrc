@@ -38,7 +38,7 @@ set noruler
 runtime .vimrc-colors.vim
 
 " Set formatter gq
-set formatprg=par\ -w70
+set formatprg=par\ -w120
 
 " Set Auto-indent options
 set cindent
@@ -116,7 +116,7 @@ if has("autocmd")
     autocmd FileType c,cpp,python,ruby,php,java autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
 
     " Use 4 spaces in php files
-    autocmd FileType php setlocal shiftwidth=4 tabstop=4 softtabstop=4
+    autocmd FileType php,kotlin setlocal shiftwidth=4 tabstop=4 softtabstop=4
 
     " collapse .vimrc
     autocmd FileType vim normal zM
@@ -180,11 +180,21 @@ let g:rubycomplete_rails = 1
 "----------------
 " Supertab
 "----------------
-let g:SuperTabDefaultCompletionType = "<c-p>"
-let g:SuperTabContextDefaultCompletionType = "<c-p>"
+let g:SuperTabDefaultCompletionType = "<c-n>"
+let g:SuperTabContextDefaultCompletionType = "<c-n>"
 let g:SuperTabCompletionContexts = ['s:ContextText', 's:ContextDiscover']
 let g:SuperTabLongestEnhanced = 1
 let g:SuperTabNoCompleteAfter = ['^', '\s', '{', '[', '(', '|']
+" autocmd FileType *
+"   \ if &omnifunc != '' |
+"   \   call SuperTabChain(&omnifunc, '<c-p>') |
+"   \ endif
+
+" let g:SuperTabContextTextOmniPrecedence = ['&omnifunc', '&completefunc']
+" let g:SuperTabContextDiscoverDiscovery =
+"     \ ["&completefunc:<c-x><c-u>", "&omnifunc:<c-x><c-o>"]
+
+
 
 "----------------
 " CTRLP
@@ -200,19 +210,45 @@ let g:ctrlp_show_hidden = 1
 " let g:ctrlp_user_command = 'find %s -type f'       " MacOSX/Linux
 let g:ctrlp_mruf_max = 100
 let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v(tmp|log|\.git|\.hg|\.svn|\.bundle)$',
+  \ 'dir':  '\v(node_modules|tmp|log|\.git|\.hg|\.svn|\.bundle)$',
   \ 'file': '\v(\.log|tags)$',
   \ }
 
 "----------------
 " Syntastic
 "----------------
+let g:ale_javascript_prettier_use_local_config = 1
 let g:airline#extensions#ale#enabled = 1
-let g:ale_fixers = {
-      \   'elixir': ['mix_format'],
-      \}
+let g:ale_completion_enabled = 1
 let g:ale_sign_error='⚠'
 let g:ale_lint_on_text_changed = 'never'
+let g:ale_fix_on_save = 1
+let g:ale_fixers = {
+\   'elixir': ['mix_format'],
+\   'typescript': [
+\       'eslint',
+\       'remove_trailing_lines',
+\       'trim_whitespace'
+\   ],
+\   'kotlin': [
+\       'remove_trailing_lines',
+\       'trim_whitespace'
+\   ],
+\}
+let g:ale_linters = {
+\   'kotlin': [
+\       'languageserver',
+\       'ktlint',
+\   ],
+\   'typescript': [
+\       'eslint',
+\   ]
+\}
+
+" inoremap <silent><expr> <Tab>
+"       \ pumvisible() ? "\<C-n>" : "\<TAB>"
+
+" let g:ale_kotlin_kotlinc_enable_config = 1
 
 " let g:syntastic_warning_symbol='⚠'
 " let g:syntastic_auto_loc_list=2
@@ -257,7 +293,6 @@ nnoremap <leader>gc :Gst<CR>
 nnoremap <leader>gl :Glog -- %<CR>
 " Search for word under the cursor using git
 nnoremap <leader>gs :Ggrep <C-r><C-w><CR>
-
 
 "----------------
 " CTags

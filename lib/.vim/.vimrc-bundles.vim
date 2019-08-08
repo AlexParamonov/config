@@ -72,6 +72,7 @@ Bundle 'kien/ctrlp.vim'
 " Semantic
 " Bundle 'scrooloose/syntastic'
 Plugin 'w0rp/ale'
+Plugin 'prettier/vim-prettier', { 'do': 'yarn install' }
 
 " Undo tree
 Bundle 'sjl/gundo.vim'
@@ -110,6 +111,12 @@ Bundle 'Konfekt/FastFold'
 " PHP
 "----------------
 " Bundle 'vexxor/phpdoc.vim'
+
+
+"----------------
+" Kotlin
+"----------------
+Plugin 'udalov/kotlin-vim'
 
 
 "----------------

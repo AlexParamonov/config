@@ -1,134 +1,128 @@
-set nocompatible
-
-if !isdirectory(expand("~/.vim/bundle/vundle/.git"))
-  !git clone git://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
+if !filereadable(expand('~/.vim/autoload/plug.vim'))
+  !curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 endif
 
-filetype off
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
-
-"#############################################
-"                  Bundleins
-"#############################################
-
-Bundle 'gmarik/vundle'
+call plug#begin('~/.vim/plugged')
 
 "----------------
 " Unprocessed
 "----------------
-Bundle 'L9'
-Bundle 'godlygeek/tabular'
-Bundle "scrooloose/nerdtree.git"
-Bundle "yazug/vim-taglist-plus"
-Bundle "MarcWeber/vim-addon-mw-utils"
-Bundle "tomtom/tlib_vim"
+Plug 'eparreno/vim-l9'
+Plug 'godlygeek/tabular'
+Plug 'scrooloose/nerdtree'
+Plug 'yazug/vim-taglist-plus'
+Plug 'MarcWeber/vim-addon-mw-utils'
+Plug 'tomtom/tlib_vim'
 
 
 "----------------
 " Utils
 "----------------
 " Git wrapper
-Bundle 'tpope/vim-fugitive'
+Plug 'tpope/vim-fugitive'
 
 
 "----------------
 " Text processing
 "----------------
-Bundle 'will133/vim-dirdiff'
+Plug 'will133/vim-dirdiff'
 " tabcompletition
-Bundle 'ervandew/supertab'
+" Plug 'ervandew/supertab'
 " Other
-Bundle 'jiangmiao/auto-pairs'
-Bundle 'tpope/vim-unimpaired'
-Bundle 'tpope/vim-speeddating'
-Bundle 'tpope/vim-surround'
+Plug 'jiangmiao/auto-pairs'
+Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-speeddating'
+Plug 'tpope/vim-surround'
 " Comments
-Bundle 'tpope/vim-commentary'
-Bundle 'sheerun/vim-polyglot'
-Bundle 'nelstrom/vim-markdown-folding.git'
+Plug 'tpope/vim-commentary'
+Plug 'sheerun/vim-polyglot'
+Plug 'nelstrom/vim-markdown-folding'
 
 
 "----------------
 " Colors
 "----------------
 " color scheme
-Bundle 'morhetz/gruvbox'
+Plug 'morhetz/gruvbox'
 " colorize fileformats, setomnifuncs, etc
-Bundle 'tpope/vim-markdown'
-Bundle 'tpope/vim-haml'
-Bundle 'tpope/vim-cucumber'
-Bundle 'slim-template/vim-slim'
-Bundle 'tpope/vim-rake'
+Plug 'tpope/vim-markdown'
+Plug 'tpope/vim-haml'
+Plug 'tpope/vim-cucumber'
+Plug 'slim-template/vim-slim'
+Plug 'tpope/vim-rake'
 
 
 "----------------
 " UI
 "----------------
-Bundle "bling/vim-airline"
-Bundle "vim-airline/vim-airline-themes"
-Bundle "roman/golden-ratio"
-Bundle 'kien/ctrlp.vim'
+Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'roman/golden-ratio'
+Plug 'kien/ctrlp.vim'
 " Semantic
-" Bundle 'scrooloose/syntastic'
-Plugin 'w0rp/ale'
+" Plug 'scrooloose/syntastic'
+" Plugin 'w0rp/ale'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc-tsserver'
 " Plugin 'zxqfl/tabnine-vim'
 
 " Undo tree
-Bundle 'sjl/gundo.vim'
+Plug 'sjl/gundo.vim'
 " find buffer
-Bundle 'vim-scripts/FuzzyFinder'
+Plug 'vim-scripts/FuzzyFinder'
 " Ack search
-Bundle 'mileszs/ack.vim'
-Bundle 'JamshedVesuna/vim-markdown-preview'
+Plug 'mileszs/ack.vim'
+Plug 'JamshedVesuna/vim-markdown-preview'
 
 
 "----------------
 " Ruby
 "----------------
 " Ruby motions (]m ]M ]]) and Ruby text objects (am im aM iM)
-" Bundle 'vim-ruby/vim-ruby'
+" Plug 'vim-ruby/vim-ruby'
 " Rails navigation
-" Bundle 'tpope/vim-rails'
+" Plug 'tpope/vim-rails'
 " refactoring http://relishapp.com/despo/vim-ruby-refactoring
-Bundle 'AlexParamonov/vim-ruby-refactoring'
+Plug 'AlexParamonov/vim-ruby-refactoring'
 " gem-ctags call gem ctags to generate tags
-"install gem-browse for opening a gems
-Bundle 'tpope/vim-bundler'
+" install gem-browse for opening a gems
+Plug 'tpope/vim-bundler'
 " Smart end
-Bundle 'tpope/vim-endwise'
+Plug 'tpope/vim-endwise'
 " Test runner
-Bundle 'janko-m/vim-test'
+Plug 'janko-m/vim-test'
 
 "----------------
 " Perfomance
 "----------------
-" alternative: Bundle 'vim-hugefile'
-Bundle 'markwu/LargeFile'
-Bundle 'Konfekt/FastFold'
+" alternative: Plug 'vim-hugefile'
+Plug 'markwu/LargeFile'
+Plug 'Konfekt/FastFold'
 
 "----------------
 " PHP
 "----------------
-" Bundle 'vexxor/phpdoc.vim'
+" Plug 'vexxor/phpdoc.vim'
 
 
 "----------------
 " Kotlin
 "----------------
-Plugin 'udalov/kotlin-vim'
+" Plug 'udalov/kotlin-vim'
 
 
 "----------------
 " HTML
 "----------------
-Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
+Plug 'rstacruz/sparkup', {'rtp': 'vim/'}
 
 
 "----------------
 " Documentation
 "----------------
-" Bundle "danchoi/ri.vim"
-Bundle "kucaahbe/vim-common-tips"
+" Plug 'danchoi/ri.vim'
+Plug 'kucaahbe/vim-common-tips'
+
+call plug#end()
 
 filetype plugin indent on

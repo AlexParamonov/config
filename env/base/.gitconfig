@@ -18,7 +18,7 @@
   la = !git l --all
   las = !git ls --all
   lsa = !git las
-  ll = !git l origin/master..HEAD
+  ll = !git l master..HEAD
 
   # Show files ignored by git:
   ign = ls-files -o -i --exclude-standard

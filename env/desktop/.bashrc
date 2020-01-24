@@ -31,11 +31,11 @@ export PATH=~/Library/Python/2.7/bin:$PATH
 # uninstall by removing these lines or running `tabtab uninstall serverless`
 [ -f /Users/ap/code/acm-shop-be/node_modules/tabtab/.completions/serverless.bash ] && . /Users/ap/code/acm-shop-be/node_modules/tabtab/.completions/serverless.bash
 
-clear
-
 # tabtab source for sls package
 # uninstall by removing these lines or running `tabtab uninstall sls`
 [ -f /Users/ap/code/acm-order-app-be/node_modules/tabtab/.completions/sls.bash ] && . /Users/ap/code/acm-order-app-be/node_modules/tabtab/.completions/sls.bash
 # tabtab source for slss package
 # uninstall by removing these lines or running `tabtab uninstall slss`
 [ -f /Users/ap/code/acm-order-app-be/node_modules/tabtab/.completions/slss.bash ] && . /Users/ap/code/acm-order-app-be/node_modules/tabtab/.completions/slss.bash
+
+clear

@@ -27,7 +27,7 @@ Plug 'tpope/vim-fugitive'
 "----------------
 Plug 'will133/vim-dirdiff'
 " tabcompletition
-Plug 'ervandew/supertab'
+" Plug 'ervandew/supertab'
 " Other
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-unimpaired'
@@ -61,9 +61,9 @@ Plug 'roman/golden-ratio'
 Plug 'kien/ctrlp.vim'
 " Semantic
 " Plug 'scrooloose/syntastic'
-Plug 'w0rp/ale'
-" Plug 'neoclide/coc.nvim', {'branch': 'release'}
-" Plug 'neoclide/coc-tsserver'
+" Plugin 'w0rp/ale'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc-tsserver'
 " Plugin 'zxqfl/tabnine-vim'
 
 " Undo tree

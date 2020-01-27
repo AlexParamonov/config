@@ -90,7 +90,7 @@ Plug 'tpope/vim-bundler'
 " Smart end
 Plug 'tpope/vim-endwise'
 " Test runner
-Plug 'janko-m/vim-test'
+Plug 'AlexParamonov/vim-test', {'branch': 'workspace_fix'}
 
 "----------------
 " Perfomance

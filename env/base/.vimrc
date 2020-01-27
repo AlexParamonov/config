@@ -591,6 +591,18 @@ endfun
 function! AlternativeFile()
   let current_path = expand('%')
 
+  if current_path =~ '.spec.ts$'
+    let app_file = substitute(current_path, ".spec.ts$", ".ts", "")
+    exec ':e ' . app_file
+    return
+  endif
+
+  if current_path =~ '.ts$'
+    let spec_file = substitute(current_path, ".ts$", ".spec.ts", "")
+    exec ':e ' . spec_file
+    return
+  endif
+
   if current_path =~ '^app/'
     let spec_folder = substitute(current_path, "^app/", "spec/", "")
     let spec_file = substitute(spec_folder, ".rb$", "_spec.rb", "")

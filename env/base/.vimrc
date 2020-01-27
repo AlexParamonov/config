@@ -325,7 +325,7 @@ vnoremap <leader>t=> :Tabularize /=><CR>
 "----------------
 " Rails
 "----------------
-nnoremap <leader>. :call AlternativeFile()<CR>
+nnoremap <leader>. :call EditAlternativeFile()<CR>
 
 "----------------
 " NerdTree
@@ -592,49 +592,45 @@ function! AlternativeFile()
   let current_path = expand('%')
 
   if current_path =~ '.spec.ts$'
-    let app_file = substitute(current_path, ".spec.ts$", ".ts", "")
-    exec ':e ' . app_file
-    return
+    return substitute(current_path, ".spec.ts$", ".ts", "")
   endif
 
   if current_path =~ '.ts$'
-    let spec_file = substitute(current_path, ".ts$", ".spec.ts", "")
-    exec ':e ' . spec_file
-    return
+    return substitute(current_path, ".ts$", ".spec.ts", "")
   endif
 
   if current_path =~ '^app/'
     let spec_folder = substitute(current_path, "^app/", "spec/", "")
     let spec_file = substitute(spec_folder, ".rb$", "_spec.rb", "")
-    exec ':e ' . spec_file
-    return
+    return spec_file
   endif
 
   if current_path =~ '^lib/'
     let spec_folder = substitute(current_path, "^lib/", "spec/lib/", "")
     let spec_file = substitute(spec_folder, ".rb$", "_spec.rb", "")
-    exec ':e ' . spec_file
-    return
+    return spec_file
   endif
 
   if current_path =~ '^spec/lib'
     let app_folder = substitute(current_path, "^spec/lib", "lib/", "")
     let app_file = substitute(app_folder, "_spec.rb$", ".rb", "")
-    exec ':e ' . app_file
-    return
+    return app_file
   endif
 
   if current_path =~ '^spec/'
     let app_folder = substitute(current_path, "^spec/", "app/", "")
     let app_file = substitute(app_folder, "_spec.rb$", ".rb", "")
-    exec ':e ' . app_file
-    return
+    return app_file
   endif
 
   if current_path =~ '^test/'
     let spec_folder = substitute(current_path, "^test/", "lib/", "")
     let spec_file = substitute(spec_folder, "_test.exs$", ".ex", "")
-    exec ':e ' . spec_file
-    return
+    return spec_file
   endif
+endfunction
+
+function! EditAlternativeFile()
+  exec ':e ' . AlternativeFile()
+  return
 endfunction

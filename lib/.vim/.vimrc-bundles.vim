@@ -63,7 +63,7 @@ Plug 'kien/ctrlp.vim'
 " Plug 'scrooloose/syntastic'
 " Plugin 'w0rp/ale'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'neoclide/coc-tsserver'
+" Plug 'neoclide/coc-tsserver'
 " Plugin 'zxqfl/tabnine-vim'
 
 " Undo tree

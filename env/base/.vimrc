@@ -223,23 +223,23 @@ let g:ctrlp_custom_ignore = {
 " let g:ale_javascript_prettier_use_local_config = 1
 " let g:airline#extensions#ale#enabled = 1
 " let g:ale_completion_enabled = 1
-" let g:ale_sign_error='⚠'
-" let g:ale_lint_on_text_changed = 'never'
-" let g:ale_fix_on_save = 1
+let g:ale_sign_error='⚠'
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_fix_on_save = 0
 " let g:ale_typescript_tsserver_use_global = 0
 
-" let g:ale_fixers = {
-" \   'elixir': ['mix_format'],
-" \   'typescript': [
-" \       'eslint',
-" \       'remove_trailing_lines',
-" \       'trim_whitespace'
-" \   ],
-" \   'kotlin': [
-" \       'remove_trailing_lines',
-" \       'trim_whitespace'
-" \   ],
-" \}
+let g:ale_fixers = {
+\   'elixir': ['mix_format'],
+\   'typescript': [
+\       'prettier',
+\       'remove_trailing_lines',
+\       'trim_whitespace'
+\   ],
+\   'kotlin': [
+\       'remove_trailing_lines',
+\       'trim_whitespace'
+\   ],
+\}
 " let g:ale_linters = {
 " \   'kotlin': [
 " \       'languageserver',
@@ -378,12 +378,6 @@ function! s:check_back_space() abort
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-" Use <c-space> to trigger completion.
-inoremap <silent><expr> <c-space> coc#refresh()
-
-" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
-" Coc only does snippet and additional edit on confirm.
-" inoremap <expr><cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 " Or use `complete_info` if your vim support it, like:
 " inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
 
@@ -519,6 +513,7 @@ nnoremap <silent> <Space> :noh<CR>
 "----------------
 " F keys
 "----------------
+nnoremap <F1> :ALEFix<CR>
 "Save file
 nnoremap <F2> :wa<CR>
 vnoremap <F2> :wa<CR>

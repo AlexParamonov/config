@@ -61,7 +61,7 @@ Plug 'roman/golden-ratio'
 Plug 'kien/ctrlp.vim'
 " Semantic
 " Plug 'scrooloose/syntastic'
-" Plugin 'w0rp/ale'
+Plug 'w0rp/ale'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Plug 'neoclide/coc-tsserver'
 " Plugin 'zxqfl/tabnine-vim'

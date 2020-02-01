@@ -360,7 +360,7 @@ nmap <silent> <leader>b :FufBuffer<CR>
 "----------------
 " Large file
 "----------------
-let g:LargeFile = 2
+let g:LargeFile = 10
 
 "----------------
 " COC

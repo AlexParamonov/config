@@ -14,6 +14,7 @@ source $BASH_USER_CONFIGS/aliases.sh
 source $BASH_USER_CONFIGS/completion.sh
 # source $BASH_USER_CONFIGS/vault.sh
 # source $BASH_USER_CONFIGS/rvm.sh
+source $BASH_USER_CONFIGS/asdf.sh
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"

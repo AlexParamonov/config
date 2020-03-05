@@ -103,8 +103,10 @@ if has("autocmd")
     " autocmd InsertLeave * set cul
 
     " make uses real tabs
-    au FileType make   set noexpandtab
+    au FileType make,go   set noexpandtab
     " au FileType python set noexpandtab
+
+    au FileType go   set nolist
 
     " Thorfile, Rakefile and Gemfile are Ruby
     au BufRead,BufNewFile {Gemfile,Gemfile.local,Rakefile,Thorfile,config.ru} set ft=ruby
@@ -114,7 +116,7 @@ if has("autocmd")
           \| exe "normal g'\"" | endif
 
     " Remove trailing whitespaces on save
-    autocmd FileType c,cpp,python,ruby,php,java autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
+    autocmd FileType c,cpp,python,ruby,php,java,go autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
 
     au FileType ruby set re=1
 
@@ -244,6 +246,12 @@ let g:ale_fixers = {
 \       'remove_trailing_lines',
 \       'trim_whitespace'
 \   ],
+\   'go': [
+\       'gofmt',
+\       'goimports',
+\       'remove_trailing_lines',
+\       'trim_whitespace'
+\   ]
 \}
 " let g:ale_linters = {
 " \   'kotlin': [
@@ -365,7 +373,7 @@ nmap <silent> <leader>b :FufBuffer<CR>
 "----------------
 " Large file
 "----------------
-let g:LargeFile = 2
+let g:LargeFile = 10
 
 "----------------
 " COC

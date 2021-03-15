@@ -9,7 +9,7 @@ set termguicolors
 
 let g:solarized_termcolors=16
 let g:solarized_degrad=0
-let g:gruvbox_contrast_dark="normal"
+let g:gruvbox_contrast_dark="hard"
 colorscheme gruvbox
 " colorscheme solarized
 " let g:solarized_contrast="high"

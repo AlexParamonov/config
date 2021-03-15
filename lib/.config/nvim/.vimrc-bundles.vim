@@ -35,9 +35,18 @@ Plug 'tpope/vim-speeddating'
 Plug 'tpope/vim-surround'
 " Comments
 Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-projectionist'
+
+
 Plug 'sheerun/vim-polyglot'
 Plug 'nelstrom/vim-markdown-folding'
+" Plug 'autozimu/LanguageClient-neovim', {
+"     \ 'branch': 'next',
+"     \ 'do': 'bash install.sh',
+"     \ }
 
+" (Optional) Multi-entry selection UI.
+Plug 'junegunn/fzf'
 
 "----------------
 " Colors
@@ -90,7 +99,14 @@ Plug 'tpope/vim-bundler'
 " Smart end
 Plug 'tpope/vim-endwise'
 " Test runner
-Plug 'AlexParamonov/vim-test', {'branch': 'workspace_fix'}
+Plug 'vim-test/vim-test'
+Plug 'tpope/vim-dispatch'
+
+"----------------
+" Elixir
+"----------------
+Plug 'elixir-editors/vim-elixir'
+" Plug 'elixir-lsp/coc-elixir', {'do': 'yarn install && yarn prepack'}
 
 "----------------
 " Perfomance

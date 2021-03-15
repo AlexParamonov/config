@@ -116,7 +116,7 @@ if has("autocmd")
           \| exe "normal g'\"" | endif
 
     " Remove trailing whitespaces on save
-    autocmd FileType c,cpp,python,ruby,php,java,go autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
+    autocmd FileType c,cpp,python,ruby,php,java,go,elixir autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
 
     au FileType ruby set re=1
 
@@ -125,6 +125,8 @@ if has("autocmd")
 
     " collapse .vimrc
     autocmd FileType vim normal zM
+
+    autocmd FileType scss setl iskeyword+=@-@
 
     " Indent p tags
     " autocmd FileType html,eruby if g:html_indent_tags !~ '\\|p\>' | let g:html_indent_tags .= '\|p\|li\|dt\|dd' | endif
@@ -246,6 +248,7 @@ let g:ale_fixers = {
 \       'remove_trailing_lines',
 \       'trim_whitespace'
 \   ],
+\   'ruby': ['standardrb'],
 \   'go': [
 \       'gofmt',
 \       'goimports',
@@ -258,6 +261,7 @@ let g:ale_fixers = {
 " \       'languageserver',
 " \       'ktlint',
 " \   ],
+" \   'ruby': ['standardrb', 'rubocop'],
 " \   'typescript': [
 " \       'tsserver',
 " \   ]
@@ -291,7 +295,7 @@ endif
 "----------------
 " Markdown
 " ---------------
-let vim_markdown_preview_github=1
+let vim_markdown_preview_github=0
 let vim_markdown_preview_hotkey='<C-m>'
 
 
@@ -338,7 +342,8 @@ vnoremap <leader>t=> :Tabularize /=><CR>
 "----------------
 " Rails
 "----------------
-nnoremap <leader>. :call EditAlternativeFile()<CR>
+" nnoremap <leader>. :call EditAlternativeFile()<CR>
+nnoremap <leader>. :A<CR>
 
 "----------------
 " NerdTree
@@ -422,8 +427,8 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 nmap <leader>rn <Plug>(coc-rename)
 
 " Remap for format selected region
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
+" xmap <leader>f  <Plug>(coc-format-selected)
+" nmap <leader>f  <Plug>(coc-format-selected)
 
 augroup mygroup
   autocmd!
@@ -505,7 +510,8 @@ vnoremap <leader>P "+P
 
 " Auto indent whole file
 " TODO:  does not work
-nnoremap <leader>i gg=G\|
+" nnoremap <leader>i gg=G\|
+nnoremap <leader>i :Format<CR>
 " noremap <leader>h :ALEHover<CR>
 autocmd FileType typescript let b:coc_root_patterns = ['tsconfig.json', '.env', '.git']
 
@@ -578,7 +584,7 @@ runtime .vimrc-folding.vim
 " runtime .vimrc-startup.vim
 
 "#############################################
-"                 Functions              {{{1
+"                 Functions               {{{1
 "#############################################
 
 " smart file rename

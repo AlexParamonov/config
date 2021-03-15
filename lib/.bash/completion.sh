@@ -12,3 +12,6 @@ fi
 # git flow completion
 source $BASH_USER_CONFIGS/vendor/git-flow-completion.bash
 source $BASH_USER_CONFIGS/vendor/hub.bash_completion.sh
+
+# FZF
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash

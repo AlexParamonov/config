@@ -10,5 +10,38 @@
 			}
 		}
 	},
-	"diagnostic.displayByAle": true
+	"diagnostic.displayByAle": true,
+  "diagnostic.refreshOnInsertMode": true,
+  "diagnostic.signOffset": 999999,
+  "diagnostic.errorSign": "✘",
+  "diagnostic.warningSign": "⚠",
+  "diagnostic.infoSign": "",
+  "diagnostic.hintSign": "ஐ",
+  "diagnostic.refreshAfterSave": true,
+  "diagnostic.checkCurrentLine": true,
+  "diagnostic.virtualTextPrefix": " ❯❯❯ ",
+  "diagnostic.virtualText": true,
+  "diagnostic.locationlist": true,
+  "diagnostic.enableMessage": "never",
+  "suggest.noselect": true,
+  "suggest.detailField": "abbr",
+  "suggest.snippetIndicator": "",
+  "suggest.removeDuplicateItems": true,
+  "suggest.triggerAfterInsertEnter": true,
+  "suggest.timeout": 5000,
+  "suggest.minTriggerInputLength": 1,
+  "elixirLS.filetypes": ["elixir", "eelixir"],
+  "elixir.filetypes": ["elixir", "eelixir", "ex", "exs", "eex", "leex"],
+  "python.venvFolders": ["envs",".pyenv",".direnv", "~/.local/share/virtualenvs", "~/.cache/pypoetry/virtualenvs"],
+  "python.workspaceSymbols.exclusionPatterns": [],
+  "python.jediEnabled": false,
+  "python.linting.pylintEnabled": true,
+  "python.linting.pylintArgs": ["--load-plugins"],
+    "python.formatting.blackPath":"~/.local/bin/black",
+    "python.linting.mypyEnabled": true,
+    "python.linting.mypyPath": "bin/mypy"
+    /* "python.formatting.provider": "black", */
+    /* "python.sortImports.path": "/home/calev/.local/bin/isort", */
+
+
 }

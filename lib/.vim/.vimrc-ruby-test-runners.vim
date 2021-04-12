@@ -13,8 +13,8 @@ nmap <silent> <leader>tv :TestVisit<CR>
 " let test#strategy = "basic"
 
 
-let test#enabled_runners = ["javascript#jest", "ruby#rspec"]
-let g:test#javascript#jest#file_pattern = 'spec.ts'
+" let test#enabled_runners = ["javascript#jest", "ruby#rspec"]
+" let g:test#javascript#jest#file_pattern = 'spec.ts'
 let test#strategy = 'vimterminal'
 " let g:test#javascript#jest#executable = 'foreman run rspec'
 " yarn --cwd invoice/backend/ jest --no-coverage invoice/backend/src/core/order/application/OrderService.spec.ts

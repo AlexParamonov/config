@@ -31,5 +31,17 @@
   "suggest.timeout": 5000,
   "suggest.minTriggerInputLength": 1,
   "elixirLS.filetypes": ["elixir", "eelixir"],
-  "elixir.filetypes": ["elixir", "eelixir", "ex", "exs", "eex", "leex"]
+  "elixir.filetypes": ["elixir", "eelixir", "ex", "exs", "eex", "leex"],
+  "python.venvFolders": ["envs",".pyenv",".direnv", "~/.local/share/virtualenvs", "~/.cache/pypoetry/virtualenvs"],
+  "python.workspaceSymbols.exclusionPatterns": [],
+  "python.jediEnabled": false,
+  "python.linting.pylintEnabled": true,
+  "python.linting.pylintArgs": ["--load-plugins"],
+    "python.formatting.blackPath":"~/.local/bin/black",
+    "python.linting.mypyEnabled": true,
+    "python.linting.mypyPath": "bin/mypy"
+    /* "python.formatting.provider": "black", */
+    /* "python.sortImports.path": "/home/calev/.local/bin/isort", */
+
+
 }

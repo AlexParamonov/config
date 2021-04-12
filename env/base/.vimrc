@@ -135,6 +135,7 @@ if has("autocmd")
     autocmd BufReadPost fugitive://* set bufhidden=delete
 
     autocmd BufNewFile,BufRead COMMIT_EDITMSG setlocal spell
+    autocmd FileType python let b:coc_root_patterns = ['.git', '.env']
 
     " Handle relative numbers
     " autocmd InsertEnter * :set number
@@ -307,6 +308,10 @@ let g:jsx_ext_required = 1
 "#############################################
 "             Leader Mappings             {{{1
 "#############################################
+"----------------
+" Test runners
+"----------------
+nnoremap <leader>to :cclose<CR>
 
 "----------------
 " Fugitive
@@ -550,6 +555,9 @@ noremap <F6> :bn <CR>
 inoremap <F5> <Esc> :bp <CR>i
 noremap <F5> :bp <CR>
 
+nnoremap <F8> :call <SID>ToggleBreakpoint()<CR>
+
+
 "----------------
 " Ctrl keys
 "----------------
@@ -653,3 +661,15 @@ function! EditAlternativeFile()
   exec ':e ' . AlternativeFile()
   return
 endfunction
+
+func! s:SetBreakpoint()
+    cal append('.', repeat(' ', strlen(matchstr(getline('.'), '^\s*'))) . 'import ipdb; ipdb.set_trace()')
+endf
+
+func! s:RemoveBreakpoint()
+    exe 'silent! g/^\s*import\sipdb\;\?\n*\s*ipdb.set_trace()/d'
+endf
+
+func! s:ToggleBreakpoint()
+    if getline('.')=~#'^\s*import\sipdb' | cal s:RemoveBreakpoint() | el | cal s:SetBreakpoint() | en
+endf

@@ -29,5 +29,6 @@ if has("autocmd")
     autocmd BufNewFile,BufRead *.html setlocal foldmethod=indent
     autocmd BufNewFile,BufRead *.html.erb setlocal foldmethod=indent
     autocmd BufNewFile,BufRead *.ex setlocal foldmethod=indent
+    autocmd BufNewFile,BufRead *.py setlocal foldmethod=indent
   augroup END
 endif

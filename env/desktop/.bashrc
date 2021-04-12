@@ -27,7 +27,6 @@ source ~/.vim/bundle/gruvbox/gruvbox_256palette.sh
 
 source $BASH_USER_CONFIGS/env/desktop.sh
 
-export PATH=~/Library/Python/2.7/bin:$PATH
 
 # tabtab source for serverless package
 # uninstall by removing these lines or running `tabtab uninstall serverless`
@@ -39,5 +38,7 @@ export PATH=~/Library/Python/2.7/bin:$PATH
 # tabtab source for slss package
 # uninstall by removing these lines or running `tabtab uninstall slss`
 [ -f /Users/ap/code/acm-order-app-be/node_modules/tabtab/.completions/slss.bash ] && . /Users/ap/code/acm-order-app-be/node_modules/tabtab/.completions/slss.bash
+
+eval "$(direnv hook bash)"
 
 clear

@@ -6,7 +6,7 @@ alias gpf="git pullff"
 alias gs="git status"
 alias gl="git l"
 
-alias v="nvim"
+alias v="vim"
 alias b="bundle"
 alias tf="tail -f"
 alias gi="gem install"

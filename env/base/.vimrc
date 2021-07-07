@@ -249,7 +249,7 @@ let g:ale_fixers = {
 \       'remove_trailing_lines',
 \       'trim_whitespace'
 \   ],
-\   'ruby': ['standardrb'],
+\   'ruby': ['standardrb', 'rubocop'],
 \   'go': [
 \       'gofmt',
 \       'goimports',
@@ -589,7 +589,7 @@ runtime .vimrc-folding.vim
 "#############################################
 "                 Startup                 {{{1
 "#############################################
-" runtime .vimrc-startup.vim
+runtime .vimrc-startup.vim
 
 "#############################################
 "                 Functions               {{{1

@@ -20,7 +20,7 @@ Plug 'tomtom/tlib_vim'
 "----------------
 " Git wrapper
 Plug 'tpope/vim-fugitive'
-
+Plug 'tpope/vim-projectionist'
 
 "----------------
 " Text processing
@@ -56,6 +56,7 @@ Plug 'tpope/vim-rake'
 "----------------
 " UI
 "----------------
+Plug 'mhinz/vim-startify'
 Plug 'bling/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'roman/golden-ratio'

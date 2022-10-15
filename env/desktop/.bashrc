@@ -16,6 +16,9 @@ source $BASH_USER_CONFIGS/completion.sh
 # source $BASH_USER_CONFIGS/rvm.sh
 source $BASH_USER_CONFIGS/asdf.sh
 source $BASH_USER_CONFIGS/elixir.sh
+source $BASH_USER_CONFIGS/eb.sh
+source $BASH_USER_CONFIGS/python.sh
+source $BASH_USER_CONFIGS/yarn.sh
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"

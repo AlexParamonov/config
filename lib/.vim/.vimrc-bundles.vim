@@ -62,11 +62,11 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'roman/golden-ratio'
 Plug 'kien/ctrlp.vim'
 " Semantic
-" Plug 'scrooloose/syntastic'
 Plug 'w0rp/ale'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Plug 'neoclide/coc-tsserver'
 " Plugin 'zxqfl/tabnine-vim'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 
 " Undo tree
 Plug 'sjl/gundo.vim'
@@ -74,7 +74,7 @@ Plug 'sjl/gundo.vim'
 Plug 'vim-scripts/FuzzyFinder'
 " Ack search
 Plug 'mileszs/ack.vim'
-Plug 'JamshedVesuna/vim-markdown-preview'
+" Plug 'JamshedVesuna/vim-markdown-preview'
 
 
 "----------------

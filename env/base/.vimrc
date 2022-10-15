@@ -223,7 +223,7 @@ let g:ctrlp_custom_ignore = {
   \ }
 
 "----------------
-" Syntastic
+" ALE
 "----------------
 " let g:ale_javascript_prettier_use_local_config = 1
 " let g:airline#extensions#ale#enabled = 1
@@ -249,7 +249,6 @@ let g:ale_fixers = {
 \       'remove_trailing_lines',
 \       'trim_whitespace'
 \   ],
-\   'ruby': ['standardrb', 'rubocop'],
 \   'go': [
 \       'gofmt',
 \       'goimports',
@@ -257,6 +256,14 @@ let g:ale_fixers = {
 \       'trim_whitespace'
 \   ]
 \}
+" \   'ruby': ['standardrb', 'rubocop'],
+let g:ale_linters = {
+\   'ruby': [],
+\   'typescript': [
+\       'tsserver',
+\   ]
+\}
+
 " let g:ale_linters = {
 " \   'kotlin': [
 " \       'languageserver',
@@ -296,9 +303,7 @@ endif
 "----------------
 " Markdown
 " ---------------
-let vim_markdown_preview_github=0
-let vim_markdown_preview_hotkey='<C-m>'
-
+nmap <silent> <C-s> :CocCommand markdown-preview-enhanced.openPreview<CR>
 
 "---------------
 " Polyglot
@@ -316,8 +321,9 @@ nnoremap <leader>to :cclose<CR>
 "----------------
 " Fugitive
 "----------------
-nnoremap <leader>gc :Gst<CR>
-nnoremap <leader>gl :Glog -- %<CR>
+nnoremap <leader>gc :G<CR>
+" nnoremap <leader>gl :G log --graph --decorate --pretty=oneline --abbrev-commit -- %<CR>
+nnoremap <leader>gl :0Gclog<CR>
 " Search for word under the cursor using git
 nnoremap <leader>gs :Ggrep <C-r><C-w><CR>
 " nnoremap <leader>as :ALEFindReferences<CR>
@@ -347,8 +353,8 @@ vnoremap <leader>t=> :Tabularize /=><CR>
 "----------------
 " Rails
 "----------------
-" nnoremap <leader>. :call EditAlternativeFile()<CR>
-nnoremap <leader>. :A<CR>
+nnoremap <leader>. :call EditAlternativeFile()<CR>
+" nnoremap <leader>. :A<CR>
 
 "----------------
 " NerdTree
@@ -389,14 +395,17 @@ let g:LargeFile = 10
 " COC
 "----------------
 " Use tab for trigger completion with characters ahead and navigate.
-" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+" NOTE: There's always complete item selected by default, you may want to enable
+" no select by `"suggest.noselect": true` in your configuration file.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
 inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#pum#visible() ? coc#pum#next(1) :
+      \ CheckBackspace() ? "\<Tab>" :
       \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 
-function! s:check_back_space() abort
+function! CheckBackspace() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
@@ -633,10 +642,16 @@ function! AlternativeFile()
   endif
 
   if current_path =~ '^lib/'
-    let spec_folder = substitute(current_path, "^lib/", "spec/lib/", "")
-    let spec_file = substitute(spec_folder, ".rb$", "_spec.rb", "")
+    let spec_folder = substitute(current_path, "^lib/", "test/", "")
+    let spec_file = substitute(spec_folder, ".ex$", "_test.exs", "")
     return spec_file
   endif
+
+  " if current_path =~ '^lib/'
+  "   let spec_folder = substitute(current_path, "^lib/", "spec/lib/", "")
+  "   let spec_file = substitute(spec_folder, ".rb$", "_spec.rb", "")
+  "   return spec_file
+  " endif
 
   if current_path =~ '^spec/lib'
     let app_folder = substitute(current_path, "^spec/lib", "lib/", "")

@@ -10,13 +10,14 @@ nmap <silent> <leader>ta :TestSuite<CR>
 nmap <silent> <leader>tl :TestLast<CR>
 nmap <silent> <leader>tv :TestVisit<CR>
 
-" let test#strategy = "basic"
+let test#strategy = "basic"
 
 
-" let test#enabled_runners = ["javascript#jest", "ruby#rspec", "elixir:exunit"]
+let test#enabled_runners = ["javascript#jest", "ruby#rspec", "elixir:exunit", "python:pytest"]
+let g:test#python#pytest#file_pattern = '\v^test.*\.py$'
 " let g:test#javascript#jest#file_pattern = 'spec.ts'
 " let g:test#elixir#runner = 'exunit'
-let test#strategy = 'dispatch'
+" let test#strategy = 'dispatch'
 " let test#strategy = 'neovim'
 " let g:test#javascript#jest#executable = 'foreman run rspec'
 " yarn --cwd invoice/backend/ jest --no-coverage invoice/backend/src/core/order/application/OrderService.spec.ts

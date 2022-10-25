@@ -136,6 +136,7 @@ if has("autocmd")
 
     autocmd BufNewFile,BufRead COMMIT_EDITMSG setlocal spell
     autocmd FileType python let b:coc_root_patterns = ['.git', '.env']
+    autocmd FileType elixir let b:coc_root_patterns = ['mix.exs']
 
     " Handle relative numbers
     " autocmd InsertEnter * :set number
@@ -228,7 +229,11 @@ let g:ctrlp_custom_ignore = {
 " let g:ale_javascript_prettier_use_local_config = 1
 " let g:airline#extensions#ale#enabled = 1
 " let g:ale_completion_enabled = 1
-let g:ale_sign_error='⚠'
+let g:ale_sign_error='✘'
+let g:ale_sign_warning='⚠'
+let g:ale_sign_info='i>'
+let g:ale_sign_style_error='ஐ'
+let g:ale_sign_style_warning='ஐ'
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_fix_on_save = 0
 " let g:ale_typescript_tsserver_use_global = 0

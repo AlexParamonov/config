@@ -148,6 +148,15 @@ endif
 "            Plugins configs              {{{1
 "#############################################
 
+
+"----------------
+" Copilot
+"----------------
+imap <silent><script><expr> <End> copilot#Accept("\<CR>")
+imap <silent><script><expr> <Home> copilot#Next()
+
+let g:copilot_no_tab_map = v:true
+
 "----------------
 " Ruby refactoring
 "----------------
@@ -259,11 +268,17 @@ let g:ale_fixers = {
 \       'goimports',
 \       'remove_trailing_lines',
 \       'trim_whitespace'
-\   ]
+\   ],
+\   'ruby': [
+\       'rubocop',
+\       'standardrb',
+\       'remove_trailing_lines',
+\       'trim_whitespace'
+\   ],
 \}
 " \   'ruby': ['standardrb', 'rubocop'],
 let g:ale_linters = {
-\   'ruby': [],
+\   'ruby': ['standardrb', 'rubocop'],
 \   'typescript': [
 \       'tsserver',
 \   ]

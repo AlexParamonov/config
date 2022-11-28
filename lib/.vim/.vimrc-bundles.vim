@@ -39,6 +39,7 @@ Plug 'tpope/vim-commentary'
 
 Plug 'sheerun/vim-polyglot'
 Plug 'nelstrom/vim-markdown-folding'
+Plug 'github/copilot.vim'
 
 "----------------
 " Colors

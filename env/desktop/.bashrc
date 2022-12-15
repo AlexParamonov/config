@@ -24,24 +24,12 @@ source $BASH_USER_CONFIGS/yarn.sh
 export PATH="/usr/local/heroku/bin:$PATH"
 
 # source ~/.nvm/nvm.sh
-source ~/.vim/bundle/gruvbox/gruvbox_256palette.sh
+source ~/.vim/plugged/gruvbox/gruvbox_256palette.sh
 # export NVM_DIR="/home/ap/.nvm"
 # [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
 source $BASH_USER_CONFIGS/env/desktop.sh
 
-
-# tabtab source for serverless package
-# uninstall by removing these lines or running `tabtab uninstall serverless`
-[ -f /Users/ap/code/acm-shop-be/node_modules/tabtab/.completions/serverless.bash ] && . /Users/ap/code/acm-shop-be/node_modules/tabtab/.completions/serverless.bash
-
-# tabtab source for sls package
-# uninstall by removing these lines or running `tabtab uninstall sls`
-[ -f /Users/ap/code/acm-order-app-be/node_modules/tabtab/.completions/sls.bash ] && . /Users/ap/code/acm-order-app-be/node_modules/tabtab/.completions/sls.bash
-# tabtab source for slss package
-# uninstall by removing these lines or running `tabtab uninstall slss`
-[ -f /Users/ap/code/acm-order-app-be/node_modules/tabtab/.completions/slss.bash ] && . /Users/ap/code/acm-order-app-be/node_modules/tabtab/.completions/slss.bash
-
 eval "$(direnv hook bash)"
 
-clear
+# clear

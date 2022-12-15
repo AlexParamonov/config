@@ -9,7 +9,7 @@
 				"lintTool": "golint"
 			}
 		}
-	},
+  },
 	"diagnostic.displayByAle": true,
   "diagnostic.refreshOnInsertMode": true,
   "diagnostic.signOffset": 999999,
@@ -30,6 +30,7 @@
   "suggest.triggerAfterInsertEnter": true,
   "suggest.timeout": 5000,
   "suggest.minTriggerInputLength": 1,
+  "elixir.pathToElixirLS": "~/.elixir-ls/release/language_server.sh",
   "elixirLS.filetypes": ["elixir", "eelixir"],
   "elixir.filetypes": ["elixir", "eelixir", "ex", "exs", "eex", "leex", "heex"],
   "python.venvFolders": ["envs",".pyenv",".direnv", "~/.local/share/virtualenvs", "~/.cache/pypoetry/virtualenvs"],

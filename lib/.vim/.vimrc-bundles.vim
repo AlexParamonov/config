@@ -95,6 +95,7 @@ Plug 'tpope/vim-endwise'
 " Test runner
 Plug 'vim-test/vim-test'
 Plug 'tpope/vim-dispatch'
+" Plug 'jlcrochet/vim-ruby'
 
 "----------------
 " Elixir

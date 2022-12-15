@@ -373,8 +373,8 @@ vnoremap <leader>t=> :Tabularize /=><CR>
 "----------------
 " Rails
 "----------------
-nnoremap <leader>. :call EditAlternativeFile()<CR>
-" nnoremap <leader>. :A<CR>
+" nnoremap <leader>. :call EditAlternativeFile()<CR>
+nnoremap <leader>. :A<CR>
 
 "----------------
 " NerdTree

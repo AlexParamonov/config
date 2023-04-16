@@ -7,6 +7,9 @@ lib/.vim/.vimrc-environment.vim
 tags
 TAGS
 
+lib/.config
+lib/.vim/plugged
+
 ## generic files to ignore
 *~
 *.lock

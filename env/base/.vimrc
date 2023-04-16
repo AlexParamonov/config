@@ -171,6 +171,7 @@ let NERDTreeMapOpenSplit = "s"
 let NERDTreeMapOpenVSplit = "v"
 let NERDTreeMinimalUI = 1
 let NERDTreeIgnore=['\.rbc$', '\~$', '\.git$', '\.bundle$', '\.elasticbeanstalk$']
+let NERDTreeCustomOpenArgs = {'file': {'reuse': 'all', 'where': 'p', 'keepopen': 0}, 'dir': {}}
 
 "----------------
 " Golden ratio
@@ -273,6 +274,10 @@ let g:ale_fixers = {
 \   'ruby': [
 \       'rubocop',
 \       'standardrb',
+\       'remove_trailing_lines',
+\       'trim_whitespace'
+\   ],
+\   'yaml': [
 \       'remove_trailing_lines',
 \       'trim_whitespace'
 \   ],
@@ -563,6 +568,27 @@ imap jj <Esc>l
 
 " Hide search highlighting
 nnoremap <silent> <Space> :noh<CR>
+
+" Window navigation with s key
+nmap sl <C-w>l
+nmap sh <C-w>h
+nmap sk <C-w>k
+nmap sj <C-w>j
+nmap ss <C-w><C-w>
+
+" Window operations with s key
+nmap sq <C-w>q
+nmap sv <C-w>v
+
+nmap s<Right> <C-w>l
+nmap s<Left> <C-w>h
+nmap s<Up> <C-w>k
+nmap s<Down> <C-w>j
+
+" Tab navigation
+nnoremap <silent> <Tab> :tabnext<CR>
+nnoremap <silent> <S-Tab> :tabprevious<CR>
+nmap s<Tab> :tabedit<CR>,n
 
 "----------------
 " F keys

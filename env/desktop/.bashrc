@@ -32,4 +32,4 @@ source $BASH_USER_CONFIGS/env/desktop.sh
 
 eval "$(direnv hook bash)"
 
-# clear
+clear

@@ -30,7 +30,7 @@ set shortmess+=c
 set lazyredraw
 highlight NonText cterm=NONE ctermfg=NONE
 set nocursorline
-set synmaxcol=200
+set synmaxcol=400
 
 set number
 set numberwidth=5
@@ -122,6 +122,7 @@ if has("autocmd")
 
     " Use 4 spaces in php files
     autocmd FileType php,kotlin setlocal shiftwidth=4 tabstop=4 softtabstop=4
+    autocmd FileType eelixir setlocal shiftwidth=2 tabstop=2 softtabstop=2
 
     " collapse .vimrc
     autocmd FileType vim normal zM

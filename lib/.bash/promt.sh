@@ -3,4 +3,6 @@ function parse_git_branch {
   echo "("${ref#refs/heads/}")"
 }
 
-export PS1="\w$YELLOW\$(parse_git_branch)$NORMAL\$ "
+# export PS1="\w$YELLOW\$(parse_git_branch)$NORMAL\$ "
+
+export PS1="\t \w$YELLOW\$(parse_git_branch)$NORMAL\$ "

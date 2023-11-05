@@ -61,7 +61,7 @@ Plug 'mhinz/vim-startify'
 Plug 'bling/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'roman/golden-ratio'
-Plug 'kien/ctrlp.vim'
+" Plug 'kien/ctrlp.vim'
 " Semantic
 Plug 'w0rp/ale'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}

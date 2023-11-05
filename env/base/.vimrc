@@ -628,6 +628,9 @@ nnoremap <F9> :GundoToggle<CR>
 " noremap ]g <C-w>j<C-w>q<C-w>k<C-n>
 " noremap [g <C-w>j<C-w>q<C-w>k<C-p>
 
+" FZF
+nnoremap <C-p> :FZF<CR>
+
 "----------------
 " [] keys
 "----------------

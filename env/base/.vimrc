@@ -91,6 +91,8 @@ set backspace=indent,eol,start
 " filetypes
 " inoremap <buffer><silent><Bar>   <Bar><Esc>:call <SID>align()<CR>a
 
+" Disable history log of .vim changes
+let netrw_dirhistmax=0
 
 "#############################################
 "                  Autocmd                {{{1

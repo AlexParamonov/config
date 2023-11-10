@@ -12,8 +12,8 @@ vnoremap  <C-j> :m'>+<CR>gv=gv
 vnoremap  <C-k> :m-2<CR>gv=gv
 
 " disable arrow keys
-noremap  <Down>  <NOP>
-noremap  <Up>    <NOP>
+" noremap  <Down>  <NOP>
+" noremap  <Up>    <NOP>
 
 " nnoremap <C-Right> >>
 " nnoremap <C-Left> <<

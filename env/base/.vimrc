@@ -25,6 +25,7 @@ set showcmd
 syntax on
 " don't give |ins-completion-menu| messages.
 set shortmess+=c
+set re=0
 
 " a bit faster vim
 set lazyredraw

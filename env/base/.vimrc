@@ -529,6 +529,7 @@ nnoremap <silent> <leader><space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <leader><space>p  :<C-u>CocListResume<CR>
 
+let g:coc_global_extensions = ['coc-solargraph', 'coc-elixir']
 "----------------
 " General
 "----------------
@@ -588,8 +589,8 @@ nmap s<Up> <C-w>k
 nmap s<Down> <C-w>j
 
 " Tab navigation
-nnoremap <silent> <Tab> :tabnext<CR>
-nnoremap <silent> <S-Tab> :tabprevious<CR>
+nnoremap <silent> <S-Tab> :tabnext<CR>
+" nnoremap <silent> <C-S-Tab> :tabprevious<CR>
 nmap s<Tab> :tabedit<CR>,n
 
 "----------------

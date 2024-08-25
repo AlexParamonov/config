@@ -13,11 +13,11 @@
 " nmap <silent> <leader>tl :TestLast<CR>
 " nmap <silent> <leader>tv :TestVisit --trace<CR>
 
-nmap <silent> <leader>tn :TestNearest<CR>
-nmap <silent> <leader>tf :TestFile<CR>
-nmap <silent> <leader>ta :TestSuite<CR>
-nmap <silent> <leader>tl :TestLast<CR>
-nmap <silent> <leader>tv :TestVisit<CR>
+nmap <silent> <leader>tn :wa<CR>:TestNearest<CR>
+nmap <silent> <leader>tf :wa<CR>:TestFile<CR>
+nmap <silent> <leader>ta :wa<CR>:TestSuite<CR>
+nmap <silent> <leader>tl :wa<CR>:TestLast<CR>
+nmap <silent> <leader>tv :wa<CR>:TestVisit<CR>
 
 let test#strategy = "basic"
 

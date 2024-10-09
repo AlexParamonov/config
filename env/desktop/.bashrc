@@ -32,6 +32,7 @@ source ~/.vim/plugged/gruvbox/gruvbox_256palette.sh
 
 source $BASH_USER_CONFIGS/env/desktop.sh
 
+eval "$(dircolors ~/.dir_colors)"
 eval "$(direnv hook bash)"
 
 clear

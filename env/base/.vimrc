@@ -543,13 +543,10 @@ nnoremap <leader>l :set list!<CR>
 noremap <leader>e :edit %:h/
 
 " OS clipboard
-nnoremap <leader>y "+y
-vnoremap <leader>y "+y
+xnoremap <leader>y y:call system("wl-copy", @")<cr>
 
-nnoremap <leader>p "+p
-vnoremap <leader>p "+p
-nnoremap <leader>P "+P
-vnoremap <leader>P "+P
+xnoremap <leader>p :let @"=substitute(system("wl-paste --no-newline"), '<C-v><C-m>', '', 'g')<cr>p
+xnoremap <leader>P :let @"=substitute(system("wl-paste --no-newline"), '<C-v><C-m>', '', 'g')<cr>P
 
 " Auto indent whole file
 " TODO:  does not work

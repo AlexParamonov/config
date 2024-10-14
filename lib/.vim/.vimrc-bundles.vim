@@ -26,6 +26,7 @@ Plug 'tpope/vim-projectionist'
 " Text processing
 "----------------
 Plug 'will133/vim-dirdiff'
+Plug 'AndrewRadev/splitjoin.vim'
 " tabcompletition
 " Plug 'ervandew/supertab'
 " Other

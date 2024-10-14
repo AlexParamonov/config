@@ -10,7 +10,17 @@
 			}
 		}
   },
-	"diagnostic.displayByAle": true,
+
+  "languageserver": {
+    "ruby-lsp": {
+      "command": "ruby-lsp",
+      "initializationOptions": {
+        "formatter": "auto" // will use rubocop (if installed) or falls back to syntax_tree
+      },
+      "filetypes": ["ruby"]
+    }
+  },
+  "diagnostic.displayByAle": true,
   "diagnostic.refreshOnInsertMode": true,
   "diagnostic.signOffset": 999999,
   "diagnostic.errorSign": "✘",

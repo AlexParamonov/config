@@ -249,6 +249,7 @@ let g:ale_sign_style_error='ஐ'
 let g:ale_sign_style_warning='ஐ'
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_fix_on_save = 0
+let g:ale_ruby_syntax_tree_executable = 'bundle'
 " let g:ale_typescript_tsserver_use_global = 0
 
 let g:ale_fixers = {
@@ -274,6 +275,7 @@ let g:ale_fixers = {
 \       'trim_whitespace'
 \   ],
 \   'ruby': [
+\       'syntax_tree',
 \       'rubocop',
 \       'standardrb',
 \       'remove_trailing_lines',
@@ -287,6 +289,7 @@ let g:ale_fixers = {
 " \   'ruby': ['standardrb', 'rubocop'],
 let g:ale_linters = {
 \   'ruby': ['standardrb', 'rubocop'],
+\   'javascript': ['eslint'],
 \   'typescript': [
 \       'tsserver',
 \   ]
@@ -529,7 +532,7 @@ nnoremap <silent> <leader><space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <leader><space>p  :<C-u>CocListResume<CR>
 
-let g:coc_global_extensions = ['coc-solargraph', 'coc-elixir']
+let g:coc_global_extensions = ['coc-elixir']
 "----------------
 " General
 "----------------

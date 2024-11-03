@@ -288,7 +288,7 @@ let g:ale_fixers = {
 \}
 " \   'ruby': ['standardrb', 'rubocop'],
 let g:ale_linters = {
-\   'ruby': ['standardrb', 'rubocop'],
+\   'ruby': ['rubocop'],
 \   'javascript': ['eslint'],
 \   'typescript': [
 \       'tsserver',
@@ -532,7 +532,7 @@ nnoremap <silent> <leader><space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <leader><space>p  :<C-u>CocListResume<CR>
 
-let g:coc_global_extensions = ['coc-elixir']
+let g:coc_global_extensions = ['coc-elixir', 'coc-json']
 "----------------
 " General
 "----------------

@@ -62,18 +62,15 @@ Plug 'mhinz/vim-startify'
 Plug 'bling/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'roman/golden-ratio'
-" Plug 'kien/ctrlp.vim'
-" Semantic
-Plug 'w0rp/ale'
+Plug 'dense-analysis/ale'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Plug 'neoclide/coc-tsserver'
 " Plugin 'zxqfl/tabnine-vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 
 " Undo tree
 Plug 'sjl/gundo.vim'
-" find buffer
-Plug 'vim-scripts/FuzzyFinder'
 " Ack search
 Plug 'mileszs/ack.vim'
 " Plug 'JamshedVesuna/vim-markdown-preview'

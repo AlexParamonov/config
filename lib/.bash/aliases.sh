@@ -26,6 +26,10 @@ alias la='ls -A'
 alias l='ls -CF'
 
 alias ack='ack-grep'
+# Modern alternative: use ripgrep (rg) if available
+if command -v rg &> /dev/null; then
+    alias ack='rg'
+fi
 alias notes="ack 'TODO|FIXME|XXX|HACK' --ignore-dir=tmp --ignore-dir=log"
 
 # Add an "alert" alias for long running commands.  Use like so:

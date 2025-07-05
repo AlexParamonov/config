@@ -18,7 +18,7 @@ set encoding=utf-8
 set hidden
 set cmdheight=2
 set switchbuf=useopen
-set clipboard=unnamed
+set clipboard=unnamedplus
 " display incomplete commands
 set showcmd
 " Enable highlighting for syntax
@@ -30,7 +30,12 @@ set shortmess+=c
 set lazyredraw
 highlight NonText cterm=NONE ctermfg=NONE
 set nocursorline
-set synmaxcol=400
+set synmaxcol=800 " syntax highlighting column limit - modern machines can handle more
+
+" Performance optimizations
+set ttimeoutlen=0 " no delay when pressing Esc (terminal key codes)
+set redrawtime=10000 " max time for syntax highlighting redraw (prevents freezing)
+set regexpengine=1 " use old regexp engine (often faster)
 
 set number
 set numberwidth=5
@@ -82,7 +87,7 @@ set backup
 set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
 set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
 
-set history=50
+set history=1000 " more command history (minimal performance impact)
 
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
@@ -120,6 +125,7 @@ if has("autocmd")
     " Remove trailing whitespaces on save
     autocmd FileType c,cpp,python,ruby,php,java,go,elixir autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
 
+    " Use old regexp engine for Ruby (faster)
     au FileType ruby set re=1
 
     " Use 4 spaces in php files
@@ -218,23 +224,6 @@ let g:SuperTabNoCompleteAfter = ['^', '\s', '{', '[', '(', '|']
 
 
 
-"----------------
-" CTRLP
-"----------------
-let g:ctrlp_use_caching = 1
-let g:ctrlp_max_files = 100000
-let g:ctrlp_clear_cache_on_exit = 0
-let g:ctrlp_user_command = ['.git/', 'cd %s && git ls-files']
-let g:ctrlp_arg_map = 1
-let g:ctrlp_show_hidden = 1
-" let g:ctrlp_root_markers = ['tags']
-
-" let g:ctrlp_user_command = 'find %s -type f'       " MacOSX/Linux
-let g:ctrlp_mruf_max = 100
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v(node_modules|tmp|log|\.git|\.hg|\.svn|\.bundle)$',
-  \ 'file': '\v(\.log|tags)$',
-  \ }
 
 "----------------
 " ALE
@@ -400,7 +389,7 @@ nnoremap <leader>n :NERDTreeToggle<CR>
 "----------------
 " Buffer window (find file in open buffers)
 "----------------
-nmap <silent> <leader>b :FufBuffer<CR>
+nmap <silent> <leader>b :Buffers<CR>
 
 "----------------
 " Ruby refactoring
@@ -638,6 +627,17 @@ nnoremap <F9> :GundoToggle<CR>
 
 " FZF
 nnoremap <C-p> :FZF<CR>
+
+" FZF arrow key navigation
+let g:fzf_action = {
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-x': 'split',
+  \ 'ctrl-v': 'vsplit' }
+
+" Enable arrow keys in FZF
+autocmd! FileType fzf set nonu nornu
+autocmd  FileType fzf tnoremap <buffer> <Up> <Up>
+autocmd  FileType fzf tnoremap <buffer> <Down> <Down>
 
 "----------------
 " [] keys

@@ -274,6 +274,11 @@ let g:ale_fixers = {
 \       'remove_trailing_lines',
 \       'trim_whitespace'
 \   ],
+\   'sh': [
+\       'shfmt',
+\       'remove_trailing_lines',
+\       'trim_whitespace'
+\   ],
 \}
 " \   'ruby': ['standardrb', 'rubocop'],
 let g:ale_linters = {

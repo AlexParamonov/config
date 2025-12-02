@@ -1,113 +1,100 @@
-#!/bin/bash
-ENV_DIR=env/
-BASE_ENV=base
-# sudo apt-get build-dep vim
-# sudo apt-get build-dep libx11-dev libxtst-dev
-# core: quiet i915.i915_enable_rc6=1 i915.i915_enable_fbc=1
-for config in `ls -1A lib`
-do
-  echo "linking library $config"
-  rm -r "$HOME/$config" 2> /dev/null
-  ln -s "`pwd`/lib/$config" "$HOME/$config"
+#!/usr/bin/env bash
+set -e
+shopt -s dotglob nullglob
+
+ENV_DIR="env/"
+BASE_ENV="base"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+
+# Helper function for yes/no prompts
+ask_yes_no() {
+    local prompt="$1"
+    while true; do
+        read -p "$prompt " yn
+        case $yn in
+            [Yy]*) return 0 ;;
+            [Nn]*) return 1 ;;
+            *) echo "Please answer yes or no." ;;
+        esac
+    done
+}
+
+# Link library configs
+for config in $(ls -1A lib); do
+    echo "linking library $config"
+    rm -rf "$HOME/$config" 2>/dev/null || true
+    ln -s "$SCRIPT_DIR/lib/$config" "$HOME/$config"
 done
 
+# Select environment
 PS3="Choose available environment: "
-options=`ls -1A $ENV_DIR`
-select SELECTED_ENV in $options
-do
-    case $opt in
-        *) break;;
-    esac
+select SELECTED_ENV in $(ls -1A "$ENV_DIR"); do
+    break
 done
 
-while true; do
-    read -p "Using $SELECTED_ENV as source. Is this correct? " yn
-    case $yn in
-        [Yy]* ) echo "--> Perform $SELECTED_ENV environment install."; break;;
-        [Nn]* ) exit;;
-        * ) echo "Please answer yes or no.";;
-    esac
+if ! ask_yes_no "Using $SELECTED_ENV as source. Is this correct?"; then
+    exit
+fi
+echo "--> Perform $SELECTED_ENV environment install."
+
+# Install dependencies
+echo "Installing xsel for tmux clipboard support..."
+sudo apt-get install -y xsel
+
+# Link base environment configs
+for config in $(ls -1A "$ENV_DIR$BASE_ENV"); do
+    echo "linking base $config"
+    rm -rf "$HOME/$config" 2>/dev/null || true
+    ln -s "$SCRIPT_DIR/$ENV_DIR$BASE_ENV/$config" "$HOME/$config"
 done
 
-for config in `ls -1A $ENV_DIR$BASE_ENV`
-do
-  echo "linking base $config"
-  rm -r "$HOME/$config" 2> /dev/null
-  ln -s "`pwd`/$ENV_DIR$BASE_ENV/$config" "$HOME/$config"
+# Link selected environment configs (overrides base)
+for config in $(ls -1A "$ENV_DIR$SELECTED_ENV"); do
+    echo "linking $SELECTED_ENV $config"
+    rm -rf "$HOME/$config" 2>/dev/null || true
+    ln -s "$SCRIPT_DIR/$ENV_DIR$SELECTED_ENV/$config" "$HOME/$config"
 done
 
-for config in `ls -1A $ENV_DIR$SELECTED_ENV`
-do
-  echo "linking $SELECTED_ENV $config"
-  rm -r "$HOME/$config" 2> /dev/null
-  ln -s "`pwd`/$ENV_DIR$SELECTED_ENV/$config" "$HOME/$config"
-done
+# VIM setup
+if ask_yes_no "Apply default VIM environment?"; then
+    cp "$HOME/.vim/.vimrc-environment.default.vim" "$HOME/.vim/.vimrc-environment.vim"
+    echo "--> default VIM environment installed."
+fi
 
-while true; do
-    read -p "Apply default VIM environment?" yn
-    case $yn in
-        [Yy]* ) cp "$HOME/.vim/.vimrc-environment.default.vim" "$HOME/.vim/.vimrc-environment.vim"; echo "--> default VIM environment installed."; break;;
-        [Nn]* ) break;;
-        * ) echo "Please answer yes or no.";;
-    esac
-done
+if ask_yes_no "Load VIM plugins now?"; then
+    vim -c BundleInstall! -c q -c q -u "$HOME/.vim/.vimrc-bundles.vim"
+    echo "--> VIM plugins are loaded."
+fi
 
-while true; do
-    read -p "Load VIM plugins now? " yn
-    case $yn in
-        [Yy]* ) vim -c BundleInstall! -c q -c q -u "$HOME/.vim/.vimrc-bundles.vim"; echo "--> VIM plugins are loaded."; break;;
-        [Nn]* ) break;;
-        * ) echo "Please answer yes or no.";;
-    esac
-done
-
+# Extra stuff
 echo "Installing extra stuff:"
-while true; do
-    read -p "Update colors in your system to match with VIM colorshema? " yn
-    case $yn in
-        [Yy]* ) bash "`pwd`/extra/gnome-terminal-colors-solarized/install.sh"; echo "--> Colorshema changed."; break;;
-        [Nn]* ) break;;
-        * ) echo "Please answer yes or no.";;
-    esac
-done
 
-while true; do
-    read -p "Install custom keyboard layout? " yn
-    case $yn in
-        [Yy]* ) sudo cp "`pwd`/extra/keyboard_layouts/us" "/usr/share/X11/xkb/symbols/"; echo "--> New layout copied to '/usr/share/X11/xkb/symbols/us'"; break;;
-        [Nn]* ) break;;
-        * ) echo "Please answer yes or no.";;
-    esac
-done
+if ask_yes_no "Update colors in your system to match with VIM colorscheme?"; then
+    bash "$SCRIPT_DIR/extra/gnome-terminal-colors-solarized/install.sh"
+    echo "--> Colorscheme changed."
+fi
 
-while true; do
-    read -p "Install fonts in your system to match with VIM configuration? " yn
-    case $yn in
-        [Yy]* ) cp -R "`pwd`/extra/powerline-fonts" "$HOME/.fonts" ;echo "Updating fonts..."; echo `fc-cache -fv | grep "fc-cache"`; echo "--> Fonts updated"; break;;
-        [Nn]* ) break;;
-        * ) echo "Please answer yes or no.";;
-    esac
-done
+if ask_yes_no "Install custom keyboard layout?"; then
+    sudo cp "$SCRIPT_DIR/extra/keyboard_layouts/us" "/usr/share/X11/xkb/symbols/"
+    echo "--> New layout copied to '/usr/share/X11/xkb/symbols/us'"
+fi
 
-while true; do
-    read -p "Set default rvm gems? " yn
-    case $yn in
-        [Yy]* ) cp -R "`pwd`/extra/.rvm" "$HOME/" ; echo "--> Default RVM gems installed"; break;;
-        [Nn]* ) break;;
-        * ) echo "Please answer yes or no.";;
-    esac
-done
+if ask_yes_no "Install fonts in your system to match with VIM configuration?"; then
+    cp -R "$SCRIPT_DIR/extra/powerline-fonts" "$HOME/.fonts"
+    echo "Updating fonts..."
+    fc-cache -fv | grep "fc-cache" || true
+    echo "--> Fonts updated"
+fi
 
-while true; do
-    read -p "Add VIM app to GNOME like env menus? " yn
-    case $yn in
-        [Yy]* ) cp -R "`pwd`/extra/.local" "$HOME/" ; echo "--> VIM app is added to menus"; break;;
-        [Nn]* ) break;;
-        * ) echo "Please answer yes or no.";;
-    esac
-done
+if ask_yes_no "Set default rvm gems?"; then
+    cp -R "$SCRIPT_DIR/extra/.rvm" "$HOME/"
+    echo "--> Default RVM gems installed"
+fi
+
+if ask_yes_no "Add VIM app to GNOME like env menus?"; then
+    cp -R "$SCRIPT_DIR/extra/.local" "$HOME/"
+    echo "--> VIM app is added to menus"
+fi
 
 echo "Done."
 echo "Have a nice day!"
-
-echo

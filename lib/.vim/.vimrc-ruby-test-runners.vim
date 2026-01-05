@@ -21,7 +21,6 @@ nmap <silent> <leader>tv :wa<CR>:TestVisit<CR>
 
 let test#strategy = "basic"
 
-
 " let test#enabled_runners = ["javascript#jest", "ruby#rspec"]
 " let g:test#javascript#jest#file_pattern = 'spec.ts'
 " let test#strategy = 'vimterminal'
@@ -32,3 +31,4 @@ let test#strategy = "basic"
 " let test#vim#term_position = "topleft"
 " |projectionist| plug-in
 let g:test#ruby#rspec#executable = 'bundle exec rspec'
+let g:test#ruby#rspec#executable = 'bundle exec parabot test'

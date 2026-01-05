@@ -328,7 +328,8 @@ endif
 "----------------
 " Markdown
 " ---------------
-nmap <silent> <C-s> :CocCommand markdown-preview-enhanced.openPreview<CR>
+" nmap <silent> <C-s> :CocCommand markdown-preview-enhanced.openPreview<CR>
+nmap <C-s> <Plug>MarkdownPreview
 
 "---------------
 " Polyglot

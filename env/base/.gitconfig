@@ -68,7 +68,6 @@
 	process = git-lfs filter-process
 	required = true
 	clean = git-lfs clean -- %f
-
 [delta]
 	navigate = true
 	light = false

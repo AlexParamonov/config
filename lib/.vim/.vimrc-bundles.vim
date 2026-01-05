@@ -74,6 +74,7 @@ Plug 'sjl/gundo.vim'
 " Ack search
 Plug 'mileszs/ack.vim'
 " Plug 'JamshedVesuna/vim-markdown-preview'
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npx --yes yarn install' }
 
 
 "----------------

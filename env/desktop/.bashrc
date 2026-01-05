@@ -33,5 +33,4 @@ source ~/.vim/plugged/gruvbox/gruvbox_256palette.sh
 source $BASH_USER_CONFIGS/env/desktop.sh
 
 command -v direnv >/dev/null && eval "$(direnv hook bash)"
-
 clear

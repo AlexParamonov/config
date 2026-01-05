@@ -21,6 +21,7 @@ source $BASH_USER_CONFIGS/python.sh
 source $BASH_USER_CONFIGS/yarn.sh
 source $BASH_USER_CONFIGS/fzf.sh
 source $BASH_USER_CONFIGS/github.sh
+source $BASH_USER_CONFIGS/ai.sh
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"

@@ -24,7 +24,7 @@
   ign = ls-files -o -i --exclude-standard
 [user]
   name = Alexander Paramonov
-  email = alexander.n.paramonov@gmail.com
+	email = 352030+AlexParamonov@users.noreply.github.com
 [core]
   editor = vim
   whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol

@@ -75,8 +75,37 @@ if ask_yes_no "Update colors in your system to match with VIM colorscheme?"; the
 fi
 
 if ask_yes_no "Install custom keyboard layout?"; then
+    # Copy the custom XKB symbols file
     sudo cp "$SCRIPT_DIR/extra/keyboard_layouts/us" "/usr/share/X11/xkb/symbols/"
-    echo "--> New layout copied to '/usr/share/X11/xkb/symbols/us'"
+
+    # Create variant XML snippet for XKB rules
+    cat > /tmp/dvorak_apk_variant.xml << 'XKBEOF'
+        <variant>
+          <configItem popularity="exotic">
+            <name>dvorak-apk</name>
+            <description>English (Dvorak, AP Keyboard)</description>
+          </configItem>
+        </variant>
+XKBEOF
+
+    # Find the line number for dvorak-classic in evdev.xml (dynamic search)
+    EVDEV_LINE=$(grep -n 'name>dvorak-classic</name>' /usr/share/X11/xkb/rules/evdev.xml | head -1 | cut -d: -f1)
+    if [ -n "$EVDEV_LINE" ]; then
+        INSERT_LINE=$((EVDEV_LINE + 3))
+        sudo sed -i "${INSERT_LINE}r /tmp/dvorak_apk_variant.xml" /usr/share/X11/xkb/rules/evdev.xml
+    fi
+
+    # Find the line number for dvorakprogr in base.extras.xml (dynamic search)
+    EXTRAS_LINE=$(grep -n 'name>dvorakprogr</name>' /usr/share/X11/xkb/rules/base.extras.xml | head -1 | cut -d: -f1)
+    if [ -n "$EXTRAS_LINE" ]; then
+        INSERT_LINE=$((EXTRAS_LINE + 3))
+        sudo sed -i "${INSERT_LINE}r /tmp/dvorak_apk_variant.xml" /usr/share/X11/xkb/rules/base.extras.xml
+    fi
+
+    # Recompile XKB database
+    sudo dpkg-reconfigure xkb-data
+
+    echo "--> Keyboard layout installed and registered in XKB rules"
 fi
 
 if ask_yes_no "Install fonts in your system to match with VIM configuration?"; then

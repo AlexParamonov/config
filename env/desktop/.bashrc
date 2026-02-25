@@ -25,6 +25,7 @@ source $BASH_USER_CONFIGS/ai.sh
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 
 # source ~/.nvm/nvm.sh
 source ~/.vim/plugged/gruvbox/gruvbox_256palette.sh

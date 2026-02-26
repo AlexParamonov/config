@@ -540,18 +540,26 @@ nnoremap <leader>l :set list!<CR>
 " Edit file in same directory
 noremap <leader>e :edit %:h/
 
-" OS clipboard
-nnoremap <leader>y "+y
-vnoremap <leader>y "+y
+" " OS clipboard
+" nnoremap <leader>y "+y
+" vnoremap <leader>y "+y
 
-nnoremap <leader>p "+p
-vnoremap <leader>p "+p
-nnoremap <leader>P "+P
-vnoremap <leader>P "+P
+" nnoremap <leader>p "+p
+" vnoremap <leader>p "+p
+" nnoremap <leader>P "+P
+" vnoremap <leader>P "+P
 
+" " OS clipboard
+" nnoremap <leader>y "+y
+" vnoremap <leader>y "+y
 " xnoremap <silent><leader>y y:call system("wl-copy", @")<cr>
 " nnoremap <silent><leader>p :let @"=substitute(system("wl-paste --no-newline"), '<C-v><C-m>', '', 'g')<cr>p
 " nnoremap <silent><leader>P :let @"=substitute(system("wl-paste --no-newline"), '<C-v><C-m>', '', 'g')<cr>P
+
+" Visual: yank to clipboard without clobbering unnamed register
+xnoremap <silent><leader>y :<C-u>let @x=@"<CR>gvy:call system("wl-copy", @")<CR>:let @"=@x<CR>
+nnoremap <silent><leader>p :let @x=@"<CR>:let @"=substitute(system("wl-paste --no-newline"), '<C-v><C-m>', '', 'g')<CR>p:let @"=@x<CR>
+nnoremap <silent><leader>P :let @x=@"<CR>:let @"=substitute(system("wl-paste --no-newline"), '<C-v><C-m>', '', 'g')<CR>P:let @"=@x<CR>
 
 " Auto indent whole file
 " TODO:  does not work

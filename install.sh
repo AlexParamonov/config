@@ -37,10 +37,6 @@ if ! ask_yes_no "Using $SELECTED_ENV as source. Is this correct?"; then
 fi
 echo "--> Perform $SELECTED_ENV environment install."
 
-# Install dependencies
-echo "Installing xsel for tmux clipboard support..."
-sudo apt-get install -y xsel
-
 # Link base environment configs
 for config in $(ls -1A "$ENV_DIR$BASE_ENV"); do
     echo "linking base $config"

@@ -125,6 +125,11 @@ fi
 # Extra stuff
 echo "Installing extra stuff:"
 
+if ask_yes_no "Install git-delta (diff viewer)?"; then
+    sudo apt install -y git-delta
+    echo "--> git-delta installed"
+fi
+
 if ask_yes_no "Update colors in your system to match with VIM colorscheme?"; then
     bash "$SCRIPT_DIR/extra/gnome-terminal-colors-solarized/install.sh"
     echo "--> Colorscheme changed."

@@ -3,7 +3,32 @@
   "verbose": true,
   "includeCoAuthoredBy": false,
   "permissions": {
-    "defaultMode": "plan"
+    "defaultMode": "plan",
+    "allow": [
+      "Read",
+      "Glob",
+      "Grep",
+      "Bash(git status)",
+      "Bash(git diff *)",
+      "Bash(git log *)",
+      "Bash(git branch *)",
+      "Bash(git show *)",
+      "Bash(git stash *)",
+      "Bash(git remote *)",
+      "Bash(git config --list)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(pwd)",
+      "Bash(ls *)",
+      "Bash(head *)",
+      "Bash(tail *)",
+      "Bash(wc *)",
+      "Bash(find *)",
+      "Bash(which *)",
+      "Bash(date)",
+      "Bash(uname *)",
+      "Bash(curl *)"
+    ]
   },
   "env": {
     "DISABLE_TELEMETRY": "1",

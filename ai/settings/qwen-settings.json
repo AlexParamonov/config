@@ -8,7 +8,32 @@
     "showLineNumbers": true
   },
   "tools": {
-    "approvalMode": "default"
+    "approvalMode": "default",
+    "allowed": [
+      "Read",
+      "Glob",
+      "Grep",
+      "run_shell_command(git status)",
+      "run_shell_command(git diff *)",
+      "run_shell_command(git log *)",
+      "run_shell_command(git branch *)",
+      "run_shell_command(git show *)",
+      "run_shell_command(git stash *)",
+      "run_shell_command(git remote *)",
+      "run_shell_command(git config --list)",
+      "run_shell_command(git add *)",
+      "run_shell_command(git commit *)",
+      "run_shell_command(pwd)",
+      "run_shell_command(ls *)",
+      "run_shell_command(head *)",
+      "run_shell_command(tail *)",
+      "run_shell_command(wc *)",
+      "run_shell_command(find *)",
+      "run_shell_command(which *)",
+      "run_shell_command(date)",
+      "run_shell_command(uname *)",
+      "run_shell_command(curl *)"
+    ]
   },
   "context": {
     "fileName": ["QWEN.md", "AI.md"]

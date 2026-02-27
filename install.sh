@@ -26,6 +26,66 @@ for config in $(ls -1A lib); do
     ln -s "$SCRIPT_DIR/lib/$config" "$HOME/$config"
 done
 
+# AI Assistants Configuration
+echo "Checking for AI assistants:"
+
+CLAUDE_INSTALLED=false
+QWEN_INSTALLED=false
+
+if command -v claude &> /dev/null; then
+    echo "  -> Claude Code detected at $(which claude)"
+    CLAUDE_INSTALLED=true
+fi
+
+if command -v qwen &> /dev/null; then
+    echo "  -> Qwen Code detected at $(which qwen)"
+    QWEN_INSTALLED=true
+fi
+
+if [ "$CLAUDE_INSTALLED" = true ] || [ "$QWEN_INSTALLED" = true ]; then
+    echo ""
+    echo "Installing AI configurations:"
+
+    # Claude Code setup
+    if [ "$CLAUDE_INSTALLED" = true ]; then
+        if ask_yes_no "Configure Claude Code?"; then
+            mkdir -p "$HOME/.claude"
+            rm -rf "$HOME/.claude/CLAUDE.md" 2>/dev/null || true
+            ln -s "$SCRIPT_DIR/ai/AI.md" "$HOME/.claude/CLAUDE.md"
+            echo "  -> Linked AI.md to ~/.claude/CLAUDE.md"
+
+            rm -rf "$HOME/.claude/settings.json" 2>/dev/null || true
+            ln -s "$SCRIPT_DIR/ai/settings/claude-settings.json" "$HOME/.claude/settings.json"
+            echo "  -> Linked settings to ~/.claude/settings.json"
+
+            rm -rf "$HOME/.claude/skills" 2>/dev/null || true
+            ln -s "$SCRIPT_DIR/ai/skills" "$HOME/.claude/skills"
+            echo "  -> Linked skills to ~/.claude/skills/"
+        fi
+    fi
+
+    # Qwen Code setup
+    if [ "$QWEN_INSTALLED" = true ]; then
+        if ask_yes_no "Configure Qwen Code?"; then
+            mkdir -p "$HOME/.qwen"
+            rm -rf "$HOME/.qwen/QWEN.md" 2>/dev/null || true
+            ln -s "$SCRIPT_DIR/ai/AI.md" "$HOME/.qwen/QWEN.md"
+            echo "  -> Linked AI.md to ~/.qwen/QWEN.md"
+
+            rm -rf "$HOME/.qwen/settings.json" 2>/dev/null || true
+            ln -s "$SCRIPT_DIR/ai/settings/qwen-settings.json" "$HOME/.qwen/settings.json"
+            echo "  -> Linked settings to ~/.qwen/settings.json"
+
+            rm -rf "$HOME/.qwen/skills" 2>/dev/null || true
+            ln -s "$SCRIPT_DIR/ai/skills" "$HOME/.qwen/skills"
+            echo "  -> Linked skills to ~/.qwen/skills/"
+        fi
+    fi
+
+    echo "--> AI configurations installed."
+    echo ""
+fi
+
 # Select environment
 PS3="Choose available environment: "
 select SELECTED_ENV in $(ls -1A "$ENV_DIR"); do

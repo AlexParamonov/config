@@ -1,0 +1,16 @@
+{
+  "general": {
+    "vimMode": true,
+    "preferredEditor": "vim"
+  },
+  "ui": {
+    "theme": "GitHub",
+    "showLineNumbers": true
+  },
+  "tools": {
+    "approvalMode": "default"
+  },
+  "context": {
+    "fileName": ["QWEN.md", "AI.md"]
+  }
+}

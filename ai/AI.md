@@ -8,38 +8,41 @@
 - Use plan mode for verification steps, not just building
 - Write detailed specs upfront to reduce ambiguity
 
-### 2. Subagent Strategy to keep main context window clean
-- Offload research, exploration, and parallel analysis to subagents
-- For complex problems, throw more compute at it via subagents
+### 2. Subagent Strategy
+- Use for: review, exploration/research, isolated task implementation
 - One task per subagent for focused execution
+- Keeps main context window clean
 
 ### 3. Self-Improvement Loop
-- After ANY correction from the user: update `tasks/lessons.md` with the pattern
-- Write rules for yourself that prevent the same mistake
-- Ruthlessly iterate on these lessons until mistake rate drops
-- Review lessons at session start for relevant project
+- After ANY correction: update `tasks/lessons.md` with the pattern
+- Write rules that prevent the same mistake
+- Ruthlessly iterate on lessons until mistake rate drops
+- Review lessons at session start
 
 ### 4. Verification Before Done
-- Never mark a task complete without proving it works
-- Diff behavior between main and your changes when relevant
-- Ask yourself: "Would a staff engineer approve this?"
+- Never mark complete without proving it works
+- Diff against `master`/`main` branch: `git diff HEAD`
+- Ask: "Would a staff engineer approve this?"
 - Run tests, check logs, demonstrate correctness
 
 ### 5. Demand Elegance (Balanced)
-- For non-trivial changes: pause and ask "is there a more elegant way?"
-- If a fix feels hacky: "Knowing everything I know now, implement the elegant solution"
-- Skip this for simple, obvious fixes - don't over-engineer
-- Challenge your own work before presenting it
+- Simple/obvious fixes: just do it, don't over-engineer
+- Non-trivial changes: pause and ask "is there a more elegant way?"
+- Hacky feeling: step back and implement the elegant solution
+- Always challenge your own work before presenting
 
 ### 6. Autonomous Bug Fixing
-- When given a bug report: just fix it. Don't ask for hand-holding
+- Given a bug: just fix it. No hand-holding requests.
 - Point at logs, errors, failing tests -> then resolve them
-- Zero context switching required from the user
-- Go fix failing CI tests without being told how
+- Zero context switching required from user
+- Fix failing CI tests without being told how
 
 ## Task Management
-1. **Plan First**: Write plan to `tasks/todo.md` with checkable items
-2. **Verify Plan**: Check in before starting implementation
+1. **Plan First**: Write plan to `tasks/todo.md` (per-project) with checkable items
+2. **Verify Plan**: Self-review before coding:
+   - Compare against original request
+   - Check for bugs, security issues, best practices
+   - Ask: simpler? more elegant?
 3. **Track Progress**: Mark items complete as you go
 4. **Explain Changes**: High-level summary at each step
 5. **Document Results**: Add review to `tasks/todo.md`
@@ -49,3 +52,7 @@
 - **Simplicity First**: Make every change as simple as possible. Impact minimal code.
 - **No Laziness**: Find root causes. No temporary fixes. Senior developer standards.
 - **Minimal Impact**: Changes should only touch what's necessary. Avoid introducing bugs.
+
+## Commit messages
+- concise, follow Conventional Commits format
+- no extra collaborators

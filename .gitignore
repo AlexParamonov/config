@@ -9,6 +9,7 @@ TAGS
 
 lib/.config
 lib/.vim/plugged
+tasks/
 
 ## generic files to ignore
 *~

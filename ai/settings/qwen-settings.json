@@ -36,6 +36,18 @@
     ]
   },
   "context": {
-    "fileName": ["QWEN.md", "AI.md"]
+    "fileName": [
+      "QWEN.md",
+      "AI.md"
+    ]
+  },
+  "$version": 3,
+  "security": {
+    "auth": {
+      "selectedType": "qwen-oauth"
+    }
+  },
+  "model": {
+    "name": "coder-model"
   }
 }

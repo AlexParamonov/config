@@ -1,2 +1,11 @@
 # Claude Code - Enable experimental MCP-CLI for reduced token consumption
 export ENABLE_EXPERIMENTAL_MCP_CLI=true
+
+# Turn off telemetry
+export BETA_TRACING_ENDPOINT=http://127.0.0.1/fakeuri
+export ENABLE_ENHANCED_TELEMETRY_BETA=0
+export CLAUDE_CODE_ENABLE_TELEMETRY=0
+export CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1
+export CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS=1
+export DISABLE_TELEMETRY=1
+export OTEL_LOG_USER_PROMPTS=0

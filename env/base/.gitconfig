@@ -76,3 +76,5 @@
 
 [interactive]
 	diffFilter = delta --color-only
+[credential]
+	helper = cache --timeout=86400

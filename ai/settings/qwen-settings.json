@@ -1,18 +1,37 @@
 {
   "general": {
     "vimMode": true,
-    "preferredEditor": "vim"
+    "preferredEditor": "vim",
+    "gitCoAuthor": false
   },
   "ui": {
-    "theme": "GitHub",
-    "showLineNumbers": true
+    "showLineNumbers": true,
+    "enableUserFeedback": false
+  },
+  "webSearch": {
+    "provider": [
+      {
+        "type": "dashscope"
+      },
+      {
+        "type": "tavily",
+        "apiKey": "$TAVILY_API_KEY"
+      }
+    ],
+    "default": "dashscope"
   },
   "tools": {
     "approvalMode": "default",
     "allowed": [
-      "Read",
-      "Glob",
-      "Grep",
+      "web_search",
+      "web_fetch",
+      "read_file",
+      "glob",
+      "grep_search",
+      "read_many_files",
+      "save_memory",
+      "todo_write",
+      "task",
       "run_shell_command(git status)",
       "run_shell_command(git diff *)",
       "run_shell_command(git log *)",
@@ -32,7 +51,13 @@
       "run_shell_command(which *)",
       "run_shell_command(date)",
       "run_shell_command(uname *)",
-      "run_shell_command(curl *)"
+      "run_shell_command(curl *)",
+      "run_shell_command(mkdir *)",
+      "run_shell_command(touch *)",
+      "run_shell_command(du *)",
+      "run_shell_command(df *)",
+      "run_shell_command(ps *)",
+      "ls"
     ]
   },
   "context": {
@@ -46,6 +71,16 @@
     "auth": {
       "selectedType": "qwen-oauth"
     }
+  },
+  "modelProviders": {
+    "openai": [
+      {
+        "id": "local-27b",
+        "name": "Qwen3.5 27B (Local)",
+        "envKey": "LOCAL_API_KEY",
+        "baseUrl": "http://192.168.0.101:8080/v1"
+      }
+    ]
   },
   "model": {
     "name": "coder-model"

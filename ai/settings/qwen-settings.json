@@ -1,6 +1,6 @@
 {
   "general": {
-    "vimMode": true,
+    "vimMode": false,
     "preferredEditor": "vim",
     "gitCoAuthor": false
   },

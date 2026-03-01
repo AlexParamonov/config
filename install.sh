@@ -79,6 +79,10 @@ if [ "$CLAUDE_INSTALLED" = true ] || [ "$QWEN_INSTALLED" = true ]; then
             rm -rf "$HOME/.qwen/skills" 2>/dev/null || true
             ln -s "$SCRIPT_DIR/ai/skills" "$HOME/.qwen/skills"
             echo "  -> Linked skills to ~/.qwen/skills/"
+
+            rm -rf "$HOME/.qwen/agents" 2>/dev/null || true
+            ln -s "$SCRIPT_DIR/ai/agents" "$HOME/.qwen/agents"
+            echo "  -> Linked agents to ~/.qwen/agents/"
         fi
     fi
 

@@ -31,11 +31,19 @@
 - Hacky feeling: step back and implement the elegant solution
 - Always challenge your own work before presenting
 
-### 6. Autonomous Bug Fixing
-- Given a bug: just fix it. No hand-holding requests.
-- Point at logs, errors, failing tests -> then resolve them
-- Zero context switching required from user
-- Fix failing CI tests without being told how
+## Pre-Completion Checklist
+
+**Before marking ANY task complete, verify:**
+
+- [ ] **Validation run**: Executed appropriate check (tests, `bash -n`, `tsc --noEmit`, etc.)
+- [ ] **Diff shown**: Displayed changes with `git diff` or equivalent
+- [ ] **Self-challenge**: Asked and answered:
+  - Is this a simple and elegant solution (simple does not mean easy!)?
+  - Are there bugs, security issues, or best-practice violations?
+  - Would I approve this if reviewing a colleague's work?
+- [ ] **User can verify**: Explained how user can independently confirm
+
+**Rule**: If any item is N/A, state why. No silent skips.
 
 ## Task Management
 1. **Plan First**: Write plan to `tasks/todo.md` (per-project) with checkable items

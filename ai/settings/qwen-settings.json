@@ -32,6 +32,7 @@
       "save_memory",
       "todo_write",
       "task",
+      "find",
       "run_shell_command(git status)",
       "run_shell_command(git diff *)",
       "run_shell_command(git log *)",
@@ -79,6 +80,36 @@
         "name": "Qwen3.5 27B (Local)",
         "envKey": "LOCAL_API_KEY",
         "baseUrl": "http://192.168.0.101:8080/v1"
+      },
+      {
+        "id": "llama-arch",
+        "name": "LLama Architecture",
+        "envKey": "LOCAL_API_KEY",
+        "baseUrl": "http://192.168.0.101:8081/v1"
+      },
+      {
+        "id": "llama-review",
+        "name": "LLama Code Review",
+        "envKey": "LOCAL_API_KEY",
+        "baseUrl": "http://192.168.0.101:8082/v1"
+      },
+      {
+        "id": "llama-debug",
+        "name": "LLama Debugging",
+        "envKey": "LOCAL_API_KEY",
+        "baseUrl": "http://192.168.0.101:8083/v1"
+      },
+      {
+        "id": "llama-security",
+        "name": "LLama Security Audit",
+        "envKey": "LOCAL_API_KEY",
+        "baseUrl": "http://192.168.0.101:8084/v1"
+      },
+      {
+        "id": "llama-code-exploration",
+        "name": "LLama Code Exploration",
+        "envKey": "LOCAL_API_KEY",
+        "baseUrl": "http://192.168.0.101:8085/v1"
       }
     ]
   },

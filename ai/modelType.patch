@@ -1,0 +1,53 @@
+--- /home/ap/.asdf/installs/nodejs/lts/lib/node_modules/@qwen-code/qwen-code/cli.js.bak	2026-03-01 23:00:08.769995910 +0100
++++ /home/ap/.asdf/installs/nodejs/lts/lib/node_modules/@qwen-code/qwen-code/cli.js	2026-03-02 00:05:36.584220603 +0100
+@@ -175446,6 +175446,23 @@
+        * @returns {Promise<void>} A promise that resolves when the subagent has completed its execution.
+        */
+       async runNonInteractive(context2, externalSignal) {
++        // Save original authType to restore after subagent finishes
++        const originalAuthType = this.runtimeContext.getContentGeneratorConfig()?.authType;
++        // Convert string authType from YAML to AuthType enum if needed
++        if (this.modelConfig.authType && typeof this.modelConfig.authType === "string") {
++          const authTypeValue = this.modelConfig.authType;
++          if (authTypeValue === "qwen-oauth") {
++            this.modelConfig.authType = AuthType2.QWEN_OAUTH;
++          } else if (authTypeValue === "openai") {
++            this.modelConfig.authType = AuthType2.USE_OPENAI;
++          } else if (authTypeValue === "gemini") {
++            this.modelConfig.authType = AuthType2.USE_GEMINI;
++          } else if (authTypeValue === "vertex-ai") {
++            this.modelConfig.authType = AuthType2.USE_VERTEX_AI;
++          } else if (authTypeValue === "anthropic") {
++            this.modelConfig.authType = AuthType2.USE_ANTHROPIC;
++          }
++        }
+         const chat = await this.createChatObject(context2);
+         if (!chat) {
+           this.terminateMode = SubagentTerminateMode.ERROR;
+@@ -175624,6 +175641,11 @@
+           });
+           throw error2;
+         } finally {
++          // Restore original authType if subagent switched it
++          if (originalAuthType && this.modelConfig.authType !== originalAuthType) {
++            console.log(`Subagent "${this.name}" restoring authType to "${originalAuthType}"`);
++            await this.runtimeContext.refreshAuth(originalAuthType);
++          }
+           if (externalSignal) {
+             externalSignal.removeEventListener("abort", onExternalAbort);
+           }
+@@ -175871,6 +175893,14 @@
+         if (this.promptConfig.systemPrompt && this.promptConfig.initialMessages) {
+           throw new Error("PromptConfig cannot have both `systemPrompt` and `initialMessages` defined.");
+         }
++        // Switch to subagent's authType if specified
++        if (this.modelConfig.authType) {
++          const sessionAuthType = this.runtimeContext.getContentGeneratorConfig()?.authType;
++          if (sessionAuthType && this.modelConfig.authType !== sessionAuthType) {
++            console.log(`Subagent "${this.name}" switching authType from "${sessionAuthType}" to "${this.modelConfig.authType}"`);
++            await this.runtimeContext.refreshAuth(this.modelConfig.authType);
++          }
++        }
+         const envHistory = await getInitialChatHistory(this.runtimeContext);
+         const start_history = [
+           ...envHistory,

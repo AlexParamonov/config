@@ -106,11 +106,18 @@
         "baseUrl": "http://192.168.0.101:8084/v1"
       },
       {
-        "id": "llama-code-exploration",
+        "id": "llama-explorer",
         "name": "LLama Code Exploration",
         "envKey": "LOCAL_API_KEY",
         "baseUrl": "http://192.168.0.101:8085/v1"
+      },
+      {
+        "id": "llama-builder",
+        "name": "LLama Code Builder",
+        "envKey": "LOCAL_API_KEY",
+        "baseUrl": "http://192.168.0.101:8086/v1"
       }
+
     ]
   },
   "model": {

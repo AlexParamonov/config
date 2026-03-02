@@ -5,7 +5,6 @@
 ### 1. Plan Mode Default
 - Enter plan mode for ANY non-trivial task (3+ steps or architectural decisions)
 - If something goes sideways, STOP and re-plan immediately - don't keep pushing
-- Use plan mode for verification steps, not just building
 - Write detailed specs upfront to reduce ambiguity
 
 ### 2. Subagent Strategy
@@ -19,48 +18,21 @@
 - Ruthlessly iterate on lessons until mistake rate drops
 - Review lessons at session start
 
-### 4. Verification Before Done
-- Never mark complete without proving it works
-- Diff against `master`/`main` branch: `git diff HEAD`
-- Ask: "Would a staff engineer approve this?"
-- Run tests, check logs, demonstrate correctness
-
-### 5. Demand Elegance (Balanced)
-- Simple/obvious fixes: just do it, don't over-engineer
-- Non-trivial changes: pause and ask "is there a more elegant way?"
-- Hacky feeling: step back and implement the elegant solution
-- Always challenge your own work before presenting
-
-## Pre-Completion Checklist
-
-**Before marking ANY task complete, verify:**
-
-- [ ] **Validation run**: Executed appropriate check (tests, `bash -n`, `tsc --noEmit`, etc.)
-- [ ] **Diff shown**: Displayed changes with `git diff` or equivalent
-- [ ] **Self-challenge**: Asked and answered:
-  - Is this a simple and elegant solution (simple does not mean easy!)?
-  - Are there bugs, security issues, or best-practice violations?
-  - Would I approve this if reviewing a colleague's work?
-- [ ] **User can verify**: Explained how user can independently confirm
-
-**Rule**: If any item is N/A, state why. No silent skips.
-
-## Task Management
-1. **Plan First**: Write plan to `tasks/todo.md` (per-project) with checkable items
-2. **Verify Plan**: Self-review before coding:
-   - Compare against original request
-   - Check for bugs, security issues, best practices
-   - Ask: simpler? more elegant?
-3. **Track Progress**: Mark items complete as you go
-4. **Explain Changes**: High-level summary at each step
-5. **Document Results**: Add review to `tasks/todo.md`
-6. **Capture Lessons**: Update `tasks/lessons.md` after corrections
-
 ## Core Principles
 - **Simplicity First**: Make every change as simple as possible. Impact minimal code.
 - **No Laziness**: Find root causes. No temporary fixes. Senior developer standards.
 - **Minimal Impact**: Changes should only touch what's necessary. Avoid introducing bugs.
 
-## Commit messages
-- concise, follow Conventional Commits format
-- no extra collaborators
+## Agent Ecosystem
+
+| Agent | Purpose | Artifacts |
+|-------|---------|-----------|
+| `explorer` | Codebase exploration | `tasks/code-exploration-*.md` |
+| `architect` | Architecture design | `tasks/architecture-*.md` |
+| `builder` | Implementation | `tasks/build-*.md`, code |
+| `reviewer` | Quality review | Inline issues |
+| `researcher` | Web research | Inline summary |
+| `debugger` | Bug fixes | Code fixes |
+| `security-auditor` | Security audits | Audit report |
+
+**Workflow:** explore → architect → build → review

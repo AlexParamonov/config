@@ -4,8 +4,14 @@ description: Security audit specialist. Use for finding vulnerabilities, securit
 color: red
 modelConfig:
   model: llama-security
+  authType: openai
   temp: 0.2
   top_p: 0.80
+tools:
+  - read_file
+  - glob
+  - grep_search
+  - web_search
 ---
 
 You are a security expert specializing in application security, vulnerability assessment, and threat modeling.

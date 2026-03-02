@@ -4,8 +4,16 @@ description: Bug fixing and debugging specialist. Use for analyzing errors, find
 color: orange
 modelConfig:
   model: llama-debug
+  authType: openai
   temp: 0.3
   top_p: 0.85
+tools:
+  - read_file
+  - grep_search
+  - glob
+  - run_shell_command
+  - edit
+  - write_file
 ---
 
 You are a debugging expert skilled at diagnosing and fixing complex issues.

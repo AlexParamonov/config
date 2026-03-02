@@ -29,10 +29,19 @@
       "glob",
       "grep_search",
       "read_many_files",
+      "list_directory",
       "save_memory",
       "todo_write",
       "task",
-      "find",
+      "run_shell_command(find)",
+      "run_shell_command(head)",
+      "run_shell_command(tail)",
+      "run_shell_command(ls)",
+      "run_shell_command(wc)",
+      "run_shell_command(pwd)",
+      "run_shell_command(date)",
+      "run_shell_command(uname)",
+      "run_shell_command(which)",
       "run_shell_command(git status)",
       "run_shell_command(git diff *)",
       "run_shell_command(git log *)",
@@ -43,22 +52,12 @@
       "run_shell_command(git config --list)",
       "run_shell_command(git add *)",
       "run_shell_command(git commit *)",
-      "run_shell_command(pwd)",
-      "run_shell_command(ls *)",
-      "run_shell_command(head *)",
-      "run_shell_command(tail *)",
-      "run_shell_command(wc *)",
-      "run_shell_command(find *)",
-      "run_shell_command(which *)",
-      "run_shell_command(date)",
-      "run_shell_command(uname *)",
-      "run_shell_command(curl *)",
-      "run_shell_command(mkdir *)",
-      "run_shell_command(touch *)",
-      "run_shell_command(du *)",
-      "run_shell_command(df *)",
-      "run_shell_command(ps *)",
-      "ls"
+      "run_shell_command(curl)",
+      "run_shell_command(mkdir)",
+      "run_shell_command(touch)",
+      "run_shell_command(du)",
+      "run_shell_command(df)",
+      "run_shell_command(ps)"
     ]
   },
   "context": {
@@ -117,7 +116,6 @@
         "envKey": "LOCAL_API_KEY",
         "baseUrl": "http://192.168.0.101:8086/v1"
       }
-
     ]
   },
   "model": {

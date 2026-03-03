@@ -11,3 +11,6 @@ export DISABLE_TELEMETRY=1
 export OTEL_LOG_USER_PROMPTS=0
 export GEMINI_TELEMETRY_ENABLED=false
 export LOCAL_API_KEY="not-needed"
+
+# opencode
+export PATH=/home/ap/.opencode/bin:$PATH

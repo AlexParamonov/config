@@ -31,6 +31,7 @@ echo "Checking for AI assistants:"
 
 CLAUDE_INSTALLED=false
 QWEN_INSTALLED=false
+OPENCODE_INSTALLED=false
 
 if command -v claude &> /dev/null; then
     echo "  -> Claude Code detected at $(which claude)"
@@ -42,7 +43,12 @@ if command -v qwen &> /dev/null; then
     QWEN_INSTALLED=true
 fi
 
-if [ "$CLAUDE_INSTALLED" = true ] || [ "$QWEN_INSTALLED" = true ]; then
+if command -v opencode &> /dev/null; then
+    echo "  -> OpenCode detected at $(which opencode)"
+    OPENCODE_INSTALLED=true
+fi
+
+if [ "$CLAUDE_INSTALLED" = true ] || [ "$QWEN_INSTALLED" = true ] || [ "$OPENCODE_INSTALLED" = true ]; then
     echo ""
     echo "Installing AI configurations:"
 
@@ -83,6 +89,23 @@ if [ "$CLAUDE_INSTALLED" = true ] || [ "$QWEN_INSTALLED" = true ]; then
             rm -rf "$HOME/.qwen/agents" 2>/dev/null || true
             ln -s "$SCRIPT_DIR/ai/agents" "$HOME/.qwen/agents"
             echo "  -> Linked agents to ~/.qwen/agents/"
+        fi
+    fi
+
+    # OpenCode setup
+    if [ "$OPENCODE_INSTALLED" = true ]; then
+        if ask_yes_no "Configure OpenCode?"; then
+            rm -rf "$HOME/.config/opencode/AGENTS.md" 2>/dev/null || true
+            ln -s "$SCRIPT_DIR/ai/AI.md" "$HOME/.config/opencode/AGENTS.md"
+            echo "  -> Linked AI.md to ~/.config/opencode/AGENTS.md"
+
+            rm -rf "$HOME/.config/opencode/skills" 2>/dev/null || true
+            ln -s "$SCRIPT_DIR/ai/skills" "$HOME/.config/opencode/skills"
+            echo "  -> Linked skills to ~/.config/opencode/skills/"
+
+            rm -rf "$HOME/.config/opencode/agents" 2>/dev/null || true
+            ln -s "$SCRIPT_DIR/ai/opencode/agents" "$HOME/.config/opencode/agents"
+            echo "  -> Linked agents to ~/.config/opencode/agents/"
         fi
     fi
 

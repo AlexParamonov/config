@@ -5,8 +5,6 @@ color: red
 modelConfig:
   model: llama-security
   authType: openai
-  temp: 0.2
-  top_p: 0.80
 tools:
   - read_file
   - glob

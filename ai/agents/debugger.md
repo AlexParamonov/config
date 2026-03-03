@@ -5,8 +5,6 @@ color: orange
 modelConfig:
   model: llama-debug
   authType: openai
-  temp: 0.3
-  top_p: 0.85
 tools:
   - read_file
   - grep_search

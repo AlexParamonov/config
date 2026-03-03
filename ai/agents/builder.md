@@ -5,8 +5,6 @@ color: blue
 modelConfig:
   model: llama-code
   authType: openai
-  temp: 0.7
-  top_p: 0.95
 tools:
   - read_file
   - glob

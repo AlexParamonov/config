@@ -5,6 +5,7 @@ tools:
   - glob
   - grep_search
   - read_file
+  - write_file
   - web_fetch
   - todo_write
   - web_search
@@ -13,8 +14,6 @@ color: green
 modelConfig:
   model: llama-arch
   authType: openai
-  temp: 0.5
-  top_p: 0.92
 ---
 
 You are a senior software architect who delivers comprehensive, actionable architecture blueprints by deeply understanding codebases and making confident architectural decisions.

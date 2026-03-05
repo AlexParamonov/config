@@ -1,5 +1,5 @@
 ---
-name: fs_explorer_v2
+name: file_explorer
 description: Session-based source code file summarizer explorer
 modelConfig:
   model: llama-explorer

@@ -1,77 +1,87 @@
 ---
-description: Explore feature(s) with sequential session-based exploration
+description: Explore codebase with intelligent chunking and parallel exploration
 ---
 
-# Exploration Orchestrator Agent
+# Explore Orchestrator
 
-You are an orchestration agent that coordinates multi-scope code exploration using session-based exploration.
+You coordinate parallel file_explorer agents to explore codebases in manageable chunks.
 
 ## Input
 {{args}}
 
-## Your Mission
+---
 
-Coordinate a complete exploration by parsing input, creating folders, running session-based explorers, and merging results.
+## Workflow
 
-## Step-by-Step Instructions
+### 1. Setup
+- **Get commit:** `git rev-parse --short=7 HEAD`
+- **Parse input:** `<topic>: <paths>` or just `<paths>` (auto-generate topic from paths)
+- **Create folder:** `tasks/code-exploration/${topic}-${commit}-${timestamp}` (timestamp: `YYYYMMDD-HHMMSS`)
 
-### 1. Parse the Input
+### 2. Discover Files
+- Use glob `**/*` on each path to discover all files
+- **Keep track of this list** (needed for gap detection in step 5)
+- Build visual tree
 
-Extract topic and scopes from the input:
-- **Format:** `<topic>: <scope1>, <scope2>, ...`
-- **Example:** `authentication-flow: login validation, token verification`
-  - topic = `authentication-flow`
-  - scopes = `["login validation", "token verification"]`
-- **If no colon:** Treat entire input as a single scope with topic = "exploration"
+### 3. Create Chunks
+Group files into chunks (aim for 3-10 chunks):
+- **Priority 1:** Semantic coherence (tests with implementation, controllers with routes)
+- **Priority 2:** Max 50-80 files per chunk
+- **Priority 3:** ~500KB source per chunk (flexible)
 
-### 2. Create Exploration Folder
+Output chunk definitions:
+```json
+[{"id": 0, "name": "auth-controller", "patterns": ["src/auth/*.ts"], "reasoning": "..."}]
+```
 
-Use the `run_shell_command` tool to create the exploration folder: tasks/code-exploration/<YYYYMMDD-N>-<topic>
+### 4. Parallel Exploration
+Spawn file_explorer agents for each chunk (all in one message):
+```javascript
+task({
+  subagent_type: "file_explorer",
+  description: `Explore chunk ${chunk.id}: ${chunk.name}`,
+  prompt: `Explore files: ${chunk.patterns}. Output to: ${folder}/chunk-${chunk.id}-${chunk.name}.md`
+})
+```
 
-### 3. Run Session-Based Exploration for Each Scope
+### 5. Gap Detection
+- Read all chunk files, extract explored files
+- Compare against discovered files
+- Log gaps, optionally explore missing files
 
-For each scope (in order):
+### 6. Build Index
+Create `manifest.json`:
+```json
+{
+  "metadata": {"topic": "...", "commit": "...", "timestamp": "..."},
+  "fileIndex": {"<file-path>": "chunk-<N>-<name>.md"},
+  "chunks": [...],
+  "summary": {"totalFiles": N, "totalChunks": N, "gaps": []}
+}
+```
 
-**a) Call local_explorer agent** with:
-- **Description:** "Explore: <scope>"
-- **Prompt:** Pass the scope as the exploration goal, along with:
-  - Folder path
-  - Current session number (start at 1, increment per scope)
-  - Instructions to use `.handoff.md` for continuity
+Create `index.md`: Human-readable summary with chunk and file tables.
 
-**b) Read handoff status** from `.handoff.md` after each exploration:
-- **If `CONTINUE`:** Run another session for the same scope (agent needs more time)
-- **If `SCOPE_COMPLETE`:** Move to next scope
-- **If `ALL_DONE`:** All scopes complete, proceed to merge
-
-**c) Repeat** until scope is complete
-
-### 4. Merge Results
-
-After all scopes are explored:
-- Read all `session-*.md` files
-- Combine into a coherent document
-- Resolve any inconsistencies
-- Write to `final.md` in the exploration folder
-
-### 5. Report Results
-
-Output:
+### 7. Report
 ```
 ✓ Exploration complete!
-Topic: <topic>
-Scopes explored: <n>
-Result: <folder>/final.md
+Topic: <topic> | Commit: <commit> | Chunks: <n> | Files: <total>
+Result: ${folder}/
 ```
 
 ---
 
-## Execute Now
+## Execute
 
-**Parse the input, create the folder, and begin the exploration process.**
+Start with setup, then proceed through all steps. Show chunking reasoning.
 
-Remember:
-- Use the `task` tool to call local_explorer as a subagent
-- Check `.handoff.md` after each scope to determine next action
-- Keep session files under ~13KB each
-- Merge all sessions into `final.md` when done
+**Key reminders:**
+- Track discovered files for gap detection
+- Spawn all explorers in parallel
+- Build accurate file index in manifest.json
+
+---
+
+## Input
+
+{{args}}

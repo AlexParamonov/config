@@ -79,49 +79,91 @@
         "name": "Qwen3.5 27B (Local)",
         "envKey": "LOCAL_API_KEY",
         "baseUrl": "http://192.168.0.101:8080/v1",
-        "timeout": 600000
+        "timeout": 600000,
+        "generationConfig": {
+          "extra_body": {
+            "enable_thinking": true,
+            "thinking_budget": 1000
+          }
+        }
       },
       {
         "id": "llama-arch",
         "name": "LLama Architecture",
         "envKey": "LOCAL_API_KEY",
         "baseUrl": "http://192.168.0.101:8081/v1",
-        "timeout": 600000
+        "timeout": 600000,
+        "generationConfig": {
+          "extra_body": {
+            "enable_thinking": true,
+            "thinking_budget": 1000
+          }
+        }
       },
       {
         "id": "llama-review",
         "name": "LLama Code Review",
         "envKey": "LOCAL_API_KEY",
         "baseUrl": "http://192.168.0.101:8082/v1",
-        "timeout": 600000
+        "timeout": 600000,
+        "generationConfig": {
+          "extra_body": {
+            "enable_thinking": true,
+            "thinking_budget": 1000
+          }
+        }
       },
       {
         "id": "llama-debug",
         "name": "LLama Debugging",
         "envKey": "LOCAL_API_KEY",
         "baseUrl": "http://192.168.0.101:8083/v1",
-        "timeout": 600000
+        "timeout": 600000,
+        "generationConfig": {
+          "extra_body": {
+            "enable_thinking": true,
+            "thinking_budget": 1000
+          }
+        }
       },
       {
         "id": "llama-security",
         "name": "LLama Security Audit",
         "envKey": "LOCAL_API_KEY",
         "baseUrl": "http://192.168.0.101:8084/v1",
-        "timeout": 600000
+        "timeout": 600000,
+        "generationConfig": {
+          "extra_body": {
+            "enable_thinking": true,
+            "thinking_budget": 1000
+          }
+        }
       },
       {
         "id": "llama-explorer",
         "name": "LLama Code Exploration",
         "envKey": "LOCAL_API_KEY",
         "baseUrl": "http://192.168.0.101:8085/v1",
-        "timeout": 600000
+        "timeout": 6000000,
+        "generationConfig": {
+          "extra_body": {
+            "enable_thinking": true,
+            "thinking_budget": 1000
+          }
+        }
       },
       {
         "id": "llama-builder",
         "name": "LLama Code Builder",
         "envKey": "LOCAL_API_KEY",
         "baseUrl": "http://192.168.0.101:8086/v1",
-        "timeout": 600000
+        "timeout": 600000,
+        "generationConfig": {
+          "extra_body": {
+            "enable_thinking": true,
+            "thinking_budget": 1000
+          }
+        }
       }
     ]
   },

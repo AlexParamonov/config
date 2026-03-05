@@ -81,6 +81,7 @@
         "baseUrl": "http://192.168.0.101:8080/v1",
         "timeout": 600000,
         "generationConfig": {
+          "contextWindowSize": 64512,
           "extra_body": {
             "enable_thinking": true,
             "thinking_budget": 1000
@@ -94,6 +95,7 @@
         "baseUrl": "http://192.168.0.101:8081/v1",
         "timeout": 600000,
         "generationConfig": {
+          "contextWindowSize": 128000,
           "extra_body": {
             "enable_thinking": true,
             "thinking_budget": 1000
@@ -107,6 +109,7 @@
         "baseUrl": "http://192.168.0.101:8082/v1",
         "timeout": 600000,
         "generationConfig": {
+          "contextWindowSize": 64512,
           "extra_body": {
             "enable_thinking": true,
             "thinking_budget": 1000
@@ -120,6 +123,7 @@
         "baseUrl": "http://192.168.0.101:8083/v1",
         "timeout": 600000,
         "generationConfig": {
+          "contextWindowSize": 64512,
           "extra_body": {
             "enable_thinking": true,
             "thinking_budget": 1000
@@ -133,6 +137,7 @@
         "baseUrl": "http://192.168.0.101:8084/v1",
         "timeout": 600000,
         "generationConfig": {
+          "contextWindowSize": 64512,
           "extra_body": {
             "enable_thinking": true,
             "thinking_budget": 1000
@@ -146,6 +151,7 @@
         "baseUrl": "http://192.168.0.101:8085/v1",
         "timeout": 6000000,
         "generationConfig": {
+          "contextWindowSize": 128000,
           "extra_body": {
             "enable_thinking": true,
             "thinking_budget": 1000
@@ -159,6 +165,7 @@
         "baseUrl": "http://192.168.0.101:8086/v1",
         "timeout": 600000,
         "generationConfig": {
+          "contextWindowSize": 64512,
           "extra_body": {
             "enable_thinking": true,
             "thinking_budget": 1000

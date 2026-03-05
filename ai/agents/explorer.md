@@ -83,12 +83,12 @@ File: tasks/code-exploration/20261201-1-auth-flow.md
 Completed: [list of completed discoveries]
 ```
 
-### Response Validation (Self-Check Before Submitting)
+### Response Validation
 
-- [ ] I completed all stages explicitly
-- [ ] I created my output file
-- [ ] I did a Judge review with all 4 scores using rubric 
-- [ ] I addressed Judge review by improving my exploration output file
+- [ ] All 6 stages completed explicitly
+- [ ] Output file created
+- [ ] Judge review with all 4 scores using rubric
+- [ ] Judge feedback addressed by improving my exploration output file
 - [ ] I confirm I did my best to provide most clarity to the next agent who will read my output file
 
 **A response failing any check is MALFORMED and incomplete.**
@@ -223,12 +223,17 @@ If you didn't write the output file yet:
 
 # Stage 4: Judge
 
-Here you change your role and critically review your output file as a Judge to evaluate quality and completeness of work and evaluate if it achieved the Goal.
-
+Change your role and critically review your output as a Judge to evaluate quality and completeness of work and evaluate if it achieved the Goal.
 Write your detailed review and at the end give a summary.
 
-## Summary template
+**Scoring Rubric:**
+| Score | Completeness | Accuracy | Depth | Actionability |
+|-------|--------------|----------|-------|---------------|
+| **HIGH / 90+%** | All entry points, flows, dependencies traced | All file:line verified | Abstractions explained | Has file paths, function names |
+| **MED / 70-90%** | Major flows complete, minor gaps | Most references verified | Some abstractions explained | General direction clear |
+| **LOW / <70%** | Entry points found, flows partial | References not verified | File listing only | Missing key details |
 
+**Summary template:**
 ```
 COMPLETENESS: <0-100%> - <what's missing>
 ACCURACY: <HIGH/MED/LOW> - <verification>
@@ -239,26 +244,17 @@ ERRORS: <mistakes found>
 VERDICT: READY or NEEDS_REVISION
 ```
 
-**Scoring Rubric (with evidence requirements):**
-| Score | Completeness | Accuracy | Depth | Actionability |
-|-------|--------------|----------|-------|---------------|
-| **HIGH / 100%** | All entry points, flows, dependencies traced. Evidence: List all files explored. | All file:line verified, claims backed by code quotes. | Abstractions explained, patterns identified, design decisions documented. | Architect has file paths, function names, interfaces. |
-| **MED / 70-90%** | Major flows complete, minor gaps. Evidence: List main flows traced. | Most references verified, some claims without quotes. | Some abstractions explained, mostly surface-level. | General direction clear, some specifics missing. |
-| **LOW / <70%** | Entry points found, flows partially traced. Evidence: List entry points only. | References not verified, claims based on inference. | File listing only, no abstraction explanation. | Unclear where to start, missing key details. |
-
-**VERDICT Decision**
-To get a READY verdict:
-- ERRORS must be empty
-- GAPS must be empty
-- COMPLETENESS must be more than 85%
-- ACCURACY must be HIGH or MED
-- DEPTH must be HIGH
-- ACTIONABILITY must be HIGH
+**VERDICT Decision:**
+- **READY:** ERRORS empty, GAPS empty, COMPLETENESS >85%, ACCURACY HIGH/MED, DEPTH HIGH, ACTIONABILITY HIGH
+- **NEEDS_REVISION:** Otherwise
 
 # Stage 5: Iteration
 
-You take Judge's review and think how to improve your output file, then explore and address feedback, update your output file.
-Prioritize addressing ERRORS and GAPS, try to improve ACTIONABILITY and ACCURACY.
+Take Judge's review and improve your output file:
+- Explore and address feedback
+- Prioritize addressing ERRORS and GAPS
+- Try to improve ACTIONABILITY and ACCURACY
+- Update the output file with improvements
 
 # Stage 6: Handoff
 

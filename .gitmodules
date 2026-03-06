@@ -1,6 +1,6 @@
-[submodule "extra/gnome-terminal-colors-solarized"]
-	path = extra/gnome-terminal-colors-solarized
-	url = https://github.com/sigurdga/gnome-terminal-colors-solarized.git
 [submodule "extra/powerline-fonts"]
 	path = extra/powerline-fonts
 	url = https://github.com/powerline/fonts.git
+[submodule "extra/anthropic-skills"]
+	path = extra/anthropic-skills
+	url = https://github.com/anthropics/skills.git

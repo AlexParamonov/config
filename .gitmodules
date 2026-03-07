@@ -1,3 +1,6 @@
 [submodule "extra/powerline-fonts"]
 	path = extra/powerline-fonts
 	url = https://github.com/powerline/fonts.git
+[submodule "ai"]
+	path = ai
+	url = git@github.com:AlexParamonov/ai.git

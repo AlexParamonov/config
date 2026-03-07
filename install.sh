@@ -89,6 +89,10 @@ if [ "$CLAUDE_INSTALLED" = true ] || [ "$QWEN_INSTALLED" = true ] || [ "$OPENCOD
             rm -rf "$HOME/.qwen/agents" 2>/dev/null || true
             ln -s "$SCRIPT_DIR/ai/agents" "$HOME/.qwen/agents"
             echo "  -> Linked agents to ~/.qwen/agents/"
+
+            rm -rf "$HOME/.qwen/commands" 2>/dev/null || true
+            ln -s "$SCRIPT_DIR/ai/commands" "$HOME/.qwen/commands"
+            echo "  -> Linked commands to ~/.qwen/commands/"
         fi
     fi
 

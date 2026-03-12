@@ -541,8 +541,8 @@ nnoremap <leader>l :set list!<CR>
 noremap <leader>e :edit %:h/
 
 " Clipboard integration
-runtime .vimrc-clip-win.vim
-" runtime .vimrc-clip-unix.vim
+" runtime .vimrc-clip-win.vim
+runtime .vimrc-clip-unix.vim
 
 " Auto indent whole file
 " TODO:  does not work

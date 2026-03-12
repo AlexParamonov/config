@@ -115,6 +115,15 @@ if [ "$CLAUDE_INSTALLED" = true ] || [ "$QWEN_INSTALLED" = true ] || [ "$OPENCOD
 
     echo "--> AI configurations installed."
     echo ""
+
+    # Symlink update_ll.sh to llama.cpp if directory exists
+    if [ -d "$HOME/code/llama.cpp" ]; then
+        if ask_yes_no "Symlink update_ll.sh to ~/code/llama.cpp/update.sh?"; then
+            rm -rf "$HOME/code/llama.cpp/update.sh" 2>/dev/null || true
+            ln -s "$SCRIPT_DIR/ai/scripts/update_ll.sh" "$HOME/code/llama.cpp/update.sh"
+            echo "  -> Linked update_ll.sh to ~/code/llama.cpp/update.sh"
+        fi
+    fi
 fi
 
 # Select environment

@@ -36,4 +36,8 @@ source ~/.vim/plugged/gruvbox/gruvbox_256palette.sh
 source $BASH_USER_CONFIGS/env/desktop.sh
 
 command -v direnv >/dev/null && eval "$(direnv hook bash)"
+
+# Add local bin directory to PATH (after all other PATH modifications)
+export PATH="./bin:$PATH"
+
 clear

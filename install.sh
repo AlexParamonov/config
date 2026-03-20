@@ -99,6 +99,11 @@ if [ "$CLAUDE_INSTALLED" = true ] || [ "$QWEN_INSTALLED" = true ] || [ "$OPENCOD
     # OpenCode setup
     if [ "$OPENCODE_INSTALLED" = true ]; then
         if ask_yes_no "Configure OpenCode?"; then
+            # Links opencode-specific agents
+            rm -rf "$HOME/.config/opencode/agents" 2>/dev/null || true
+            ln -s "$SCRIPT_DIR/ai/opencode/agents" "$HOME/.config/opencode/agents"
+            echo "  -> Linked opencode agents to ~/.config/opencode/agents/"
+
             rm -rf "$HOME/.config/opencode/AGENTS.md" 2>/dev/null || true
             ln -s "$SCRIPT_DIR/ai/AI.md" "$HOME/.config/opencode/AGENTS.md"
             echo "  -> Linked AI.md to ~/.config/opencode/AGENTS.md"
@@ -107,9 +112,9 @@ if [ "$CLAUDE_INSTALLED" = true ] || [ "$QWEN_INSTALLED" = true ] || [ "$OPENCOD
             ln -s "$SCRIPT_DIR/ai/skills" "$HOME/.config/opencode/skills"
             echo "  -> Linked skills to ~/.config/opencode/skills/"
 
-            rm -rf "$HOME/.config/opencode/agents" 2>/dev/null || true
-            ln -s "$SCRIPT_DIR/ai/opencode/agents" "$HOME/.config/opencode/agents"
-            echo "  -> Linked agents to ~/.config/opencode/agents/"
+            rm -rf "$HOME/.config/opencode/commands" 2>/dev/null || true
+            ln -s "$SCRIPT_DIR/ai/commands" "$HOME/.config/opencode/commands"
+            echo "  -> Linked commands to ~/.config/opencode/commands/"
         fi
     fi
 

@@ -32,23 +32,42 @@ echo "Checking for AI assistants:"
 CLAUDE_INSTALLED=false
 QWEN_INSTALLED=false
 OPENCODE_INSTALLED=false
+KILOCLI_INSTALLED=false
 
+# Check CLI commands in PATH
 if command -v claude &> /dev/null; then
     echo "  -> Claude Code detected at $(which claude)"
+    CLAUDE_INSTALLED=true
+elif [ -f "$HOME/.local/bin/claude" ]; then
+    echo "  -> Claude Code detected at ~/.local/bin/claude"
     CLAUDE_INSTALLED=true
 fi
 
 if command -v qwen &> /dev/null; then
     echo "  -> Qwen Code detected at $(which qwen)"
     QWEN_INSTALLED=true
+elif [ -d "$HOME/.qwen" ]; then
+    echo "  -> Qwen Code detected (~/.qwen exists)"
+    QWEN_INSTALLED=true
 fi
 
 if command -v opencode &> /dev/null; then
     echo "  -> OpenCode detected at $(which opencode)"
     OPENCODE_INSTALLED=true
+elif [ -d "$HOME/.config/opencode" ]; then
+    echo "  -> OpenCode detected (~/.config/opencode exists)"
+    OPENCODE_INSTALLED=true
 fi
 
-if [ "$CLAUDE_INSTALLED" = true ] || [ "$QWEN_INSTALLED" = true ] || [ "$OPENCODE_INSTALLED" = true ]; then
+if command -v kilo &> /dev/null; then
+    echo "  -> Kilo CLI detected at $(which kilo)"
+    KILOCLI_INSTALLED=true
+elif [ -d "$HOME/.config/kilo" ]; then
+    echo "  -> Kilo CLI detected (~/.config/kilo exists)"
+    KILOCLI_INSTALLED=true
+fi
+
+if [ "$CLAUDE_INSTALLED" = true ] || [ "$QWEN_INSTALLED" = true ] || [ "$OPENCODE_INSTALLED" = true ] || [ "$KILOCLI_INSTALLED" = true ]; then
     echo ""
     echo "Installing AI configurations:"
 
@@ -115,6 +134,28 @@ if [ "$CLAUDE_INSTALLED" = true ] || [ "$QWEN_INSTALLED" = true ] || [ "$OPENCOD
             rm -rf "$HOME/.config/opencode/commands" 2>/dev/null || true
             ln -s "$SCRIPT_DIR/ai/commands" "$HOME/.config/opencode/commands"
             echo "  -> Linked commands to ~/.config/opencode/commands/"
+        fi
+    fi
+
+    # Kilo CLI setup
+    if [ "$KILOCLI_INSTALLED" = true ]; then
+        if ask_yes_no "Configure Kilo CLI?"; then
+            # Kilo CLI uses same structure as OpenCode
+            rm -rf "$HOME/.config/kilo/agents" 2>/dev/null || true
+            ln -s "$SCRIPT_DIR/ai/opencode/agents" "$HOME/.config/kilo/agents"
+            echo "  -> Linked agents to ~/.config/kilo/agents/"
+
+            rm -rf "$HOME/.config/kilo/AGENTS.md" 2>/dev/null || true
+            ln -s "$SCRIPT_DIR/ai/AI.md" "$HOME/.config/kilo/AGENTS.md"
+            echo "  -> Linked AI.md to ~/.config/kilo/AGENTS.md"
+
+            rm -rf "$HOME/.config/kilo/skills" 2>/dev/null || true
+            ln -s "$SCRIPT_DIR/ai/skills" "$HOME/.config/kilo/skills"
+            echo "  -> Linked skills to ~/.config/kilo/skills/"
+
+            rm -rf "$HOME/.config/kilo/commands" 2>/dev/null || true
+            ln -s "$SCRIPT_DIR/ai/commands" "$HOME/.config/kilo/commands"
+            echo "  -> Linked commands to ~/.config/kilo/commands/"
         fi
     fi
 

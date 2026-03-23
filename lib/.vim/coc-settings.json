@@ -13,9 +13,12 @@
 
   "languageserver": {
     "ruby-lsp": {
-      "command": "ruby-lsp",
+      "command": "bundle",
+      "args": ["exec", "ruby-lsp"],
       "initializationOptions": {
-        "formatter": "auto" // will use rubocop (if installed) or falls back to syntax_tree
+        "enabledFeatures": {
+          "diagnostics": false
+        }
       },
       "filetypes": ["ruby"]
     }

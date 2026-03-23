@@ -71,21 +71,24 @@ if [ "$CLAUDE_INSTALLED" = true ] || [ "$QWEN_INSTALLED" = true ] || [ "$OPENCOD
     echo ""
     echo "Installing AI configurations:"
 
+    if ask_yes_no "Link shared skills to ~/.agents/skills/?"; then
+        mkdir -p "$HOME/.agents"
+        rm -rf "$HOME/.agents/skills" 2>/dev/null || true
+        ln -s "$SCRIPT_DIR/ai/skills" "$HOME/.agents/skills"
+        echo "  -> Linked skills to ~/.agents/skills/"
+    fi
+
     # Claude Code setup
     if [ "$CLAUDE_INSTALLED" = true ]; then
         if ask_yes_no "Configure Claude Code?"; then
             mkdir -p "$HOME/.claude"
             rm -rf "$HOME/.claude/CLAUDE.md" 2>/dev/null || true
-            ln -s "$SCRIPT_DIR/ai/AI.md" "$HOME/.claude/CLAUDE.md"
-            echo "  -> Linked AI.md to ~/.claude/CLAUDE.md"
+            ln -s "$SCRIPT_DIR/ai/AGENTS.md" "$HOME/.claude/CLAUDE.md"
+            echo "  -> Linked AGENTS.md to ~/.claude/CLAUDE.md"
 
             rm -rf "$HOME/.claude/settings.json" 2>/dev/null || true
             ln -s "$SCRIPT_DIR/ai/settings/claude-settings.json" "$HOME/.claude/settings.json"
             echo "  -> Linked settings to ~/.claude/settings.json"
-
-            rm -rf "$HOME/.claude/skills" 2>/dev/null || true
-            ln -s "$SCRIPT_DIR/ai/skills" "$HOME/.claude/skills"
-            echo "  -> Linked skills to ~/.claude/skills/"
         fi
     fi
 
@@ -93,17 +96,13 @@ if [ "$CLAUDE_INSTALLED" = true ] || [ "$QWEN_INSTALLED" = true ] || [ "$OPENCOD
     if [ "$QWEN_INSTALLED" = true ]; then
         if ask_yes_no "Configure Qwen Code?"; then
             mkdir -p "$HOME/.qwen"
-            rm -rf "$HOME/.qwen/QWEN.md" 2>/dev/null || true
-            ln -s "$SCRIPT_DIR/ai/AI.md" "$HOME/.qwen/QWEN.md"
-            echo "  -> Linked AI.md to ~/.qwen/QWEN.md"
+            rm -rf "$HOME/.qwen/AGENTS.md" 2>/dev/null || true
+            ln -s "$SCRIPT_DIR/ai/AGENTS.md" "$HOME/.qwen/AGENTS.md"
+            echo "  -> Linked AGENTS.md to ~/.qwen/AGENTS.md"
 
             rm -rf "$HOME/.qwen/settings.json" 2>/dev/null || true
             ln -s "$SCRIPT_DIR/ai/settings/qwen-settings.json" "$HOME/.qwen/settings.json"
             echo "  -> Linked settings to ~/.qwen/settings.json"
-
-            rm -rf "$HOME/.qwen/skills" 2>/dev/null || true
-            ln -s "$SCRIPT_DIR/ai/skills" "$HOME/.qwen/skills"
-            echo "  -> Linked skills to ~/.qwen/skills/"
 
             rm -rf "$HOME/.qwen/agents" 2>/dev/null || true
             ln -s "$SCRIPT_DIR/ai/agents" "$HOME/.qwen/agents"
@@ -112,6 +111,17 @@ if [ "$CLAUDE_INSTALLED" = true ] || [ "$QWEN_INSTALLED" = true ] || [ "$OPENCOD
             rm -rf "$HOME/.qwen/commands" 2>/dev/null || true
             ln -s "$SCRIPT_DIR/ai/commands" "$HOME/.qwen/commands"
             echo "  -> Linked commands to ~/.qwen/commands/"
+
+            rm -rf "$HOME/.qwen/hooks" 2>/dev/null || true
+            ln -s "$SCRIPT_DIR/ai/hooks" "$HOME/.qwen/hooks"
+            echo "  -> Linked hooks to ~/.qwen/hooks/"
+
+            # Link Qwen LSP configuration
+            if [ -f "$SCRIPT_DIR/ai/qwen/.lsp.json" ]; then
+                rm -rf "$HOME/.qwen/.lsp.json" 2>/dev/null || true
+                ln -s "$SCRIPT_DIR/ai/qwen/.lsp.json" "$HOME/.qwen/.lsp.json"
+                echo "  -> Linked .lsp.json to ~/.qwen/.lsp.json"
+            fi
         fi
     fi
 
@@ -124,16 +134,19 @@ if [ "$CLAUDE_INSTALLED" = true ] || [ "$QWEN_INSTALLED" = true ] || [ "$OPENCOD
             echo "  -> Linked opencode agents to ~/.config/opencode/agents/"
 
             rm -rf "$HOME/.config/opencode/AGENTS.md" 2>/dev/null || true
-            ln -s "$SCRIPT_DIR/ai/AI.md" "$HOME/.config/opencode/AGENTS.md"
-            echo "  -> Linked AI.md to ~/.config/opencode/AGENTS.md"
-
-            rm -rf "$HOME/.config/opencode/skills" 2>/dev/null || true
-            ln -s "$SCRIPT_DIR/ai/skills" "$HOME/.config/opencode/skills"
-            echo "  -> Linked skills to ~/.config/opencode/skills/"
+            ln -s "$SCRIPT_DIR/ai/AGENTS.md" "$HOME/.config/opencode/AGENTS.md"
+            echo "  -> Linked AGENTS.md to ~/.config/opencode/AGENTS.md"
 
             rm -rf "$HOME/.config/opencode/commands" 2>/dev/null || true
             ln -s "$SCRIPT_DIR/ai/commands" "$HOME/.config/opencode/commands"
             echo "  -> Linked commands to ~/.config/opencode/commands/"
+
+            # Link OpenCode configuration (including LSP)
+            if [ -f "$SCRIPT_DIR/ai/opencode/opencode.json" ]; then
+                rm -rf "$HOME/.config/opencode/opencode.json" 2>/dev/null || true
+                ln -s "$SCRIPT_DIR/ai/opencode/opencode.json" "$HOME/.config/opencode/opencode.json"
+                echo "  -> Linked opencode.json to ~/.config/opencode/opencode.json"
+            fi
         fi
     fi
 
@@ -146,8 +159,8 @@ if [ "$CLAUDE_INSTALLED" = true ] || [ "$QWEN_INSTALLED" = true ] || [ "$OPENCOD
             echo "  -> Linked agents to ~/.config/kilo/agents/"
 
             rm -rf "$HOME/.config/kilo/AGENTS.md" 2>/dev/null || true
-            ln -s "$SCRIPT_DIR/ai/AI.md" "$HOME/.config/kilo/AGENTS.md"
-            echo "  -> Linked AI.md to ~/.config/kilo/AGENTS.md"
+            ln -s "$SCRIPT_DIR/ai/AGENTS.md" "$HOME/.config/kilo/AGENTS.md"
+            echo "  -> Linked AGENTS.md to ~/.config/kilo/AGENTS.md"
 
             rm -rf "$HOME/.config/kilo/skills" 2>/dev/null || true
             ln -s "$SCRIPT_DIR/ai/skills" "$HOME/.config/kilo/skills"
@@ -156,6 +169,13 @@ if [ "$CLAUDE_INSTALLED" = true ] || [ "$QWEN_INSTALLED" = true ] || [ "$OPENCOD
             rm -rf "$HOME/.config/kilo/commands" 2>/dev/null || true
             ln -s "$SCRIPT_DIR/ai/commands" "$HOME/.config/kilo/commands"
             echo "  -> Linked commands to ~/.config/kilo/commands/"
+
+            # Link Kilo CLI configuration (including LSP)
+            if [ -f "$SCRIPT_DIR/ai/opencode/opencode.json" ]; then
+                rm -rf "$HOME/.config/kilo/opencode.json" 2>/dev/null || true
+                ln -s "$SCRIPT_DIR/ai/opencode/opencode.json" "$HOME/.config/kilo/opencode.json"
+                echo "  -> Linked opencode.json to ~/.config/kilo/opencode.json"
+            fi
         fi
     fi
 

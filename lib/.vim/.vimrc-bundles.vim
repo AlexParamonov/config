@@ -43,7 +43,8 @@ Plug 'tpope/vim-commentary'
 let g:polyglot_disabled = ['typescript', 'typescriptreact']
 Plug 'sheerun/vim-polyglot'
 Plug 'nelstrom/vim-markdown-folding'
-Plug 'github/copilot.vim'
+" Plug 'github/copilot.vim'
+Plug 'ggml-org/llama.vim'
 
 "----------------
 " Colors

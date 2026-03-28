@@ -161,10 +161,15 @@ endif
 "----------------
 " Copilot
 "----------------
-imap <silent><script><expr> <End> copilot#Accept("\<CR>")
-imap <silent><script><expr> <Home> copilot#Next()
+" imap <silent><script><expr> <End> copilot#Accept("\<CR>")
+" imap <silent><script><expr> <Home> copilot#Next()
 
-let g:copilot_no_tab_map = v:true
+" let g:copilot_no_tab_map = v:true
+
+"----------------
+" llama.vim
+"----------------
+runtime .vimrc-llama.vim
 
 "----------------
 " Ruby refactoring
@@ -264,8 +269,8 @@ let g:ale_fixers = {
 \       'trim_whitespace'
 \   ],
 \   'ruby': [
-\       'syntax_tree',
 \       'rubocop',
+\       'syntax_tree',
 \       'standardrb',
 \       'remove_trailing_lines',
 \       'trim_whitespace'
@@ -535,7 +540,7 @@ let g:coc_global_extensions = ['coc-elixir', 'coc-json']
 nnoremap <leader>v :e $MYVIMRC<CR>
 
 " Toggle spaces and tabs
-nnoremap <leader>l :set list!<CR>
+" nnoremap <leader>l :set list!<CR>
 
 " Edit file in same directory
 noremap <leader>e :edit %:h/

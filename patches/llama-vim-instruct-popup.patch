@@ -1,0 +1,129 @@
+--- /home/ap/config/lib/.vim/plugged/llama.vim/autoload/llama.vim.bak	2026-03-28 01:52:31.654948238 +0100
++++ /home/ap/config/lib/.vim/plugged/llama.vim/autoload/llama.vim	2026-03-28 19:53:02.704239321 +0100
+@@ -315,6 +315,13 @@
+         if empty(prop_type_get(s:hlgroup_inst_info))
+             call prop_type_add(s:hlgroup_inst_info, {'highlight': s:hlgroup_inst_info})
+         endif
++
++        " Add property types for inst status colors
++        for s:hl in ['llama_hl_inst_virt_proc', 'llama_hl_inst_virt_gen', 'llama_hl_inst_virt_ready']
++            if empty(prop_type_get(s:hl))
++                call prop_type_add(s:hl, {'highlight': s:hl})
++            endif
++        endfor
+     endif
+ 
+     if g:llama_config.enable_at_startup
+@@ -1456,6 +1463,7 @@
+         \ 'n_gen': 0,
+         \ 'extmark': -1,
+         \ 'extmark_virt': -1,
++        \ 'inst_virt_props': [],
+         \ }
+ 
+     let s:inst_reqs[l:req_id] = l:req
+@@ -1623,41 +1631,61 @@
+                 \ })
+         endif
+     elseif s:ghost_text_vim
+-        if l:req.extmark_virt != -1
+-             call prop_remove({
+-                \ 'type': 'llama_hl_inst_info',
+-                \ 'id': l:req.extmark_virt,
++        " Remove ALL existing virtual text props (by ID - type doesn't matter)
++        for l:prop_id in l:req.inst_virt_props
++            call prop_remove({
++                \ 'id': l:prop_id,
+                 \ 'bufnr': l:req.bufnr
+                 \ })
+-        endif
++        endfor
++        let l:req.inst_virt_props = []
+ 
+-        let l:text = ''
++        " Build content array - first line shown inline, rest shown below
++        let l:content = []
++        let l:sep_l = '─────────────────────'
++        let l:sep_r = '─────────────────────'
++        " Use different highlight types per status
++        let l:hl_type = 'llama_hl_inst_info'
+ 
+         if a:status == 'proc'
+-            let l:text = ' ⏳ Processing... (' . g:llama_config.model_inst . ')'
++            let l:content = [' ', l:sep_l . ' ⏳ ' . l:sep_r . ' tokens']
++            let l:hl_type = 'llama_hl_inst_virt_proc'
+         elseif a:status == 'gen'
+-            let l:preview = substitute(l:req.result, '.*\n\s*', '', '')
+-            " Truncate if too long so it fits on screen
+-            if len(l:preview) > 40
+-                let l:preview = l:preview[:37] . '...'
++            let l:result_lines = split(l:req.result, "\n", 1)
++            let l:preview_lines = l:result_lines[:20]  " Show first 20 lines
++            if len(l:result_lines) > 20
++                call add(l:preview_lines, '... (' . (len(l:result_lines) - 20) . ' more lines)')
+             endif
+-            let l:text = printf(' ⏳ Generating (%d tokens): %s', l:req.n_gen, l:preview)
++            let l:content = [' ', l:sep_l . ' ⏳ ' . l:sep_r . ' ' . l:req.n_gen . ' tokens'] + l:preview_lines
++            let l:hl_type = 'llama_hl_inst_virt_gen'
+         elseif a:status == 'ready'
+-            let l:text = ' ✅ Ready! Press <Tab> to accept.'
++            let l:content = [' ', l:sep_l . ' ✅ ' . l:sep_r . ' ' . l:req.n_gen . ' tokens'] + split(l:req.result, "\n", 1)
++            let l:hl_type = 'llama_hl_inst_virt_ready'
+         endif
+ 
+-        let l:prop_id = 9000 + a:id
+-
+-        call prop_add(l:req.range[1], 0, {
+-            \ 'type': 'llama_hl_inst_info',
+-            \ 'id': l:prop_id,
+-            \ 'bufnr': l:req.bufnr,
+-            \ 'text': l:text,
+-            \ 'text_align': 'after',
+-            \ 'text_padding_left': 2
+-            \ })
++        if !empty(l:content)
++            " First line: show inline right after the selection
++            let l:prop_id = prop_add(l:req.range[1], 0, {
++                \ 'type': l:hl_type,
++                \ 'id': 9000 + a:id,
++                \ 'bufnr': l:req.bufnr,
++                \ 'text': l:content[0],
++                \ 'text_align': 'after',
++                \ 'text_padding_left': 2
++                \ })
++            call add(l:req.inst_virt_props, l:prop_id)
+ 
+-        let l:req.extmark_virt = l:prop_id
++            " Subsequent lines: show BELOW (same as FIM)
++            for l:line in l:content[1:]
++                let l:prop_id = prop_add(l:req.range[1], 0, {
++                    \ 'type': l:hl_type,
++                    \ 'bufnr': l:req.bufnr,
++                    \ 'text': l:line,
++                    \ 'text_align': 'below'
++                    \ })
++                call add(l:req.inst_virt_props, l:prop_id)
++            endfor
++        endif
+     endif
+ endfunction
+ 
+@@ -1757,10 +1785,14 @@
+                 \ 'bufnr': l:req.bufnr
+                 \ })
+ 
+-            call prop_remove({
+-                \ 'type': 'llama_hl_inst_info',
+-                \ 'bufnr': l:req.bufnr
+-                \ })
++            " Remove all virtual text props
++            for l:prop_id in l:req.inst_virt_props
++                call prop_remove({
++                    \ 'type': 'llama_hl_inst_info',
++                    \ 'id': l:prop_id,
++                    \ 'bufnr': l:req.bufnr
++                    \ })
++            endfor
+ 
+             call job_stop(l:req.job)
+         endif

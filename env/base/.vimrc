@@ -140,6 +140,9 @@ if has("autocmd")
     " Indent p tags
     " autocmd FileType html,eruby if g:html_indent_tags !~ '\\|p\>' | let g:html_indent_tags .= '\|p\|li\|dt\|dd' | endif
 
+    " Use indent-based folding for TypeScript to avoid syntax highlighting hangs
+    autocmd FileType typescript,typescriptreact setlocal foldmethod=indent foldlevelstart=99
+
     " Autoclean fugitive buffers
     autocmd BufReadPost fugitive://* set bufhidden=delete
 

@@ -143,6 +143,9 @@ if has("autocmd")
     " Use indent-based folding for TypeScript to avoid syntax highlighting hangs
     autocmd FileType typescript,typescriptreact setlocal foldmethod=indent foldlevelstart=99
 
+    " Disable ALE linting in Fugitive diff buffers to prevent redrawtime timeout
+    autocmd FileType fugitive,fugitiveblame let b:ale_enabled = 0
+
     " Autoclean fugitive buffers
     autocmd BufReadPost fugitive://* set bufhidden=delete
 

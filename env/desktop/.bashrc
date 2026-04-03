@@ -39,5 +39,7 @@ command -v direnv >/dev/null && eval "$(direnv hook bash)"
 
 # Add local bin directory to PATH (after all other PATH modifications)
 export PATH="./bin:$PATH"
+export ROCM_PATH=/opt/rocm
+export PATH=$PATH:/opt/rocm/bin
 
 clear

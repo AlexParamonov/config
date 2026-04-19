@@ -35,7 +35,7 @@ set synmaxcol=800 " syntax highlighting column limit - modern machines can handl
 " Performance optimizations
 set ttimeoutlen=0 " no delay when pressing Esc (terminal key codes)
 set redrawtime=10000 " max time for syntax highlighting redraw (prevents freezing)
-set regexpengine=1 " use old regexp engine (often faster)
+set regexpengine=0 " use default regex engine (re=1 causes YATS TypeScript hang)
 
 set number
 set numberwidth=5
@@ -139,12 +139,6 @@ if has("autocmd")
 
     " Indent p tags
     " autocmd FileType html,eruby if g:html_indent_tags !~ '\\|p\>' | let g:html_indent_tags .= '\|p\|li\|dt\|dd' | endif
-
-    " Use indent-based folding for TypeScript to avoid syntax highlighting hangs
-    autocmd FileType typescript,typescriptreact setlocal foldmethod=indent foldlevelstart=99
-
-    " Disable ALE linting in Fugitive diff buffers to prevent redrawtime timeout
-    autocmd FileType fugitive,fugitiveblame let b:ale_enabled = 0
 
     " Autoclean fugitive buffers
     autocmd BufReadPost fugitive://* set bufhidden=delete

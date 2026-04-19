@@ -36,16 +36,14 @@ Plug 'tpope/vim-speeddating'
 Plug 'tpope/vim-surround'
 " Comments
 Plug 'tpope/vim-commentary'
-" Plug 'tpope/vim-projectionist'
 
-" Disable TypeScript/TSX in polyglot - complex JSX regex causes redrawtime timeout
-" when opening Markdown files with TypeScript/JSX code blocks
-" Also disable markdown - polyglot's syntax is slow for large files
-let g:polyglot_disabled = ['typescript', 'typescriptreact', 'markdown']
-Plug 'sheerun/vim-polyglot'
+" Markdown
 Plug 'nelstrom/vim-markdown-folding'
 " Plug 'github/copilot.vim'
 Plug 'ggml-org/llama.vim'
+
+" Ruby syntax (polyglot replacement)
+Plug 'vim-ruby/vim-ruby'
 
 "----------------
 " Colors
@@ -99,6 +97,11 @@ Plug 'tpope/vim-endwise'
 Plug 'vim-test/vim-test'
 Plug 'tpope/vim-dispatch'
 " Plug 'jlcrochet/vim-ruby'
+
+"----------------
+" CoffeeScript
+"----------------
+Plug 'kchmck/vim-coffee-script'
 
 "----------------
 " Elixir

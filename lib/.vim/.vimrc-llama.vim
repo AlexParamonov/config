@@ -13,6 +13,12 @@ let g:llama_config.endpoint_fim = 'http://127.0.0.1:8093/infill'
 let g:llama_config.endpoint_inst = 'http://127.0.0.1:8093/v1/chat/completions'
 
 " --------------------------------------
+" FIM - Gemma 4 MoE
+"--------------------------------------
+" let g:llama_config.endpoint_fim = 'http://127.0.0.1:8096/infill'
+" let g:llama_config.endpoint_inst = 'http://127.0.0.1:8096/v1/chat/completions'
+
+" --------------------------------------
 " FIM - 30B A3 Coder Q4 (vulkan, 2062/203) - verbose
 "--------------------------------------
 " let g:llama_config.endpoint_fim = 'http://127.0.0.1:8091/infill'
@@ -52,8 +58,7 @@ let g:llama_config.keymap_fim_accept_end = '<End>'
 let g:llama_config.n_suffix = 96           " default: 64 - see closing braces, return types
 let g:llama_config.ring_n_chunks = 16      " default: 16 - cross-file context
 let g:llama_config.ring_chunk_size = 64    " default: 64 - lines per chunk
-let g:llama_config.n_predict_fim = 256     " FIM: short completions
-let g:llama_config.n_predict_inst = 8192   " Instruct: long-form
+let g:llama_config.n_predict = 8192        " Instruct: long-form
 let g:llama_config.max_line_suffix = 16    " default: 8 - chars after cursor before auto-trigger
 let g:llama_config.t_max_predict_ms = 60000
 

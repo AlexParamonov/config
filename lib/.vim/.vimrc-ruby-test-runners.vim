@@ -30,5 +30,5 @@ let test#strategy = "basic"
 " let test#project_root = "/path/to/your/project"
 " let test#vim#term_position = "topleft"
 " |projectionist| plug-in
-let g:test#ruby#rspec#executable = 'bundle exec rspec'
-let g:test#ruby#rspec#executable = 'bundle exec parabot test'
+" let g:test#ruby#rspec#executable = 'bundle exec rspec'
+" let g:test#ruby#rspec#executable = 'bundle exec parabot test'

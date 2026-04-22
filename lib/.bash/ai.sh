@@ -20,3 +20,4 @@ export PATH=/home/ap/.opencode/bin:$PATH
 # llama -hf
 export HF_HOME=~/models
 export LLAMA_CACHE=~/models
+export LLAMACPP_API_KEY=noop

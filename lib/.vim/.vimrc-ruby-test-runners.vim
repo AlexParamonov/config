@@ -7,17 +7,17 @@
 " nmap <silent> <leader>tv :TestVisit --format documentation<CR>
 
 " Elixir test runners
-" nmap <silent> <leader>tn :TestNearest --trace<CR>
-" nmap <silent> <leader>tf :TestFile --trace<CR>
-" nmap <silent> <leader>ta :TestSuite<CR>
-" nmap <silent> <leader>tl :TestLast<CR>
-" nmap <silent> <leader>tv :TestVisit --trace<CR>
-
-nmap <silent> <leader>tn :wa<CR>:TestNearest<CR>
-nmap <silent> <leader>tf :wa<CR>:TestFile<CR>
+nmap <silent> <leader>tn :wa<CR>:TestNearest --trace<CR>
+nmap <silent> <leader>tf :wa<CR>:TestFile --trace<CR>
 nmap <silent> <leader>ta :wa<CR>:TestSuite<CR>
 nmap <silent> <leader>tl :wa<CR>:TestLast<CR>
-nmap <silent> <leader>tv :wa<CR>:TestVisit<CR>
+nmap <silent> <leader>tv :wa<CR>:TestVisit --trace<CR>
+
+" nmap <silent> <leader>tn :wa<CR>:TestNearest<CR>
+" nmap <silent> <leader>tf :wa<CR>:TestFile<CR>
+" nmap <silent> <leader>ta :wa<CR>:TestSuite<CR>
+" nmap <silent> <leader>tl :wa<CR>:TestLast<CR>
+" nmap <silent> <leader>tv :wa<CR>:TestVisit<CR>
 
 let test#strategy = "basic"
 

@@ -33,6 +33,7 @@ CLAUDE_INSTALLED=false
 QWEN_INSTALLED=false
 OPENCODE_INSTALLED=false
 KILOCLI_INSTALLED=false
+PI_INSTALLED=false
 
 # Check CLI commands in PATH
 if command -v claude &> /dev/null; then
@@ -67,7 +68,15 @@ elif [ -d "$HOME/.config/kilo" ]; then
     KILOCLI_INSTALLED=true
 fi
 
-if [ "$CLAUDE_INSTALLED" = true ] || [ "$QWEN_INSTALLED" = true ] || [ "$OPENCODE_INSTALLED" = true ] || [ "$KILOCLI_INSTALLED" = true ]; then
+if command -v pi &> /dev/null; then
+    echo "  -> Pi harness detected at $(which pi)"
+    PI_INSTALLED=true
+elif [ -d "$HOME/.pi" ]; then
+    echo "  -> Pi harness detected (~/.pi exists)"
+    PI_INSTALLED=true
+fi
+
+if [ "$CLAUDE_INSTALLED" = true ] || [ "$QWEN_INSTALLED" = true ] || [ "$OPENCODE_INSTALLED" = true ] || [ "$KILOCLI_INSTALLED" = true ] || [ "$PI_INSTALLED" = true ]; then
     echo ""
     echo "Installing AI configurations:"
 
@@ -128,32 +137,15 @@ if [ "$CLAUDE_INSTALLED" = true ] || [ "$QWEN_INSTALLED" = true ] || [ "$OPENCOD
     # OpenCode setup
     if [ "$OPENCODE_INSTALLED" = true ]; then
         if ask_yes_no "Configure OpenCode?"; then
-            # Links opencode-specific agents
-            rm -rf "$HOME/.config/opencode/agents" 2>/dev/null || true
-            ln -s "$SCRIPT_DIR/ai/opencode/agents" "$HOME/.config/opencode/agents"
-            echo "  -> Linked opencode agents to ~/.config/opencode/agents/"
-
-            rm -rf "$HOME/.config/opencode/AGENTS.md" 2>/dev/null || true
-            ln -s "$SCRIPT_DIR/ai/AGENTS.md" "$HOME/.config/opencode/AGENTS.md"
-            echo "  -> Linked AGENTS.md to ~/.config/opencode/AGENTS.md"
-
-            rm -rf "$HOME/.config/opencode/commands" 2>/dev/null || true
-            ln -s "$SCRIPT_DIR/ai/commands" "$HOME/.config/opencode/commands"
-            echo "  -> Linked commands to ~/.config/opencode/commands/"
-
-            # Link OpenCode configuration (including LSP)
-            if [ -f "$SCRIPT_DIR/ai/opencode/opencode.json" ]; then
-                rm -rf "$HOME/.config/opencode/opencode.json" 2>/dev/null || true
-                ln -s "$SCRIPT_DIR/ai/opencode/opencode.json" "$HOME/.config/opencode/opencode.json"
-                echo "  -> Linked opencode.json to ~/.config/opencode/opencode.json"
-            fi
+            rm -rf "$HOME/.config/opencode" 2>/dev/null || true
+            ln -s "$SCRIPT_DIR/ai/opencode" "$HOME/.config/opencode"
+            echo "  -> Linked opencode/ to ~/.config/opencode/"
         fi
     fi
 
     # Kilo CLI setup
     if [ "$KILOCLI_INSTALLED" = true ]; then
         if ask_yes_no "Configure Kilo CLI?"; then
-            # Kilo CLI uses same structure as OpenCode
             rm -rf "$HOME/.config/kilo/agents" 2>/dev/null || true
             ln -s "$SCRIPT_DIR/ai/opencode/agents" "$HOME/.config/kilo/agents"
             echo "  -> Linked agents to ~/.config/kilo/agents/"
@@ -170,12 +162,20 @@ if [ "$CLAUDE_INSTALLED" = true ] || [ "$QWEN_INSTALLED" = true ] || [ "$OPENCOD
             ln -s "$SCRIPT_DIR/ai/commands" "$HOME/.config/kilo/commands"
             echo "  -> Linked commands to ~/.config/kilo/commands/"
 
-            # Link Kilo CLI configuration (including LSP)
             if [ -f "$SCRIPT_DIR/ai/opencode/opencode.json" ]; then
                 rm -rf "$HOME/.config/kilo/opencode.json" 2>/dev/null || true
                 ln -s "$SCRIPT_DIR/ai/opencode/opencode.json" "$HOME/.config/kilo/opencode.json"
                 echo "  -> Linked opencode.json to ~/.config/kilo/opencode.json"
             fi
+        fi
+    fi
+
+    # Pi harness setup
+    if [ "$PI_INSTALLED" = true ]; then
+        if ask_yes_no "Configure Pi harness?"; then
+            rm -rf "$HOME/.pi" 2>/dev/null || true
+            ln -s "$SCRIPT_DIR/ai/pi" "$HOME/.pi"
+            echo "  -> Linked pi/ to ~/.pi/"
         fi
     fi
 

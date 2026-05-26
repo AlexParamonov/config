@@ -76,6 +76,11 @@ elif [ -d "$HOME/.pi" ]; then
     PI_INSTALLED=true
 fi
 
+if command -v tokf &> /dev/null; then
+    echo "  -> tokf detected at $(which tokf)"
+    TOKF_INSTALLED=true
+fi
+
 if [ "$CLAUDE_INSTALLED" = true ] || [ "$QWEN_INSTALLED" = true ] || [ "$OPENCODE_INSTALLED" = true ] || [ "$KILOCLI_INSTALLED" = true ] || [ "$PI_INSTALLED" = true ]; then
     echo ""
     echo "Installing AI configurations:"
@@ -85,6 +90,12 @@ if [ "$CLAUDE_INSTALLED" = true ] || [ "$QWEN_INSTALLED" = true ] || [ "$OPENCOD
         rm -rf "$HOME/.agents/skills" 2>/dev/null || true
         ln -s "$SCRIPT_DIR/ai/skills" "$HOME/.agents/skills"
         echo "  -> Linked skills to ~/.agents/skills/"
+    fi
+
+    if ask_yes_no "Link commands to ~/.agents/commands/?"; then
+        rm -rf "$HOME/.agents/commands" 2>/dev/null || true
+        ln -s "$SCRIPT_DIR/ai/commands" "$HOME/.agents/commands"
+        echo "  -> Linked commands to ~/.agents/commands/"
     fi
 
     # Claude Code setup
@@ -180,6 +191,16 @@ if [ "$CLAUDE_INSTALLED" = true ] || [ "$QWEN_INSTALLED" = true ] || [ "$OPENCOD
     fi
 
     echo "--> AI configurations installed."
+fi
+
+# tokf setup (separate from AI tools — not gated by their presence)
+if [ "$TOKF_INSTALLED" = true ]; then
+    if ask_yes_no "Configure tokf?"; then
+        rm -rf "$HOME/.config/tokf" 2>/dev/null || true
+        ln -s "$SCRIPT_DIR/ai/tokf" "$HOME/.config/tokf"
+        echo "  -> Linked tokf/ to ~/.config/tokf/"
+    fi
+fi
     echo ""
 
     # Symlink update_ll.sh to llama.cpp if directory exists
@@ -190,7 +211,6 @@ if [ "$CLAUDE_INSTALLED" = true ] || [ "$QWEN_INSTALLED" = true ] || [ "$OPENCOD
             echo "  -> Linked update_ll.sh to ~/code/llama.cpp/update.sh"
         fi
     fi
-fi
 
 # Select environment
 PS3="Choose available environment: "

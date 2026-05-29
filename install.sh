@@ -187,11 +187,11 @@ if [ "$CLAUDE_INSTALLED" = true ] || [ "$QWEN_INSTALLED" = true ] || [ "$OPENCOD
             rm -rf "$HOME/.pi" 2>/dev/null || true
             ln -s "$SCRIPT_DIR/ai/pi" "$HOME/.pi"
             echo "  -> Linked pi/ to ~/.pi/"
-            # Install pi-safe wrapper
-            if [ -f "$SCRIPT_DIR/ai/pi/bin/pi-safe" ]; then
-                cp "$SCRIPT_DIR/ai/pi/bin/pi-safe" "$HOME/.local/bin/pi-safe"
-                chmod +x "$HOME/.local/bin/pi-safe"
-                echo "  -> Installed pi-safe wrapper to ~/.local/bin/"
+            # Install pii wrapper
+            if [ -f "$SCRIPT_DIR/ai/pi/bin/pii" ]; then
+                cp "$SCRIPT_DIR/ai/pi/bin/pii" "$HOME/.local/bin/pii"
+                chmod +x "$HOME/.local/bin/pii"
+                echo "  -> Installed pii wrapper to ~/.local/bin/"
             fi
         fi
     fi

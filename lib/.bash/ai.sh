@@ -22,7 +22,7 @@ export HF_HOME=~/models
 export LLAMA_CACHE=~/models
 export LLAMACPP_API_KEY=noop
 # Quick question — 35B instruct IQ4, with context and system prompt, read-only tools
-alias q='pi -p --provider llamacpp --model 35B_instruct_IQ4_MTP --no-session --thinking off --no-skills --no-extensions --tools read,bash,grep,find,ls'
+alias q='p -p --provider llamacpp --model 35B_instruct_IQ4_MTP --no-session --thinking off --no-skills --no-extensions --tools read,bash,grep,find,ls'
 
 # Quick question — bare minimum, free model, no tools
 alias qq='pi -p --provider openrouter --model openrouter/free --no-session --thinking off --no-skills --no-extensions --no-context-files --system-prompt "" --no-tools'

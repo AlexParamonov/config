@@ -28,7 +28,7 @@
 [core]
   editor = vim
   whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
-	excludesfile = ~/.config/git/ignore
+	excludesfile = /home/ap/.config/git/ignore
 	pager = delta
 [github]
   user = AlexParamonov

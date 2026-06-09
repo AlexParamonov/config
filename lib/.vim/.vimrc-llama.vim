@@ -9,8 +9,8 @@ let g:llama_config = {}
 " --------------------------------------
 " FIM - Granite 32B MoE (rocm, 977/68) - precise
 "--------------------------------------
-let g:llama_config.endpoint_fim = 'http://127.0.0.1:8093/infill'
-let g:llama_config.endpoint_inst = 'http://127.0.0.1:8093/v1/chat/completions'
+" let g:llama_config.endpoint_fim = 'http://127.0.0.1:8093/infill'
+" let g:llama_config.endpoint_inst = 'http://127.0.0.1:8093/v1/chat/completions'
 
 " --------------------------------------
 " FIM - Gemma 4 MoE

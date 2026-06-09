@@ -42,4 +42,5 @@ export PATH="./bin:$PATH"
 export ROCM_PATH=/opt/rocm
 export PATH=$PATH:/opt/rocm/bin
 
+alias bat=batcat
 clear

@@ -6,35 +6,33 @@
 "--------------------------------------
 let g:llama_config = {}
 
+let g:llama_config.endpoint_fim = 'http://127.0.0.1:8080/infill'
+let g:llama_config.endpoint_inst = 'http://127.0.0.1:8080/v1/chat/completions'
 " --------------------------------------
 " FIM - Granite 32B MoE (rocm, 977/68) - precise
 "--------------------------------------
-" let g:llama_config.endpoint_fim = 'http://127.0.0.1:8093/infill'
-" let g:llama_config.endpoint_inst = 'http://127.0.0.1:8093/v1/chat/completions'
+" let g:llama_config.model_fim = 'fim_granite_32b'
+" let g:llama_config.model_inst = 'fim_granite_32b'
 
 " --------------------------------------
 " FIM - Gemma 4 MoE
 "--------------------------------------
-" let g:llama_config.endpoint_fim = 'http://127.0.0.1:8096/infill'
-" let g:llama_config.endpoint_inst = 'http://127.0.0.1:8096/v1/chat/completions'
+" let g:llama_config.model_fim = 'fim_gemma_26b'
+" let g:llama_config.model_inst = 'fim_gemma_26b'
 
 " --------------------------------------
 " FIM - 30B A3 Coder Q4 (vulkan, 2062/203) - verbose
 "--------------------------------------
-" let g:llama_config.endpoint_fim = 'http://127.0.0.1:8091/infill'
-" let g:llama_config.endpoint_inst = 'http://127.0.0.1:8091/v1/chat/completions'
+" let g:llama_config.model_fim = 'fim_30b_coder'
+" let g:llama_config.model_inst = 'fim_30b_coder'
 
 " --------------------------------------
 " FIM - 35B IQ4 (vulkan, 3375/134) - bad for FIM
 "--------------------------------------
-" let g:llama_config.endpoint_fim = 'http://127.0.0.1:8092/infill'
-" let g:llama_config.endpoint_inst = 'http://127.0.0.1:8092/v1/chat/completions'
-
-" --------------------------------------
-" FIM - StableDiffCoder 8B (rocm, 2583/78) - doesnt work?
-"--------------------------------------
-" let g:llama_config.endpoint_fim = 'http://127.0.0.1:8094/infill'
-" let g:llama_config.endpoint_inst = 'http://127.0.0.1:8094/v1/chat/completions'
+" let g:llama_config.model_fim = 'fim_35b_iq4'
+" let g:llama_config.model_inst = 'fim_35b_iq4'
+" let g:llama_config.model_fim = '35B_think_IQ4_MTP'
+" let g:llama_config.model_inst = '35B_think_IQ4_MTP'
 
 "--------------------------------------
 " Keymaps - use <leader>l instead of <leader>ll

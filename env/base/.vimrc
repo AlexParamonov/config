@@ -21,6 +21,8 @@ set switchbuf=useopen
 set clipboard=unnamedplus
 " display incomplete commands
 set showcmd
+
+set splitright
 " Enable highlighting for syntax
 syntax on
 " don't give |ins-completion-menu| messages.
@@ -352,6 +354,7 @@ nnoremap <leader>to :cclose<CR>
 "----------------
 " Fugitive
 "----------------
+autocmd FileType fugitive nnoremap <buffer> dd <Plug>fugitive:dv
 nnoremap <leader>gc :G<CR>
 " nnoremap <leader>gl :G log --graph --decorate --pretty=oneline --abbrev-commit -- %<CR>
 nnoremap <leader>gl :0Gclog<CR>
@@ -628,7 +631,7 @@ nnoremap <F9> :GundoToggle<CR>
 " noremap [g <C-w>j<C-w>q<C-w>k<C-p>
 
 " FZF
-nnoremap <C-p> :FZF<CR>
+nnoremap <C-p> :GitFiles<CR>
 
 " FZF arrow key navigation
 let g:fzf_action = {

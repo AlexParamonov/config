@@ -17,11 +17,13 @@ GPU_DEVICES=(
 
 usage() {
     cat <<'EOF'
-Usage: hexdocs-update <repo> [repo ...]
+Usage: hexdocs-update [--force] <repo> [repo ...]
 
-Updates the hexdocs-mcp npm package, then fetches embeddings for every
-apps/*/ app in each repo using GPU-accelerated Ollama. Restores the CPU
-Ollama container when done.
+Updates the hexdocs-mcp npm package, runs `mix deps.get` in each repo,
+then fetches embeddings for every apps/*/ app in each repo using
+GPU-accelerated Ollama. Restores the CPU Ollama container when done.
+
+  --force  re-fetch all embeddings (passed through to every fetch)
 
 Each repo is resolved as given, or under ~/code if not found.
 EOF
@@ -106,7 +108,9 @@ ensure_model() {
 }
 
 fetch_repo() {
-    local repo="$1"
+    local repo="$1" force="$2"
+    local force_args=()
+    [ -n "$force" ] && force_args+=("$force")
     (
         # cd into the repo so the binary's `mix` invocation resolves against
         # the repo's .tool-versions, not the caller's cwd.
@@ -116,7 +120,7 @@ fetch_repo() {
             app="${app%/}"
             [ -f "$app/mix.exs" ] || continue
             echo -e "\n=== Fetching docs for $(basename "$app") ==="
-            if ! "$HEXDOCS_BIN" fetch --project "$app/mix.exs" --model "$MODEL"; then
+            if ! "$HEXDOCS_BIN" fetch --project "$app/mix.exs" --model "$MODEL" "${force_args[@]}"; then
                 echo "Warning: fetch failed for $(basename "$app") (may have packages without docs)"
                 rm -f erl_crash.dump
             fi
@@ -124,20 +128,49 @@ fetch_repo() {
     )
 }
 
+mix_deps_get() {
+    # Fetch deps inside the repo so its lockfile/.tool-versions apply. A
+    # failure is a warning, not fatal: fetches fail per-app with their own
+    # warnings if deps are genuinely missing.
+    local repo="$1"
+    echo "=== Updating deps in $repo ==="
+    if ! ( cd "$repo" && mix deps.get ); then
+        echo "Warning: mix deps.get failed in $repo (fetches may fail for missing deps)" >&2
+    fi
+}
+
 main() {
     trap cleanup EXIT
-    if [ "$#" -eq 0 ]; then
+
+    local force="" arg
+    local raw_repos=()
+    for arg in "$@"; do
+        case "$arg" in
+            -h | --help)
+                usage
+                return 0
+                ;;
+            --force)
+                force="--force"
+                ;;
+            -*)
+                echo "Error: unknown option: $arg" >&2
+                usage >&2
+                return 2
+                ;;
+            *)
+                raw_repos+=("$arg")
+                ;;
+        esac
+    done
+    if [ "${#raw_repos[@]}" -eq 0 ]; then
         usage >&2
         return 2
-    fi
-    if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
-        usage
-        return 0
     fi
 
     local repos=()
     local repo resolved
-    for repo in "$@"; do
+    for repo in "${raw_repos[@]}"; do
         resolved="$(resolve_repo "$repo")" || return 1
         repos+=("$resolved")
     done
@@ -158,7 +191,8 @@ main() {
     ensure_model || return 1
 
     for repo in "${repos[@]}"; do
-        fetch_repo "$repo"
+        mix_deps_get "$repo"
+        fetch_repo "$repo" "$force"
     done
 
     echo -e "\n=== Done ==="

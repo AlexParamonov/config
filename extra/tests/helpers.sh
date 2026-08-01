@@ -156,6 +156,19 @@ exit 0
 FAKE
 chmod +x "$FAKE_BIN/npm"
 
+cat > "$FAKE_BIN/mix" <<'FAKE'
+#!/usr/bin/env bash
+# Fake mix. Logs argv; fails when $FAKE_STATE/mix-fail exists.
+echo "mix $*" >> "$FAKE_LOG/mix.log"
+echo "mix $*" >> "$FAKE_LOG/order.log"
+if [ -f "$FAKE_STATE/mix-fail" ]; then
+    echo "** (Mix) command deps.get failed" >&2
+    exit 1
+fi
+exit 0
+FAKE
+chmod +x "$FAKE_BIN/mix"
+
 cat > "$FAKE_NPM_ROOT/hexdocs-mcp/bin/hexdocs_mcp_linux" <<'FAKE'
 #!/usr/bin/env bash
 # Fake hexdocs binary. Logs argv; behavior from $FAKE_STATE/binary-mode.
@@ -211,11 +224,12 @@ setup_fakes() {
 reset_state() {
     : > "$FAKE_STATE/containers"
     rm -f "$FAKE_STATE/ollama-ready" "$FAKE_STATE/model-available" \
-          "$FAKE_STATE/no-ready" "$FAKE_STATE/run-fail" "$FAKE_STATE/pull-fail"
+          "$FAKE_STATE/no-ready" "$FAKE_STATE/run-fail" "$FAKE_STATE/pull-fail" "$FAKE_STATE/mix-fail"
     echo ok > "$FAKE_STATE/binary-mode"
     : > "$FAKE_LOG/docker.log"
     : > "$FAKE_LOG/curl.log"
     : > "$FAKE_LOG/npm.log"
+    : > "$FAKE_LOG/mix.log"
     : > "$FAKE_LOG/binary.log"
     : > "$FAKE_LOG/order.log"
 }

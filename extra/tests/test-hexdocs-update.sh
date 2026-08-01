@@ -115,4 +115,48 @@ assert_eq "$code" 0 "exit code"
 assert_file_line_count "$FAKE_LOG/binary.log" "hexdocs_mcp_linux fetch" 2 "both apps attempted"
 assert_file_contains "$FAKE_LOG/binary.log" "hexdocs_mcp_linux fetch --project apps/anagen_x/mix.exs" "later app fetched after earlier failure"
 
+t "update: passes --force through to every fetch and still restores CPU Ollama"
+reset_state
+state_container anagen-x-ollama stopped
+touch "$FAKE_STATE/model-available"
+( source "$UPDATE"; main --force "$REPO1" ) >/dev/null 2>&1
+code=$?
+assert_eq "$code" 0 "exit code"
+assert_file_contains "$FAKE_LOG/binary.log" "hexdocs_mcp_linux fetch --project apps/agent_loop/mix.exs --model qwen3-embedding:4b --force" "force passed to app 1"
+assert_file_contains "$FAKE_LOG/binary.log" "hexdocs_mcp_linux fetch --project apps/anagen_x/mix.exs --model qwen3-embedding:4b --force" "force passed to app 2"
+assert_file_contains "$FAKE_LOG/docker.log" "docker start anagen-x-ollama" "cpu restored on exit with --force"
+
+t "update: runs mix deps.get in each repo before fetching that repo's apps"
+reset_state
+state_container anagen-x-ollama stopped
+touch "$FAKE_STATE/model-available"
+( source "$UPDATE"; main "$REPO1" "$REPO2" ) >/dev/null 2>&1
+code=$?
+assert_eq "$code" 0 "exit code"
+assert_file_line_count "$FAKE_LOG/mix.log" "mix deps.get" 2 "deps.get run once per repo"
+mix1="$(grep -nF "mix deps.get" "$FAKE_LOG/order.log" | head -1 | cut -d: -f1)"
+fetch1="$(grep -nF "hexdocs_mcp_linux fetch" "$FAKE_LOG/order.log" | head -1 | cut -d: -f1)"
+if [ -n "$mix1" ] && [ -n "$fetch1" ] && [ "$mix1" -lt "$fetch1" ]; then pass; else fail "first deps.get must precede first fetch"; fi
+mix2="$(grep -nF "mix deps.get" "$FAKE_LOG/order.log" | sed -n '2p' | cut -d: -f1)"
+fetch_bc="$(grep -nF "book_companion" "$FAKE_LOG/order.log" | head -1 | cut -d: -f1)"
+if [ -n "$mix2" ] && [ -n "$fetch_bc" ] && [ "$mix2" -lt "$fetch_bc" ]; then pass; else fail "book-companion deps.get must precede its fetch"; fi
+
+t "update: warns and continues when mix deps.get fails"
+reset_state
+state_container anagen-x-ollama stopped
+touch "$FAKE_STATE/model-available"
+touch "$FAKE_STATE/mix-fail"
+out="$( source "$UPDATE"; main "$REPO1" 2>&1 )"
+code=$?
+assert_eq "$code" 0 "exit code"
+assert_contains "$out" "mix deps.get failed" "warning printed"
+assert_file_contains "$FAKE_LOG/binary.log" "hexdocs_mcp_linux fetch --project apps/agent_loop/mix.exs" "fetch still attempted after deps.get failure"
+
+t "update: unknown option is a usage error"
+reset_state
+out="$( source "$UPDATE"; main --bogus "$REPO1" 2>&1 )"
+code=$?
+assert_eq "$code" 2 "exit code"
+assert_contains "$out" "unknown option" "error message"
+
 summary

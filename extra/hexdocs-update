@@ -1,0 +1,178 @@
+#!/usr/bin/env bash
+set -uo pipefail
+
+MODEL="qwen3-embedding:4b"
+OLLAMA_URL="http://localhost:11434"
+CPU_CONTAINER="anagen-x-ollama"
+GPU_CONTAINER="anagen-x-ollama-gpu"
+GPU_IMAGE="ollama/ollama:rocm"
+# Machine-specific GPU flags: AMD Radeon RX 9700 (RDNA), render group 992.
+GPU_DEVICES=(
+    --device /dev/kfd
+    --device /dev/dri/renderD128
+    --group-add video
+    --group-add 992
+    --memory=8g
+    -e HSA_OVERRIDE_GFX_VERSION=11.0.0
+    -e ROCM_VISIBLE_DEVICES=0
+)
+
+usage() {
+    cat <<'EOF'
+Usage: hexdocs-update <repo> [repo ...]
+
+Updates the hexdocs-mcp npm package, then fetches embeddings for every
+apps/*/ app in each repo using GPU-accelerated Ollama. Restores the CPU
+Ollama container when done.
+
+Each repo is resolved as given, or under ~/code if not found.
+EOF
+}
+
+hexdocs_bin() {
+    local root bin
+    root="$(npm root -g 2>/dev/null)" || {
+        echo "Error: npm not found in PATH (install nodejs via asdf first)" >&2
+        return 1
+    }
+    bin="$root/hexdocs-mcp/bin/hexdocs_mcp_linux"
+    if [ ! -x "$bin" ]; then
+        echo "Error: hexdocs binary not found at $bin" >&2
+        echo "Run: npm update -g hexdocs-mcp" >&2
+        return 1
+    fi
+    echo "$bin"
+}
+
+cleanup() {
+    echo -e "\n=== Restoring CPU Ollama ==="
+    docker stop "$GPU_CONTAINER" >/dev/null 2>&1 || true
+    docker rm "$GPU_CONTAINER" >/dev/null 2>&1 || true
+    docker start "$CPU_CONTAINER" >/dev/null 2>&1 || true
+}
+
+resolve_repo() {
+    local arg="$1"
+    if [ -d "$arg/apps" ]; then
+        echo "$arg"
+        return 0
+    fi
+    local candidate="$HOME/code/$arg"
+    if [ -d "$candidate/apps" ]; then
+        echo "$candidate"
+        return 0
+    fi
+    echo "Error: repo '$arg' not found (checked '$arg' and '$candidate'); expected apps/*/ subdirectories" >&2
+    return 1
+}
+
+ensure_cpu_container() {
+    # The CPU container is the idle state; it must exist so cleanup can restore it.
+    if ! docker ps -a --filter name="$CPU_CONTAINER" --format '{{.Names}}' 2>/dev/null | grep -q "^$CPU_CONTAINER$"; then
+        echo "=== Creating CPU Ollama container ==="
+        docker run -d --name "$CPU_CONTAINER" -p 11434:11434 \
+            -v anagen-x_ollama_data:/root/.ollama ollama/ollama:latest >/dev/null || {
+            echo "Error: failed to create CPU Ollama container" >&2
+            return 1
+        }
+    fi
+}
+
+ensure_gpu_ollama() {
+    echo "=== Stopping CPU Ollama ==="
+    docker stop "$CPU_CONTAINER" >/dev/null 2>&1 || true
+    echo "=== Starting GPU Ollama ==="
+    docker rm -f "$GPU_CONTAINER" >/dev/null 2>&1 || true
+    docker run -d \
+        --name "$GPU_CONTAINER" \
+        "${GPU_DEVICES[@]}" \
+        -p 11434:11434 \
+        -v anagen-x_ollama_data:/root/.ollama \
+        "$GPU_IMAGE" >/dev/null || {
+        echo "Error: failed to start GPU Ollama container" >&2
+        return 1
+    }
+}
+
+wait_ollama() {
+    echo "Waiting for Ollama..."
+    local i
+    for i in $(seq 1 "${OLLAMA_READY_TIMEOUT:-60}"); do
+        if curl -s --max-time 2 "$OLLAMA_URL/api/tags" >/dev/null 2>&1; then
+            return 0
+        fi
+        sleep 1
+    done
+    echo "Error: Ollama did not become ready within ${OLLAMA_READY_TIMEOUT:-60}s" >&2
+    return 1
+}
+
+ensure_model() {
+    echo "=== Checking model ==="
+    if ! curl -s "$OLLAMA_URL/api/show" -d "{\"name\": \"$MODEL\"}" >/dev/null 2>&1; then
+        echo "Pulling $MODEL..."
+        curl -s "$OLLAMA_URL/api/pull" -d "{\"name\": \"$MODEL\"}" | tail -1
+    fi
+}
+
+fetch_repo() {
+    local repo="$1"
+    (
+        # cd into the repo so the binary's `mix` invocation resolves against
+        # the repo's .tool-versions, not the caller's cwd.
+        cd "$repo" || { echo "Warning: cannot enter $repo, skipping" >&2; exit 1; }
+        for app in apps/*/; do
+            [ -d "$app" ] || continue
+            app="${app%/}"
+            [ -f "$app/mix.exs" ] || continue
+            echo -e "\n=== Fetching docs for $(basename "$app") ==="
+            if ! "$HEXDOCS_BIN" fetch --project "$app/mix.exs" --model "$MODEL"; then
+                echo "Warning: fetch failed for $(basename "$app") (may have packages without docs)"
+                rm -f erl_crash.dump
+            fi
+        done
+    )
+}
+
+main() {
+    trap cleanup EXIT
+    if [ "$#" -eq 0 ]; then
+        usage >&2
+        return 2
+    fi
+    if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+        usage
+        return 0
+    fi
+
+    local repos=()
+    local repo resolved
+    for repo in "$@"; do
+        resolved="$(resolve_repo "$repo")" || return 1
+        repos+=("$resolved")
+    done
+
+    echo "=== Updating hexdocs-mcp ==="
+    npm update -g hexdocs-mcp || {
+        echo "Error: npm update -g hexdocs-mcp failed" >&2
+        return 1
+    }
+
+    HEXDOCS_BIN="$(hexdocs_bin)" || return 1
+    echo "Using binary: $HEXDOCS_BIN"
+
+    ensure_cpu_container || return 1
+    ensure_gpu_ollama || return 1
+    wait_ollama || return 1
+    ensure_model
+
+    for repo in "${repos[@]}"; do
+        fetch_repo "$repo"
+    done
+
+    echo -e "\n=== Done ==="
+}
+
+if [[ "${BASH_SOURCE[0]}" == "$0" ]]; then
+    main "$@"
+fi

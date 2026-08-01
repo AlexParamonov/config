@@ -43,7 +43,7 @@ assert_file_contains() { # file needle label
 }
 assert_file_line_count() { # file expected-count label
     local actual
-    actual="$(grep -cF "$2" "$1" 2>/dev/null || echo 0)"
+    actual="$(grep -cF "$2" "$1" 2>/dev/null || true)"
     assert_eq "$actual" "$3" "$4"
 }
 

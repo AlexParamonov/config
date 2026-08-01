@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 set -uo pipefail
 
-MODEL="qwen3-embedding:4b"
-OLLAMA_URL="http://localhost:11434"
 OLLAMA_CONTAINER="anagen-x-ollama"
 CONN_ERROR=0
 
@@ -29,10 +27,6 @@ fi
 # shellcheck source=hexdocs-common.sh
 source "$SCRIPT_DIR/hexdocs-common.sh"
 
-ollama_ready() {
-    curl -s --max-time 2 "$OLLAMA_URL/api/tags" >/dev/null 2>&1
-}
-
 ensure_ollama() {
     # Start the CPU Ollama container if it exists but is stopped, then poll
     # until the API responds. Fails if the container is missing or unhealthy.
@@ -50,13 +44,7 @@ ensure_ollama() {
             return 1
         fi
     fi
-    local i
-    for i in $(seq 1 "${OLLAMA_READY_TIMEOUT:-60}"); do
-        ollama_ready && return 0
-        sleep 1
-    done
-    echo "Error: Ollama did not become ready within ${OLLAMA_READY_TIMEOUT:-60}s" >&2
-    return 1
+    wait_ollama || return 1
 }
 
 run_search() {

@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 set -uo pipefail
 
-MODEL="qwen3-embedding:4b"
-OLLAMA_URL="http://localhost:11434"
 CPU_CONTAINER="anagen-x-ollama"
 GPU_CONTAINER="anagen-x-ollama-gpu"
 GPU_IMAGE="ollama/ollama:rocm"
@@ -87,19 +85,6 @@ ensure_gpu_ollama() {
     }
 }
 
-wait_ollama() {
-    echo "Waiting for Ollama..."
-    local i
-    for i in $(seq 1 "${OLLAMA_READY_TIMEOUT:-60}"); do
-        if curl -s --max-time 2 "$OLLAMA_URL/api/tags" >/dev/null 2>&1; then
-            return 0
-        fi
-        sleep 1
-    done
-    echo "Error: Ollama did not become ready within ${OLLAMA_READY_TIMEOUT:-60}s" >&2
-    return 1
-}
-
 ensure_model() {
     # Ensure the embedding model exists, pulling it if missing. The pull
     # streams JSON lines ending in {"status":"success"} on success or an
@@ -168,6 +153,7 @@ main() {
 
     ensure_cpu_container || return 1
     ensure_gpu_ollama || return 1
+    echo "Waiting for Ollama..."
     wait_ollama || return 1
     ensure_model || return 1
 

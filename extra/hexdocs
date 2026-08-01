@@ -1,0 +1,163 @@
+#!/usr/bin/env bash
+set -uo pipefail
+
+OLLAMA_CONTAINER="anagen-x-ollama"
+CONN_ERROR=0
+
+usage() {
+    cat <<'EOF'
+Usage: hexdocs search "query" [--package NAME] [--version VER] [--limit N]
+
+Searches Hex package documentation using semantic embeddings.
+Flags match the MCP hexdocs_mcp_server_search tool.
+
+  --package NAME  search within a specific package
+  --version VER   search a specific package version
+  --limit N       max results (default: 5)
+
+If Ollama is not reachable, the CPU container is started and the search retried.
+EOF
+}
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+if [ ! -f "$SCRIPT_DIR/hexdocs-common.sh" ]; then
+    echo "Error: $SCRIPT_DIR/hexdocs-common.sh not found (re-run install.sh)" >&2
+    exit 1
+fi
+# shellcheck source=hexdocs-common.sh
+source "$SCRIPT_DIR/hexdocs-common.sh"
+
+ensure_ollama() {
+    # Start the CPU Ollama container if it exists but is stopped, then poll
+    # until the API responds. Fails if the container is missing or unhealthy.
+    if ! docker ps --filter name="$OLLAMA_CONTAINER" --format '{{.Names}}' 2>/dev/null | grep -q "^$OLLAMA_CONTAINER$"; then
+        if docker ps -a --filter name="$OLLAMA_CONTAINER" --format '{{.Names}}' 2>/dev/null | grep -q "^$OLLAMA_CONTAINER$"; then
+            echo "Starting Ollama container ($OLLAMA_CONTAINER)..." >&2
+            if ! docker start "$OLLAMA_CONTAINER" >/dev/null 2>&1; then
+                echo "Error: failed to start $OLLAMA_CONTAINER (is another Ollama using port 11434?)" >&2
+                return 1
+            fi
+        else
+            echo "Error: Ollama container '$OLLAMA_CONTAINER' does not exist." >&2
+            echo "Create it with:" >&2
+            echo "  docker run -d --name $OLLAMA_CONTAINER -p 11434:11434 -v anagen-x_ollama_data:/root/.ollama ollama/ollama:latest" >&2
+            return 1
+        fi
+    fi
+    wait_ollama || return 1
+}
+
+run_search() {
+    # Run the hexdocs binary once. The binary exits 0 even on connection
+    # failure, so a connection error is detected from its output: suppress it
+    # and set CONN_ERROR so the caller can recover and retry. Any other
+    # failure keeps the binary's own exit code and prints its output.
+    local bin="$1"
+    shift
+    local out
+    out="$(mktemp)"
+    CONN_ERROR=0
+    "$bin" "$@" >"$out" 2>&1
+    local code=$?
+    if grep -qE 'econnrefused|econnreset' "$out"; then
+        CONN_ERROR=1
+        rm -f "$out"
+        return 1
+    fi
+    cat "$out"
+    rm -f "$out"
+    return "$code"
+}
+
+main() {
+    if [ "${1:-}" = "search" ]; then
+        shift
+    fi
+
+    local query="" package="" version="" limit="5" model="$MODEL" positional=0
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            -h | --help)
+                usage
+                return 0
+                ;;
+            --package)
+                [ $# -ge 2 ] || { echo "Error: --package requires a value" >&2; return 2; }
+                package="$2"
+                shift 2
+                ;;
+            --version)
+                [ $# -ge 2 ] || { echo "Error: --version requires a value" >&2; return 2; }
+                version="$2"
+                shift 2
+                ;;
+            --limit)
+                [ $# -ge 2 ] || { echo "Error: --limit requires a value" >&2; return 2; }
+                limit="$2"
+                shift 2
+                ;;
+            --model)
+                [ $# -ge 2 ] || { echo "Error: --model requires a value" >&2; return 2; }
+                model="$2"
+                shift 2
+                ;;
+            --*)
+                echo "Error: unknown option: $1" >&2
+                usage >&2
+                return 2
+                ;;
+            *)
+                positional=$((positional + 1))
+                if [ "$positional" -gt 1 ]; then
+                    echo "Error: unexpected extra argument: $1" >&2
+                    usage >&2
+                    return 2
+                fi
+                query="$1"
+                shift
+                ;;
+        esac
+    done
+
+    if [ -z "$query" ]; then
+        echo "Error: missing search query" >&2
+        usage >&2
+        return 2
+    fi
+    if ! [[ "$limit" =~ ^[0-9]+$ ]]; then
+        echo "Error: --limit must be a number, got: $limit" >&2
+        return 2
+    fi
+
+    local bin
+    bin="$(hexdocs_bin)" || return 1
+
+    # The binary's default model (nomic-embed-text) is not what fetch uses;
+    # searches must use the same model the embeddings were generated with.
+    local bin_args=(search)
+    [ -n "$package" ] && bin_args+=("$package")
+    [ -n "$version" ] && bin_args+=(--version "$version")
+    bin_args+=(--query "$query")
+    bin_args+=(--model "$model")
+    bin_args+=(--limit "$limit")
+
+    run_search "$bin" "${bin_args[@]}"
+    local code=$?
+    if [ "$code" -eq 0 ]; then
+        return 0
+    fi
+    if [ "$CONN_ERROR" -ne 1 ]; then
+        # Non-connection failure: run_search already printed the output.
+        return "$code"
+    fi
+    echo "Ollama connection error; attempting recovery..." >&2
+    if ensure_ollama; then
+        run_search "$bin" "${bin_args[@]}"
+    else
+        return 1
+    fi
+}
+
+if [[ "${BASH_SOURCE[0]}" == "$0" ]]; then
+    main "$@"
+fi

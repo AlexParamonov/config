@@ -207,6 +207,19 @@ if [ "$TOKF_INSTALLED" = true ]; then
         echo "  -> Linked tokf/ to ~/.config/tokf/"
     fi
 fi
+
+# hexdocs CLI wrappers
+if [ -f "$SCRIPT_DIR/extra/hexdocs" ] && [ -f "$SCRIPT_DIR/extra/hexdocs-update" ] && [ -f "$SCRIPT_DIR/extra/hexdocs-common.sh" ]; then
+    if ask_yes_no "Install hexdocs CLI wrappers to ~/.local/bin/?"; then
+        cp "$SCRIPT_DIR/extra/hexdocs" "$HOME/.local/bin/hexdocs"
+        chmod +x "$HOME/.local/bin/hexdocs"
+        cp "$SCRIPT_DIR/extra/hexdocs-update" "$HOME/.local/bin/hexdocs-update"
+        chmod +x "$HOME/.local/bin/hexdocs-update"
+        cp "$SCRIPT_DIR/extra/hexdocs-common.sh" "$HOME/.local/bin/hexdocs-common.sh"
+        chmod +x "$HOME/.local/bin/hexdocs-common.sh"
+        echo "  -> Installed hexdocs wrappers to ~/.local/bin/"
+    fi
+fi
     echo ""
 
     # Symlink update_ll.sh to llama.cpp if directory exists

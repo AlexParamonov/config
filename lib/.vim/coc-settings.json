@@ -1,17 +1,14 @@
 {
-	"languageserver": {
-		"golang": {
-			"command": "go-langserver",
-			"filetypes": ["go"],
-			"initializationOptions": {
-				"gocodeCompletionEnabled": true,
-				"diagnosticsEnabled": true,
-				"lintTool": "golint"
-			}
-		}
-  },
-
   "languageserver": {
+    "golang": {
+      "command": "go-langserver",
+      "filetypes": ["go"],
+      "initializationOptions": {
+        "gocodeCompletionEnabled": true,
+        "diagnosticsEnabled": true,
+        "lintTool": "golint"
+      }
+    },
     "ruby-lsp": {
       "command": "bundle",
       "args": ["exec", "ruby-lsp"],
@@ -21,6 +18,16 @@
         }
       },
       "filetypes": ["ruby"]
+    },
+    "typescript": {
+      "command": "npx",
+      "args": ["-y", "typescript-language-server", "--stdio"],
+      "filetypes": ["typescript", "typescriptreact", "javascript", "javascriptreact"],
+      "initializationOptions": {
+        "preferences": {
+          "includeCompletionsForModuleExports": true
+        }
+      }
     }
   },
   "diagnostic.displayByAle": true,
@@ -46,17 +53,13 @@
   "elixir.pathToElixirLS": "elixir-ls",
   "elixirLS.filetypes": ["elixir", "eelixir"],
   "elixir.filetypes": ["elixir", "eelixir", "ex", "exs", "eex", "leex", "heex"],
-  "python.venvFolders": ["envs",".pyenv",".direnv", "~/.local/share/virtualenvs", "~/.cache/pypoetry/virtualenvs"],
+  "python.venvFolders": ["envs", ".pyenv", ".direnv", "~/.local/share/virtualenvs", "~/.cache/pypoetry/virtualenvs"],
   "python.workspaceSymbols.exclusionPatterns": [],
   "python.jediEnabled": false,
   "python.linting.pylintEnabled": true,
   "python.linting.pylintArgs": ["--load-plugins"],
-    "python.formatting.blackPath":"~/.local/bin/black",
-    "python.linting.mypyEnabled": true,
-    "python.linting.mypyPath": "bin/mypy",
-    "python.pythonPath": "/home/ap/.cache/pypoetry/virtualenvs/helpcenter-mAFu3VFg-py3.8/bin/python"
-    /* "python.formatting.provider": "black", */
-    /* "python.sortImports.path": "/home/calev/.local/bin/isort", */
-
-
+  "python.formatting.blackPath": "~/.local/bin/black",
+  "python.linting.mypyEnabled": true,
+  "python.linting.mypyPath": "bin/mypy",
+  "python.pythonPath": "/home/ap/.cache/pypoetry/virtualenvs/helpcenter-mAFu3VFg-py3.8/bin/python"
 }

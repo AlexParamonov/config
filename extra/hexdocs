@@ -21,20 +21,13 @@ If Ollama is not reachable, the CPU container is started and the search retried.
 EOF
 }
 
-hexdocs_bin() {
-    local root bin
-    root="$(npm root -g 2>/dev/null)" || {
-        echo "Error: npm not found in PATH (install nodejs via asdf first)" >&2
-        return 1
-    }
-    bin="$root/hexdocs-mcp/bin/hexdocs_mcp_linux"
-    if [ ! -x "$bin" ]; then
-        echo "Error: hexdocs binary not found at $bin" >&2
-        echo "Run: npm update -g hexdocs-mcp" >&2
-        return 1
-    fi
-    echo "$bin"
-}
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+if [ ! -f "$SCRIPT_DIR/hexdocs-common.sh" ]; then
+    echo "Error: $SCRIPT_DIR/hexdocs-common.sh not found (re-run install.sh)" >&2
+    exit 1
+fi
+# shellcheck source=hexdocs-common.sh
+source "$SCRIPT_DIR/hexdocs-common.sh"
 
 ollama_ready() {
     curl -s --max-time 2 "$OLLAMA_URL/api/tags" >/dev/null 2>&1

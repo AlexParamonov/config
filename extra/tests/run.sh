@@ -5,7 +5,7 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 failures=0
 
-for script in "$SCRIPT_DIR/../hexdocs" "$SCRIPT_DIR/../hexdocs-update" "$SCRIPT_DIR/../../install.sh"; do
+for script in "$SCRIPT_DIR/../hexdocs" "$SCRIPT_DIR/../hexdocs-update" "$SCRIPT_DIR/../hexdocs-common.sh" "$SCRIPT_DIR/../../install.sh"; do
     if ! bash -n "$script"; then
         echo "SYNTAX ERROR in $script"
         failures=$((failures + 1))

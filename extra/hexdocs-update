@@ -140,8 +140,6 @@ mix_deps_get() {
 }
 
 main() {
-    trap cleanup EXIT
-
     local force="" arg
     local raw_repos=()
     for arg in "$@"; do
@@ -174,6 +172,11 @@ main() {
         resolved="$(resolve_repo "$repo")" || return 1
         repos+=("$resolved")
     done
+
+    # Only arm cleanup once real work begins. Help, usage errors, and
+    # repo resolution run before any container is touched, so they must
+    # not print the "Restoring CPU Ollama" banner on exit.
+    trap cleanup EXIT
 
     echo "=== Updating hexdocs-mcp ==="
     npm update -g hexdocs-mcp || {

@@ -125,4 +125,22 @@ assert_eq "$code" 1 "exit code propagated"
 assert_not_contains "$out" "attempting recovery" "no misleading recovery message"
 assert_file_line_count "$FAKE_LOG/binary.log" "hexdocs_mcp_linux search" 1 "no retry"
 
+
+t "search: --help prints usage without restore or recovery noise"
+reset_state
+out="$(main --help 2>&1)"
+code=$?
+assert_eq "$code" 0 "exit code"
+assert_contains "$out" "Usage" "usage shown"
+assert_not_contains "$out" "Restoring" "no restore noise on help"
+assert_not_contains "$out" "connection error" "no recovery noise on help"
+
+t "search: no command prints usage without restore noise"
+reset_state
+out="$(main 2>&1)"
+code=$?
+assert_eq "$code" 2 "exit code"
+assert_contains "$out" "Usage" "usage shown"
+assert_not_contains "$out" "Restoring" "no restore noise on missing command"
+
 summary

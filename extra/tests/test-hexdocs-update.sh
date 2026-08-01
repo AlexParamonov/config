@@ -159,4 +159,23 @@ code=$?
 assert_eq "$code" 2 "exit code"
 assert_contains "$out" "unknown option" "error message"
 
+
+t "update: --help prints usage without CPU restore noise"
+reset_state
+out="$( source "$UPDATE"; main --help 2>&1 )"
+code=$?
+assert_eq "$code" 0 "exit code"
+assert_contains "$out" "Usage" "usage shown"
+assert_not_contains "$out" "Restoring CPU Ollama" "no restore banner on help"
+assert_file_line_count "$FAKE_LOG/docker.log" "docker" 0 "no container commands on help"
+
+t "update: no-args usage prints usage without CPU restore noise"
+reset_state
+out="$( source "$UPDATE"; main 2>&1 )"
+code=$?
+assert_eq "$code" 2 "exit code"
+assert_contains "$out" "Usage" "usage shown"
+assert_not_contains "$out" "Restoring CPU Ollama" "no restore banner on usage error"
+assert_file_line_count "$FAKE_LOG/docker.log" "docker" 0 "no container commands on usage error"
+
 summary

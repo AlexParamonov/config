@@ -7,7 +7,7 @@
 #   containers     lines "name:running|stopped" — docker ps inventory
 #   ollama-ready   presence => GET /api/tags succeeds
 #   model-available presence => GET /api/show succeeds
-#   binary-mode    ok | connrefused | connrefused-once | fail-fetch
+#   binary-mode    ok | connrefused | connrefused-once | fail | fail-once | fail-fetch | crash
 #   no-ready       docker start/run do NOT make Ollama ready
 #   run-fail       docker run exits non-zero
 # Invocations are logged to $FAKE_LOG/*.log for outcome assertions.
@@ -34,6 +34,9 @@ assert_eq() { # actual expected label
 }
 assert_contains() { # haystack needle label
     case "$1" in *"$2"*) pass ;; *) fail "$3: missing [$2] in: $1" ;; esac
+}
+assert_not_contains() { # haystack needle label
+    case "$1" in *"$2"*) fail "$3: unexpected [$2] in: $1" ;; *) pass ;; esac
 }
 assert_file_contains() { # file needle label
     if [ -f "$1" ] && grep -qF "$2" "$1"; then pass; else fail "$3: file $1 missing [$2]"; fi
@@ -87,7 +90,16 @@ case "$cmd" in
         rm -f "$FAKE_STATE/ollama-ready"
         ;;
     rm)
-        sed -i "/^$2:/d" "$FAKE_STATE/containers"
+        # Ignore -f: the fake state file has no running-protection to force through.
+        name=""
+        while [ $# -gt 0 ]; do
+            case "$1" in
+                -f) ;;
+                *) name="$1" ;;
+            esac
+            shift
+        done
+        sed -i "/^${name}:/d" "$FAKE_STATE/containers"
         ;;
     run)
         name=""; image=""
@@ -121,7 +133,13 @@ echo "curl $*" >> "$FAKE_LOG/curl.log"
 case "$*" in
     *"/api/tags"*) [ -f "$FAKE_STATE/ollama-ready" ] && exit 0 || exit 7 ;;
     *"/api/show"*) [ -f "$FAKE_STATE/model-available" ] && exit 0 || exit 1 ;;
-    *"/api/pull"*) echo '{"status":"success"}' ;;
+    *"/api/pull"*)
+        if [ -f "$FAKE_STATE/pull-fail" ]; then
+            echo '{"error":"model not found"}'
+        else
+            echo '{"status":"success"}'
+        fi
+        ;;
 esac
 exit 0
 FAKE
@@ -159,6 +177,19 @@ case "$mode" in
         echo "fetch failed for app" >&2
         exit 1
         ;;
+    fail)
+        echo "Error: something went wrong" >&2
+        exit 1
+        ;;
+    crash)
+        echo "Error: something went wrong" >&2
+        exit 2
+        ;;
+    fail-once)
+        echo "ok" > "$FAKE_STATE/binary-mode"
+        echo "fetch failed for app" >&2
+        exit 1
+        ;;
     ok)
         echo "Searching for \"test\" in all packages (latest versions only)..."
         echo "✓ Found 2 results:"
@@ -180,7 +211,7 @@ setup_fakes() {
 reset_state() {
     : > "$FAKE_STATE/containers"
     rm -f "$FAKE_STATE/ollama-ready" "$FAKE_STATE/model-available" \
-          "$FAKE_STATE/no-ready" "$FAKE_STATE/run-fail"
+          "$FAKE_STATE/no-ready" "$FAKE_STATE/run-fail" "$FAKE_STATE/pull-fail"
     echo ok > "$FAKE_STATE/binary-mode"
     : > "$FAKE_LOG/docker.log"
     : > "$FAKE_LOG/curl.log"

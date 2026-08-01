@@ -102,4 +102,27 @@ assert_eq "$code" 1 "exit code"
 assert_contains "$out" "not found" "clear error"
 assert_contains "$out" "npm update -g hexdocs-mcp" "fix hint"
 
+t "search: non-connection failure is not retried and propagates its exit code"
+reset_state
+state_container anagen-x-ollama running
+touch "$FAKE_STATE/ollama-ready"
+echo crash > "$FAKE_STATE/binary-mode"
+out="$(main search "agent loop" 2>&1)"
+code=$?
+assert_eq "$code" 2 "exit code propagated"
+assert_contains "$out" "something went wrong" "binary error shown"
+assert_not_contains "$out" "attempting recovery" "no misleading recovery message"
+assert_file_line_count "$FAKE_LOG/binary.log" "hexdocs_mcp_linux search" 1 "no retry on non-connection failure"
+
+t "search: exit 1 without connection error is not treated as a connection error"
+reset_state
+state_container anagen-x-ollama running
+touch "$FAKE_STATE/ollama-ready"
+echo fail > "$FAKE_STATE/binary-mode"
+out="$(main search "agent loop" 2>&1)"
+code=$?
+assert_eq "$code" 1 "exit code propagated"
+assert_not_contains "$out" "attempting recovery" "no misleading recovery message"
+assert_file_line_count "$FAKE_LOG/binary.log" "hexdocs_mcp_linux search" 1 "no retry"
+
 summary

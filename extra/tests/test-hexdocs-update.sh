@@ -83,4 +83,36 @@ code=$?
 assert_eq "$code" 1 "exit code"
 assert_file_contains "$FAKE_LOG/docker.log" "docker start anagen-x-ollama" "cpu restored after failure"
 
+t "update: reports clear error when model pull fails"
+reset_state
+state_container anagen-x-ollama stopped
+rm -f "$FAKE_STATE/model-available"
+touch "$FAKE_STATE/pull-fail"
+out="$( source "$UPDATE"; main "$REPO1" 2>&1 )"
+code=$?
+assert_eq "$code" 1 "exit code"
+assert_contains "$out" "failed to pull model" "clear model pull error"
+assert_file_contains "$FAKE_LOG/docker.log" "docker start anagen-x-ollama" "cpu restored after model failure"
+
+t "update: removes a stale GPU container before starting a fresh one"
+reset_state
+state_container anagen-x-ollama stopped
+state_container anagen-x-ollama-gpu stopped
+touch "$FAKE_STATE/model-available"
+( source "$UPDATE"; main "$REPO1" ) >/dev/null 2>&1
+code=$?
+assert_eq "$code" 0 "exit code"
+assert_file_contains "$FAKE_LOG/docker.log" "docker rm -f anagen-x-ollama-gpu" "stale gpu container removed"
+
+t "update: continues fetching remaining apps when one fetch fails"
+reset_state
+state_container anagen-x-ollama stopped
+touch "$FAKE_STATE/model-available"
+echo fail-once > "$FAKE_STATE/binary-mode"
+( source "$UPDATE"; main "$REPO1" ) >/dev/null 2>&1
+code=$?
+assert_eq "$code" 0 "exit code"
+assert_file_line_count "$FAKE_LOG/binary.log" "hexdocs_mcp_linux fetch" 2 "both apps attempted"
+assert_file_contains "$FAKE_LOG/binary.log" "hexdocs_mcp_linux fetch --project apps/anagen_x/mix.exs" "later app fetched after earlier failure"
+
 summary

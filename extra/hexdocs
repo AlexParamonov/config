@@ -4,6 +4,7 @@ set -uo pipefail
 MODEL="qwen3-embedding:4b"
 OLLAMA_URL="http://localhost:11434"
 OLLAMA_CONTAINER="anagen-x-ollama"
+CONN_ERROR=0
 
 usage() {
     cat <<'EOF'
@@ -68,14 +69,17 @@ ensure_ollama() {
 run_search() {
     # Run the hexdocs binary once. The binary exits 0 even on connection
     # failure, so a connection error is detected from its output: suppress it
-    # and return 1 so the caller can recover and retry.
+    # and set CONN_ERROR so the caller can recover and retry. Any other
+    # failure keeps the binary's own exit code and prints its output.
     local bin="$1"
     shift
     local out
     out="$(mktemp)"
+    CONN_ERROR=0
     "$bin" "$@" >"$out" 2>&1
     local code=$?
     if grep -qE 'econnrefused|econnreset' "$out"; then
+        CONN_ERROR=1
         rm -f "$out"
         return 1
     fi
@@ -156,8 +160,14 @@ main() {
     bin_args+=(--model "$model")
     bin_args+=(--limit "$limit")
 
-    if run_search "$bin" "${bin_args[@]}"; then
+    run_search "$bin" "${bin_args[@]}"
+    local code=$?
+    if [ "$code" -eq 0 ]; then
         return 0
+    fi
+    if [ "$CONN_ERROR" -ne 1 ]; then
+        # Non-connection failure: run_search already printed the output.
+        return "$code"
     fi
     echo "Ollama connection error; attempting recovery..." >&2
     if ensure_ollama; then

@@ -108,10 +108,22 @@ wait_ollama() {
 }
 
 ensure_model() {
+    # Ensure the embedding model exists, pulling it if missing. The pull
+    # streams JSON lines ending in {"status":"success"} on success or an
+    # error object on failure; check the final line rather than curl's exit.
     echo "=== Checking model ==="
-    if ! curl -s "$OLLAMA_URL/api/show" -d "{\"name\": \"$MODEL\"}" >/dev/null 2>&1; then
-        echo "Pulling $MODEL..."
-        curl -s "$OLLAMA_URL/api/pull" -d "{\"name\": \"$MODEL\"}" | tail -1
+    if curl -s "$OLLAMA_URL/api/show" -d "{\"name\": \"$MODEL\"}" >/dev/null 2>&1; then
+        return 0
+    fi
+    echo "Pulling $MODEL..."
+    local last
+    last="$(curl -s "$OLLAMA_URL/api/pull" -d "{\"name\": \"$MODEL\"}" | tail -1)" || {
+        echo "Error: failed to pull model $MODEL (curl error)" >&2
+        return 1
+    }
+    if ! printf '%s' "$last" | grep -q '"status":"success"'; then
+        echo "Error: failed to pull model $MODEL" >&2
+        return 1
     fi
 }
 
@@ -164,7 +176,7 @@ main() {
     ensure_cpu_container || return 1
     ensure_gpu_ollama || return 1
     wait_ollama || return 1
-    ensure_model
+    ensure_model || return 1
 
     for repo in "${repos[@]}"; do
         fetch_repo "$repo"

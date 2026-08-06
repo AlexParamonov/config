@@ -34,14 +34,27 @@ assert_contains "$out" "Found 2 results" "retry succeeded"
 assert_file_contains "$FAKE_LOG/docker.log" "docker start anagen-x-ollama" "container started"
 assert_file_line_count "$FAKE_LOG/binary.log" "hexdocs_mcp_linux search" 2 "search retried once"
 
-t "search: reports error when container does not exist"
+t "search: creates the Ollama container when missing"
+reset_state
+echo connrefused-once > "$FAKE_STATE/binary-mode"
+out="$(main search "agent loop" 2>&1)"
+code=$?
+assert_eq "$code" 0 "exit code after recovery"
+assert_contains "$out" "Found 2 results" "retry succeeded"
+assert_file_contains "$FAKE_LOG/docker.log" \
+    "docker run -d --name anagen-x-ollama -p 11434:11434 -v anagen-x_ollama_data:/root/.ollama ollama/ollama:latest" \
+    "container created"
+assert_file_line_count "$FAKE_LOG/binary.log" "hexdocs_mcp_linux search" 2 "search retried once"
+
+t "search: reports error when container creation fails"
 reset_state
 echo connrefused > "$FAKE_STATE/binary-mode"
+touch "$FAKE_STATE/run-fail"
 out="$(main search "agent loop" 2>&1)"
 code=$?
 assert_eq "$code" 1 "exit code"
-assert_contains "$out" "does not exist" "clear error"
-assert_file_line_count "$FAKE_LOG/binary.log" "hexdocs_mcp_linux search" 1 "no retry when unrecoverable"
+assert_contains "$out" "failed to create" "clear error"
+assert_file_line_count "$FAKE_LOG/binary.log" "hexdocs_mcp_linux search" 1 "no retry when creation fails"
 
 t "search: reports error when Ollama never becomes ready"
 reset_state

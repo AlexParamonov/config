@@ -64,7 +64,7 @@ ensure_cpu_container() {
     if ! docker ps -a --filter name="$CPU_CONTAINER" --format '{{.Names}}' 2>/dev/null | grep -q "^$CPU_CONTAINER$"; then
         echo "=== Creating CPU Ollama container ==="
         docker run -d --name "$CPU_CONTAINER" -p 11434:11434 \
-            -v anagen-x_ollama_data:/root/.ollama ollama/ollama:latest >/dev/null || {
+            -v "$OLLAMA_VOLUME:/root/.ollama" "$OLLAMA_IMAGE" >/dev/null || {
             echo "Error: failed to create CPU Ollama container" >&2
             return 1
         }

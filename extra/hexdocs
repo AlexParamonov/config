@@ -15,7 +15,8 @@ Flags match the MCP hexdocs_mcp_server_search tool.
   --version VER   search a specific package version
   --limit N       max results (default: 5)
 
-If Ollama is not reachable, the CPU container is started and the search retried.
+If Ollama is not reachable, the CPU container is started (created if
+missing) and the search retried.
 EOF
 }
 
@@ -28,8 +29,8 @@ fi
 source "$SCRIPT_DIR/hexdocs-common.sh"
 
 ensure_ollama() {
-    # Start the CPU Ollama container if it exists but is stopped, then poll
-    # until the API responds. Fails if the container is missing or unhealthy.
+    # Ensure the CPU Ollama container is running, creating it if missing,
+    # then poll until the API responds.
     if ! docker ps --filter name="$OLLAMA_CONTAINER" --format '{{.Names}}' 2>/dev/null | grep -q "^$OLLAMA_CONTAINER$"; then
         if docker ps -a --filter name="$OLLAMA_CONTAINER" --format '{{.Names}}' 2>/dev/null | grep -q "^$OLLAMA_CONTAINER$"; then
             echo "Starting Ollama container ($OLLAMA_CONTAINER)..." >&2
@@ -38,10 +39,14 @@ ensure_ollama() {
                 return 1
             fi
         else
-            echo "Error: Ollama container '$OLLAMA_CONTAINER' does not exist." >&2
-            echo "Create it with:" >&2
-            echo "  docker run -d --name $OLLAMA_CONTAINER -p 11434:11434 -v anagen-x_ollama_data:/root/.ollama ollama/ollama:latest" >&2
-            return 1
+            echo "Creating Ollama container ($OLLAMA_CONTAINER)..." >&2
+            # docker's stderr is kept: its message is the best hint when the
+            # daemon is down or port 11434 is taken.
+            if ! docker run -d --name "$OLLAMA_CONTAINER" -p 11434:11434 \
+                -v "$OLLAMA_VOLUME:/root/.ollama" "$OLLAMA_IMAGE" >/dev/null; then
+                echo "Error: failed to create $OLLAMA_CONTAINER (is Docker running? is port 11434 in use?)" >&2
+                return 1
+            fi
         fi
     fi
     wait_ollama || return 1

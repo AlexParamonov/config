@@ -7,6 +7,10 @@
 # the model the docs were embedded with, so it is shared rather than overridden.
 MODEL="qwen3-embedding:4b"
 OLLAMA_URL="http://localhost:11434"
+# CPU Ollama container definition, shared by the search wrapper (which
+# creates it on demand) and hexdocs-update (which swaps it for the GPU one).
+OLLAMA_VOLUME="anagen-x_ollama_data"
+OLLAMA_IMAGE="ollama/ollama:latest"
 
 # Resolve the hexdocs_mcp_linux binary via the global npm root, so the active
 # asdf node version is used without hardcoding any path to it.

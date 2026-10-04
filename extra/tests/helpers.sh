@@ -3,14 +3,9 @@
 #
 # Tests run the wrapper scripts with fake docker/curl/npm/hexdocs binaries
 # prepended to PATH, so no container, network, or global npm state is touched.
-# Fake behavior is driven by state files in $FAKE_STATE:
-#   containers     lines "name:running|stopped" — docker ps inventory
-#   ollama-ready   presence => GET /api/tags succeeds
-#   model-available presence => GET /api/show succeeds
-#   binary-mode    ok | connrefused | connrefused-once | fail | fail-once | fail-fetch | crash
-#   no-ready       docker start/run do NOT make Ollama ready
-#   run-fail       docker run exits non-zero
-# Invocations are logged to $FAKE_LOG/*.log for outcome assertions.
+# FAKE_STATE/dependencies and mix-run-fail configure package enumeration;
+# failing-package selects a package failure. Outcome files record processed
+# packages, failures, and bulk fallbacks. Invocation logs capture call order.
 set -uo pipefail
 
 PASS=0
@@ -158,7 +153,7 @@ chmod +x "$FAKE_BIN/npm"
 
 cat > "$FAKE_BIN/mix" <<'FAKE'
 #!/usr/bin/env bash
-# Fake mix. Logs argv; fails when $FAKE_STATE/mix-fail exists.
+# Fake mix. Emits configured package names and can fail deps.get or package listing.
 echo "mix $*" >> "$FAKE_LOG/mix.log"
 echo "mix $*" >> "$FAKE_LOG/order.log"
 if [ "$1" = "run" ]; then
@@ -185,9 +180,35 @@ cat > "$FAKE_NPM_ROOT/hexdocs-mcp/bin/hexdocs_mcp_linux" <<'FAKE'
 # Mirrors the real binary: exits 0 even on connection failure.
 echo "hexdocs_mcp_linux $*" >> "$FAKE_LOG/binary.log"
 echo "hexdocs_mcp_linux $*" >> "$FAKE_LOG/order.log"
+operation="${1:-}"
+package=""
+project=""
+if [ "$operation" = "fetch" ]; then
+    shift
+    if [ "${1:-}" != "--project" ]; then
+        package="$1"
+        shift
+    fi
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            --project)
+                project="$2"
+                shift 2
+                ;;
+            *) shift ;;
+        esac
+    done
+fi
+record_failed_fetch() {
+    if [ "$operation" = "fetch" ] && [ -n "$package" ]; then
+        printf '%s %s\n' "$project" "$package" >> "$FAKE_STATE/failed-docs"
+    fi
+}
+
 mode="$(cat "$FAKE_STATE/binary-mode" 2>/dev/null || echo ok)"
-if [ "${1:-}" = "fetch" ] && [ -f "$FAKE_STATE/failing-package" ] && [ "${2:-}" = "$(cat "$FAKE_STATE/failing-package")" ]; then
-    echo "fetch failed for package $2" >&2
+if [ -n "$package" ] && [ -f "$FAKE_STATE/failing-package" ] && [ "$package" = "$(cat "$FAKE_STATE/failing-package")" ]; then
+    record_failed_fetch
+    echo "fetch failed for package $package" >&2
     exit 1
 fi
 case "$mode" in
@@ -201,19 +222,23 @@ case "$mode" in
         echo "No results found."
         ;;
     fail-fetch)
+        record_failed_fetch
         echo "fetch failed for app" >&2
         exit 1
         ;;
     fail)
+        record_failed_fetch
         echo "Error: something went wrong" >&2
         exit 1
         ;;
     crash)
+        record_failed_fetch
         echo "Error: something went wrong" >&2
         exit 2
         ;;
     fail-once)
         echo "ok" > "$FAKE_STATE/binary-mode"
+        record_failed_fetch
         echo "fetch failed for app" >&2
         exit 1
         ;;
@@ -224,6 +249,13 @@ case "$mode" in
         echo "  URL: https://hexdocs.pm/jido/core-loop.html"
         ;;
 esac
+if [ "$operation" = "fetch" ]; then
+    if [ -n "$package" ]; then
+        printf '%s %s\n' "$project" "$package" >> "$FAKE_STATE/fetched-docs"
+    else
+        printf '%s\n' "$project" >> "$FAKE_STATE/bulk-fetches"
+    fi
+fi
 exit 0
 FAKE
 chmod +x "$FAKE_NPM_ROOT/hexdocs-mcp/bin/hexdocs_mcp_linux"
@@ -239,7 +271,8 @@ reset_state() {
     : > "$FAKE_STATE/containers"
     rm -f "$FAKE_STATE/ollama-ready" "$FAKE_STATE/model-available" \
           "$FAKE_STATE/no-ready" "$FAKE_STATE/run-fail" "$FAKE_STATE/pull-fail" \
-          "$FAKE_STATE/mix-fail" "$FAKE_STATE/failing-package" "$FAKE_STATE/mix-run-fail"
+          "$FAKE_STATE/mix-fail" "$FAKE_STATE/failing-package" "$FAKE_STATE/mix-run-fail" \
+          "$FAKE_STATE/failed-docs" "$FAKE_STATE/fetched-docs" "$FAKE_STATE/bulk-fetches"
     echo fake_dep > "$FAKE_STATE/dependencies"
     echo ok > "$FAKE_STATE/binary-mode"
     : > "$FAKE_LOG/docker.log"

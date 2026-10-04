@@ -25,15 +25,15 @@ assert_file_contains "$FAKE_LOG/docker.log" "docker stop anagen-x-ollama" "cpu c
 assert_file_contains "$FAKE_LOG/docker.log" "docker run -d --name anagen-x-ollama-gpu" "gpu container started"
 assert_file_contains "$FAKE_LOG/docker.log" "docker stop anagen-x-ollama-gpu" "gpu stopped in cleanup"
 assert_file_contains "$FAKE_LOG/docker.log" "docker start anagen-x-ollama" "cpu restored in cleanup"
-assert_file_contains "$FAKE_LOG/binary.log" "hexdocs_mcp_linux fetch --project apps/agent_loop/mix.exs --model qwen3-embedding:4b" "fetched app 1"
-assert_file_contains "$FAKE_LOG/binary.log" "hexdocs_mcp_linux fetch --project apps/anagen_x/mix.exs --model qwen3-embedding:4b" "fetched app 2"
+assert_file_contains "$FAKE_LOG/binary.log" "hexdocs_mcp_linux fetch fake_dep --project apps/agent_loop/mix.exs --model qwen3-embedding:4b" "fetched app 1"
+assert_file_contains "$FAKE_LOG/binary.log" "hexdocs_mcp_linux fetch fake_dep --project apps/anagen_x/mix.exs --model qwen3-embedding:4b" "fetched app 2"
 
 t "update: fetches apps from every repo arg"
 reset_state
 state_container anagen-x-ollama stopped
 touch "$FAKE_STATE/model-available"
 ( source "$UPDATE"; main "$REPO1" "$REPO2" ) >/dev/null 2>&1
-assert_file_contains "$FAKE_LOG/binary.log" "hexdocs_mcp_linux fetch --project apps/book_companion/mix.exs --model qwen3-embedding:4b" "book-companion app fetched"
+assert_file_contains "$FAKE_LOG/binary.log" "hexdocs_mcp_linux fetch fake_dep --project apps/book_companion/mix.exs --model qwen3-embedding:4b" "book-companion app fetched"
 
 t "update: npm update runs before any fetch"
 reset_state
@@ -104,6 +104,36 @@ code=$?
 assert_eq "$code" 0 "exit code"
 assert_file_contains "$FAKE_LOG/docker.log" "docker rm -f anagen-x-ollama-gpu" "stale gpu container removed"
 
+t "update: continues package fetches after one package fails"
+reset_state
+state_container anagen-x-ollama stopped
+touch "$FAKE_STATE/model-available"
+printf 'hackney\ngood_dep\n' > "$FAKE_STATE/dependencies"
+echo hackney > "$FAKE_STATE/failing-package"
+out="$( source "$UPDATE"; main "$REPO2" 2>&1 )"
+code=$?
+assert_eq "$code" 0 "exit code"
+assert_contains "$out" "fetch failed for package hackney" "failed package warning"
+assert_file_contains "$FAKE_LOG/binary.log" "hexdocs_mcp_linux fetch hackney --project apps/book_companion/mix.exs" "failed package attempted"
+assert_file_contains "$FAKE_LOG/binary.log" "hexdocs_mcp_linux fetch good_dep --project apps/book_companion/mix.exs" "later package fetched after failure"
+hackney_line="$(grep -nF "fetch hackney --project apps/book_companion/mix.exs" "$FAKE_LOG/binary.log" | cut -d: -f1)"
+good_dep_line="$(grep -nF "fetch good_dep --project apps/book_companion/mix.exs" "$FAKE_LOG/binary.log" | cut -d: -f1)"
+if [ -n "$hackney_line" ] && [ -n "$good_dep_line" ] && [ "$hackney_line" -lt "$good_dep_line" ]; then
+    pass
+else
+    fail "later package must be fetched after the failed package"
+fi
+
+t "update: falls back to bulk fetch when package enumeration fails"
+reset_state
+state_container anagen-x-ollama stopped
+touch "$FAKE_STATE/model-available" "$FAKE_STATE/mix-run-fail"
+out="$( source "$UPDATE"; main "$REPO2" 2>&1 )"
+code=$?
+assert_eq "$code" 0 "exit code"
+assert_contains "$out" "could not list Hex packages" "enumeration warning"
+assert_file_contains "$FAKE_LOG/binary.log" "hexdocs_mcp_linux fetch --project apps/book_companion/mix.exs" "bulk fetch fallback attempted"
+
 t "update: continues fetching remaining apps when one fetch fails"
 reset_state
 state_container anagen-x-ollama stopped
@@ -113,7 +143,7 @@ echo fail-once > "$FAKE_STATE/binary-mode"
 code=$?
 assert_eq "$code" 0 "exit code"
 assert_file_line_count "$FAKE_LOG/binary.log" "hexdocs_mcp_linux fetch" 2 "both apps attempted"
-assert_file_contains "$FAKE_LOG/binary.log" "hexdocs_mcp_linux fetch --project apps/anagen_x/mix.exs" "later app fetched after earlier failure"
+assert_file_contains "$FAKE_LOG/binary.log" "hexdocs_mcp_linux fetch fake_dep --project apps/anagen_x/mix.exs" "later app fetched after earlier failure"
 
 t "update: passes --force through to every fetch and still restores CPU Ollama"
 reset_state
@@ -122,8 +152,8 @@ touch "$FAKE_STATE/model-available"
 ( source "$UPDATE"; main --force "$REPO1" ) >/dev/null 2>&1
 code=$?
 assert_eq "$code" 0 "exit code"
-assert_file_contains "$FAKE_LOG/binary.log" "hexdocs_mcp_linux fetch --project apps/agent_loop/mix.exs --model qwen3-embedding:4b --force" "force passed to app 1"
-assert_file_contains "$FAKE_LOG/binary.log" "hexdocs_mcp_linux fetch --project apps/anagen_x/mix.exs --model qwen3-embedding:4b --force" "force passed to app 2"
+assert_file_contains "$FAKE_LOG/binary.log" "hexdocs_mcp_linux fetch fake_dep --project apps/agent_loop/mix.exs --model qwen3-embedding:4b --force" "force passed to app 1"
+assert_file_contains "$FAKE_LOG/binary.log" "hexdocs_mcp_linux fetch fake_dep --project apps/anagen_x/mix.exs --model qwen3-embedding:4b --force" "force passed to app 2"
 assert_file_contains "$FAKE_LOG/docker.log" "docker start anagen-x-ollama" "cpu restored on exit with --force"
 
 t "update: runs mix deps.get in each repo before fetching that repo's apps"
@@ -150,7 +180,7 @@ out="$( source "$UPDATE"; main "$REPO1" 2>&1 )"
 code=$?
 assert_eq "$code" 0 "exit code"
 assert_contains "$out" "mix deps.get failed" "warning printed"
-assert_file_contains "$FAKE_LOG/binary.log" "hexdocs_mcp_linux fetch --project apps/agent_loop/mix.exs" "fetch still attempted after deps.get failure"
+assert_file_contains "$FAKE_LOG/binary.log" "hexdocs_mcp_linux fetch fake_dep --project apps/agent_loop/mix.exs" "fetch still attempted after deps.get failure"
 
 t "update: unknown option is a usage error"
 reset_state

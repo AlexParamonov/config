@@ -161,6 +161,16 @@ cat > "$FAKE_BIN/mix" <<'FAKE'
 # Fake mix. Logs argv; fails when $FAKE_STATE/mix-fail exists.
 echo "mix $*" >> "$FAKE_LOG/mix.log"
 echo "mix $*" >> "$FAKE_LOG/order.log"
+if [ "$1" = "run" ]; then
+    if [ -f "$FAKE_STATE/mix-run-fail" ]; then
+        echo "** (Mix) command run failed" >&2
+        exit 1
+    fi
+    while IFS= read -r dependency; do
+        [ -n "$dependency" ] && printf '__HEXDOCS_PACKAGE__:%s\n' "$dependency"
+    done < "$FAKE_STATE/dependencies"
+    exit 0
+fi
 if [ -f "$FAKE_STATE/mix-fail" ]; then
     echo "** (Mix) command deps.get failed" >&2
     exit 1
@@ -176,6 +186,10 @@ cat > "$FAKE_NPM_ROOT/hexdocs-mcp/bin/hexdocs_mcp_linux" <<'FAKE'
 echo "hexdocs_mcp_linux $*" >> "$FAKE_LOG/binary.log"
 echo "hexdocs_mcp_linux $*" >> "$FAKE_LOG/order.log"
 mode="$(cat "$FAKE_STATE/binary-mode" 2>/dev/null || echo ok)"
+if [ "${1:-}" = "fetch" ] && [ -f "$FAKE_STATE/failing-package" ] && [ "${2:-}" = "$(cat "$FAKE_STATE/failing-package")" ]; then
+    echo "fetch failed for package $2" >&2
+    exit 1
+fi
 case "$mode" in
     connrefused)
         echo "Error generating query embedding: {:error, %Req.TransportError{reason: :econnrefused}}"
@@ -224,7 +238,9 @@ setup_fakes() {
 reset_state() {
     : > "$FAKE_STATE/containers"
     rm -f "$FAKE_STATE/ollama-ready" "$FAKE_STATE/model-available" \
-          "$FAKE_STATE/no-ready" "$FAKE_STATE/run-fail" "$FAKE_STATE/pull-fail" "$FAKE_STATE/mix-fail"
+          "$FAKE_STATE/no-ready" "$FAKE_STATE/run-fail" "$FAKE_STATE/pull-fail" \
+          "$FAKE_STATE/mix-fail" "$FAKE_STATE/failing-package" "$FAKE_STATE/mix-run-fail"
+    echo fake_dep > "$FAKE_STATE/dependencies"
     echo ok > "$FAKE_STATE/binary-mode"
     : > "$FAKE_LOG/docker.log"
     : > "$FAKE_LOG/curl.log"

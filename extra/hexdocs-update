@@ -14,7 +14,7 @@ GPU_DEVICES=(
     -e HSA_OVERRIDE_GFX_VERSION=11.0.0
     -e ROCM_VISIBLE_DEVICES=0
 )
-
+PACKAGE_MARKER='__HEXDOCS_PACKAGE__:'
 usage() {
     cat <<'EOF'
 Usage: hexdocs-update [--force] <repo> [repo ...]
@@ -107,31 +107,88 @@ ensure_model() {
     fi
 }
 
+project_hex_packages() {
+    local mix_file="$1"
+    local project_dir="${mix_file%/*}"
+    (
+        cd "$project_dir" || return 1
+        mix run --no-deps-check --no-compile --no-start -e '
+            hex_dep? = fn opts ->
+                (Keyword.get(opts, :version) != nil or Keyword.get(opts, :hex) != nil) and
+                    not Enum.any?([:path, :git, :github], &Keyword.has_key?(opts, &1))
+            end
+
+            Mix.Project.config()
+            |> Keyword.get(:deps, [])
+            |> Enum.each(fn
+                {app, version} when is_binary(version) ->
+                    IO.puts("__HEXDOCS_PACKAGE__:" <> to_string(app))
+
+                {app, opts} when is_list(opts) ->
+                    if hex_dep?.(opts), do: IO.puts("__HEXDOCS_PACKAGE__:" <> to_string(app))
+
+                {app, version, opts} when is_binary(version) and is_list(opts) ->
+                    unless Enum.any?([:path, :git, :github], &Keyword.has_key?(opts, &1)) do
+                        IO.puts("__HEXDOCS_PACKAGE__:" <> to_string(app))
+                    end
+
+                _ ->
+                    :ok
+            end)
+        '
+    )
+}
+
+fetch_package_docs() {
+    local app="$1" package="$2" force="$3"
+    local force_args=()
+    [ -n "$force" ] && force_args+=("$force")
+    if ! "$HEXDOCS_BIN" fetch "$package" --project "$app/mix.exs" --model "$MODEL" "${force_args[@]}"; then
+        echo "Warning: fetch failed for package $package in $(basename "$app")"
+        rm -f erl_crash.dump
+    fi
+}
+
 fetch_repo() {
     local repo="$1" force="$2"
+    local app package_output line package found
     local force_args=()
     [ -n "$force" ] && force_args+=("$force")
     (
-        # cd into the repo so the binary's `mix` invocation resolves against
-        # the repo's .tool-versions, not the caller's cwd.
+        # cd into the repo so Mix resolves against the repo's .tool-versions.
         cd "$repo" || { echo "Warning: cannot enter $repo, skipping" >&2; exit 1; }
         for app in apps/*/; do
             [ -d "$app" ] || continue
             app="${app%/}"
             [ -f "$app/mix.exs" ] || continue
             echo -e "\n=== Fetching docs for $(basename "$app") ==="
-            if ! "$HEXDOCS_BIN" fetch --project "$app/mix.exs" --model "$MODEL" "${force_args[@]}"; then
-                echo "Warning: fetch failed for $(basename "$app") (may have packages without docs)"
-                rm -f erl_crash.dump
+            if ! package_output="$(project_hex_packages "$app/mix.exs")"; then
+                echo "Warning: could not list Hex packages for $(basename "$app"), falling back to app-wide fetch" >&2
+                if ! "$HEXDOCS_BIN" fetch --project "$app/mix.exs" --model "$MODEL" "${force_args[@]}"; then
+                    echo "Warning: fetch failed for $(basename "$app")"
+                    rm -f erl_crash.dump
+                fi
+                continue
             fi
+            found=0
+            while IFS= read -r line; do
+                case "$line" in
+                    "$PACKAGE_MARKER"*)
+                        package="${line#"$PACKAGE_MARKER"}"
+                        [ -n "$package" ] || continue
+                        found=1
+                        fetch_package_docs "$app" "$package" "$force"
+                        ;;
+                esac
+            done <<< "$package_output"
+            [ "$found" -eq 1 ] || echo "No Hex dependencies found for $(basename "$app")"
         done
     )
 }
 
 mix_deps_get() {
     # Fetch deps inside the repo so its lockfile/.tool-versions apply. A
-    # failure is a warning, not fatal: fetches fail per-app with their own
-    # warnings if deps are genuinely missing.
+    # failure is a warning, not fatal: package fetches report missing deps.
     local repo="$1"
     echo "=== Updating deps in $repo ==="
     if ! ( cd "$repo" && mix deps.get ); then

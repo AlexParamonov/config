@@ -161,8 +161,9 @@ if [ "$1" = "run" ]; then
         echo "** (Mix) command run failed" >&2
         exit 1
     fi
-    while IFS= read -r dependency; do
-        [ -n "$dependency" ] && printf '__HEXDOCS_PACKAGE__:%s\n' "$dependency"
+    echo "mix run project $PWD" >> "$FAKE_LOG/order.log"
+    while IFS=' ' read -r dependency version; do
+        [ -n "$dependency" ] && printf '__HEXDOCS_PACKAGE__:%s:%s\n' "$dependency" "${version:-latest}"
     done < "$FAKE_STATE/dependencies"
     exit 0
 fi
@@ -182,12 +183,17 @@ echo "hexdocs_mcp_linux $*" >> "$FAKE_LOG/binary.log"
 echo "hexdocs_mcp_linux $*" >> "$FAKE_LOG/order.log"
 operation="${1:-}"
 package=""
+version=""
 project=""
 if [ "$operation" = "fetch" ]; then
     shift
     if [ "${1:-}" != "--project" ]; then
         package="$1"
         shift
+        case "${1:-}" in
+            --*) ;;
+            *) version="$1"; shift ;;
+        esac
     fi
     while [ $# -gt 0 ]; do
         case "$1" in
@@ -201,13 +207,17 @@ if [ "$operation" = "fetch" ]; then
 fi
 record_failed_fetch() {
     if [ "$operation" = "fetch" ] && [ -n "$package" ]; then
-        printf '%s %s\n' "$project" "$package" >> "$FAKE_STATE/failed-docs"
+        printf '%s %s\n' "$package" "$version" >> "$FAKE_STATE/failed-docs"
     fi
 }
 
 mode="$(cat "$FAKE_STATE/binary-mode" 2>/dev/null || echo ok)"
 if [ -n "$package" ] && [ -f "$FAKE_STATE/consume-fetch-stdin" ]; then
     cat >/dev/null
+fi
+if [ -n "$package" ] && [ -n "$project" ] && [ -f "$FAKE_STATE/reject-project-fetch" ]; then
+    printf '%s %s\n' "$package" "$version" >> "$FAKE_STATE/project-parser-errors"
+    exit 1
 fi
 if [ -n "$package" ] && [ -f "$FAKE_STATE/failing-package" ] && [ "$package" = "$(cat "$FAKE_STATE/failing-package")" ]; then
     record_failed_fetch
@@ -254,7 +264,7 @@ case "$mode" in
 esac
 if [ "$operation" = "fetch" ]; then
     if [ -n "$package" ]; then
-        printf '%s %s\n' "$project" "$package" >> "$FAKE_STATE/fetched-docs"
+        printf '%s %s\n' "$package" "$version" >> "$FAKE_STATE/fetched-docs"
     else
         printf '%s\n' "$project" >> "$FAKE_STATE/bulk-fetches"
     fi
@@ -276,8 +286,9 @@ reset_state() {
           "$FAKE_STATE/no-ready" "$FAKE_STATE/run-fail" "$FAKE_STATE/pull-fail" \
           "$FAKE_STATE/mix-fail" "$FAKE_STATE/failing-package" "$FAKE_STATE/mix-run-fail" \
           "$FAKE_STATE/failed-docs" "$FAKE_STATE/fetched-docs" "$FAKE_STATE/bulk-fetches" \
-          "$FAKE_STATE/consume-fetch-stdin"
-    echo fake_dep > "$FAKE_STATE/dependencies"
+          "$FAKE_STATE/consume-fetch-stdin" "$FAKE_STATE/reject-project-fetch" \
+          "$FAKE_STATE/project-parser-errors"
+    echo 'fake_dep 1.2.3' > "$FAKE_STATE/dependencies"
     echo ok > "$FAKE_STATE/binary-mode"
     : > "$FAKE_LOG/docker.log"
     : > "$FAKE_LOG/curl.log"

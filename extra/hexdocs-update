@@ -15,6 +15,7 @@ GPU_DEVICES=(
     -e ROCM_VISIBLE_DEVICES=0
 )
 PACKAGE_MARKER='__HEXDOCS_PACKAGE__:'
+LATEST_VERSION='latest'
 usage() {
     cat <<'EOF'
 Usage: hexdocs-update [--force] <repo> [repo ...]
@@ -34,7 +35,7 @@ if [ ! -f "$SCRIPT_DIR/hexdocs-common.sh" ]; then
     echo "Error: $SCRIPT_DIR/hexdocs-common.sh not found (re-run install.sh)" >&2
     exit 1
 fi
-# shellcheck source=hexdocs-common.sh
+# shellcheck source=extra/hexdocs-common.sh
 source "$SCRIPT_DIR/hexdocs-common.sh"
 
 cleanup() {
@@ -113,6 +114,23 @@ project_hex_packages() {
     (
         cd "$project_dir" || return 1
         mix run --no-deps-check --no-compile --no-start -e '
+            locks = Mix.Dep.Lock.read()
+            latest_version = "latest"
+
+            emit_package = fn app ->
+                version =
+                    case Map.get(locks, app) do
+                        {:hex, _package, version, _checksum, _managers, _deps, _repo, _outer_checksum}
+                        when is_binary(version) and version != "" ->
+                            version
+
+                        _ ->
+                            latest_version
+                    end
+
+                IO.puts("__HEXDOCS_PACKAGE__:" <> to_string(app) <> ":" <> version)
+            end
+
             hex_dep? = fn opts ->
                 (Keyword.get(opts, :version) != nil or Keyword.get(opts, :hex) != nil) and
                     not Enum.any?([:path, :git, :github], &Keyword.has_key?(opts, &1))
@@ -122,14 +140,14 @@ project_hex_packages() {
             |> Keyword.get(:deps, [])
             |> Enum.each(fn
                 {app, version} when is_binary(version) ->
-                    IO.puts("__HEXDOCS_PACKAGE__:" <> to_string(app))
+                    emit_package.(app)
 
                 {app, opts} when is_list(opts) ->
-                    if hex_dep?.(opts), do: IO.puts("__HEXDOCS_PACKAGE__:" <> to_string(app))
+                    if hex_dep?.(opts), do: emit_package.(app)
 
                 {app, version, opts} when is_binary(version) and is_list(opts) ->
                     unless Enum.any?([:path, :git, :github], &Keyword.has_key?(opts, &1)) do
-                        IO.puts("__HEXDOCS_PACKAGE__:" <> to_string(app))
+                        emit_package.(app)
                     end
 
                 _ ->
@@ -140,11 +158,11 @@ project_hex_packages() {
 }
 
 fetch_package_docs() {
-    local app="$1" package="$2" force="$3"
+    local app="$1" package="$2" version="$3" force="$4"
     local force_args=()
     [ -n "$force" ] && force_args+=("$force")
     # The fetch process must not consume the package list driving the caller's loop.
-    if ! "$HEXDOCS_BIN" fetch "$package" --project "$app/mix.exs" --model "$MODEL" "${force_args[@]}" </dev/null; then
+    if ! "$HEXDOCS_BIN" fetch "$package" "$version" --model "$MODEL" "${force_args[@]}" </dev/null; then
         echo "Warning: fetch failed for package $package in $(basename "$app")"
         rm -f erl_crash.dump
     fi
@@ -152,7 +170,7 @@ fetch_package_docs() {
 
 fetch_repo() {
     local repo="$1" force="$2"
-    local app package_output line package found
+    local app package_output line package package_info version found
     local force_args=()
     [ -n "$force" ] && force_args+=("$force")
     (
@@ -175,10 +193,12 @@ fetch_repo() {
             while IFS= read -r line; do
                 case "$line" in
                     "$PACKAGE_MARKER"*)
-                        package="${line#"$PACKAGE_MARKER"}"
+                        package_info="${line#"$PACKAGE_MARKER"}"
+                        IFS=: read -r package version <<< "$package_info"
+                        version="${version:-$LATEST_VERSION}"
                         [ -n "$package" ] || continue
                         found=1
-                        fetch_package_docs "$app" "$package" "$force"
+                        fetch_package_docs "$app" "$package" "$version" "$force"
                         ;;
                 esac
             done <<< "$package_output"

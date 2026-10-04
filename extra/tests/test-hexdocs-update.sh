@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 # Tests for extra/hexdocs-update (embedding fetch wrapper).
+# UPDATE is selected from the test fixture at runtime.
+# shellcheck disable=SC1090
 set -uo pipefail
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+# shellcheck source=extra/tests/helpers.sh
 source "$SCRIPT_DIR/helpers.sh"
 UPDATE="$SCRIPT_DIR/../hexdocs-update"
 
@@ -25,15 +28,14 @@ assert_file_contains "$FAKE_LOG/docker.log" "docker stop anagen-x-ollama" "cpu c
 assert_file_contains "$FAKE_LOG/docker.log" "docker run -d --name anagen-x-ollama-gpu" "gpu container started"
 assert_file_contains "$FAKE_LOG/docker.log" "docker stop anagen-x-ollama-gpu" "gpu stopped in cleanup"
 assert_file_contains "$FAKE_LOG/docker.log" "docker start anagen-x-ollama" "cpu restored in cleanup"
-assert_file_contains "$FAKE_STATE/fetched-docs" "apps/agent_loop/mix.exs fake_dep" "first app docs processed"
-assert_file_contains "$FAKE_STATE/fetched-docs" "apps/anagen_x/mix.exs fake_dep" "second app docs processed"
+assert_file_line_count "$FAKE_STATE/fetched-docs" "fake_dep 1.2.3" 2 "docs processed for both apps"
 
 t "update: fetches apps from every repo arg"
 reset_state
 state_container anagen-x-ollama stopped
 touch "$FAKE_STATE/model-available"
 ( source "$UPDATE"; main "$REPO1" "$REPO2" ) >/dev/null 2>&1
-assert_file_contains "$FAKE_STATE/fetched-docs" "apps/book_companion/mix.exs fake_dep" "book-companion docs processed"
+assert_file_contains "$FAKE_STATE/fetched-docs" "fake_dep 1.2.3" "book-companion docs processed"
 
 t "update: npm update runs before any fetch"
 reset_state
@@ -44,7 +46,11 @@ npm_line="$(grep -nF "npm update" "$FAKE_LOG/order.log" | head -1 | cut -d: -f1)
 fetch_line="$(grep -nF "hexdocs_mcp_linux fetch" "$FAKE_LOG/order.log" | head -1 | cut -d: -f1)"
 assert_eq "$([ -n "$npm_line" ] && echo yes || echo no)" "yes" "npm update ran"
 if [ -n "$npm_line" ] && [ -n "$fetch_line" ]; then
-    [ "$npm_line" -lt "$fetch_line" ] && pass || fail "npm update must precede fetches"
+    if [ "$npm_line" -lt "$fetch_line" ]; then
+        pass
+    else
+        fail "npm update must precede fetches"
+    fi
 else
     fail "missing npm update or fetch log lines"
 fi
@@ -108,14 +114,26 @@ t "update: continues package fetches after one package fails"
 reset_state
 state_container anagen-x-ollama stopped
 touch "$FAKE_STATE/model-available"
-printf 'hackney\ngood_dep\n' > "$FAKE_STATE/dependencies"
+printf 'hackney 1.6.0\ngood_dep 2.0.0\n' > "$FAKE_STATE/dependencies"
 echo hackney > "$FAKE_STATE/failing-package"
 touch "$FAKE_STATE/consume-fetch-stdin"
 ( source "$UPDATE"; main "$REPO2" ) >/dev/null 2>&1
 code=$?
 assert_eq "$code" 0 "exit code"
-assert_file_contains "$FAKE_STATE/failed-docs" "apps/book_companion/mix.exs hackney" "failed package recorded"
-assert_file_contains "$FAKE_STATE/fetched-docs" "apps/book_companion/mix.exs good_dep" "later package processed successfully"
+assert_file_contains "$FAKE_STATE/failed-docs" "hackney 1.6.0" "failed package recorded"
+assert_file_contains "$FAKE_STATE/fetched-docs" "good_dep 2.0.0" "later package processed successfully"
+
+t "update: fetches locked and latest versions without project dependency parsing"
+reset_state
+state_container anagen-x-ollama stopped
+touch "$FAKE_STATE/model-available" "$FAKE_STATE/reject-project-fetch"
+printf 'mochiweb 3.5.0\nunlocked_dep\n' > "$FAKE_STATE/dependencies"
+( source "$UPDATE"; main "$REPO2" ) >/dev/null 2>&1
+code=$?
+assert_eq "$code" 0 "exit code"
+assert_file_contains "$FAKE_STATE/fetched-docs" "mochiweb 3.5.0" "locked-version package processed"
+assert_file_contains "$FAKE_STATE/fetched-docs" "unlocked_dep latest" "unlocked package uses latest version"
+assert_not_contains "$(cat "$FAKE_STATE/project-parser-errors" 2>/dev/null || true)" "mochiweb" "no project parser failure"
 
 t "update: falls back to bulk fetch when package enumeration fails"
 reset_state
@@ -135,8 +153,8 @@ echo fail-once > "$FAKE_STATE/binary-mode"
 ( source "$UPDATE"; main "$REPO1" ) >/dev/null 2>&1
 code=$?
 assert_eq "$code" 0 "exit code"
-assert_file_contains "$FAKE_STATE/failed-docs" "apps/agent_loop/mix.exs fake_dep" "first app fetch failed"
-assert_file_contains "$FAKE_STATE/fetched-docs" "apps/anagen_x/mix.exs fake_dep" "later app processed after earlier failure"
+assert_file_contains "$FAKE_STATE/failed-docs" "fake_dep 1.2.3" "first app fetch failed"
+assert_file_line_count "$FAKE_STATE/fetched-docs" "fake_dep 1.2.3" 1 "later app processed after earlier failure"
 
 t "update: passes --force through to every fetch and still restores CPU Ollama"
 reset_state
@@ -145,8 +163,7 @@ touch "$FAKE_STATE/model-available"
 ( source "$UPDATE"; main --force "$REPO1" ) >/dev/null 2>&1
 code=$?
 assert_eq "$code" 0 "exit code"
-assert_file_contains "$FAKE_LOG/binary.log" "hexdocs_mcp_linux fetch fake_dep --project apps/agent_loop/mix.exs --model qwen3-embedding:4b --force" "force passed to app 1"
-assert_file_contains "$FAKE_LOG/binary.log" "hexdocs_mcp_linux fetch fake_dep --project apps/anagen_x/mix.exs --model qwen3-embedding:4b --force" "force passed to app 2"
+assert_file_line_count "$FAKE_LOG/binary.log" "hexdocs_mcp_linux fetch fake_dep 1.2.3 --model qwen3-embedding:4b --force" 2 "force passed to both app fetches"
 assert_file_contains "$FAKE_LOG/docker.log" "docker start anagen-x-ollama" "cpu restored on exit with --force"
 
 t "update: runs mix deps.get in each repo before fetching that repo's apps"
@@ -161,8 +178,8 @@ mix1="$(grep -nF "mix deps.get" "$FAKE_LOG/order.log" | head -1 | cut -d: -f1)"
 fetch1="$(grep -nF "hexdocs_mcp_linux fetch" "$FAKE_LOG/order.log" | head -1 | cut -d: -f1)"
 if [ -n "$mix1" ] && [ -n "$fetch1" ] && [ "$mix1" -lt "$fetch1" ]; then pass; else fail "first deps.get must precede first fetch"; fi
 mix2="$(grep -nF "mix deps.get" "$FAKE_LOG/order.log" | sed -n '2p' | cut -d: -f1)"
-fetch_bc="$(grep -nF "book_companion" "$FAKE_LOG/order.log" | head -1 | cut -d: -f1)"
-if [ -n "$mix2" ] && [ -n "$fetch_bc" ] && [ "$mix2" -lt "$fetch_bc" ]; then pass; else fail "book-companion deps.get must precede its fetch"; fi
+fetch_bc="$(grep -nF "mix run project $REPO2/apps/book_companion" "$FAKE_LOG/order.log" | head -1 | cut -d: -f1)"
+if [ -n "$mix2" ] && [ -n "$fetch_bc" ] && [ "$mix2" -lt "$fetch_bc" ]; then pass; else fail "book-companion deps.get must precede package enumeration"; fi
 
 t "update: warns and continues when mix deps.get fails"
 reset_state
@@ -173,7 +190,7 @@ out="$( source "$UPDATE"; main "$REPO1" 2>&1 )"
 code=$?
 assert_eq "$code" 0 "exit code"
 assert_contains "$out" "mix deps.get failed" "warning printed"
-assert_file_contains "$FAKE_STATE/fetched-docs" "apps/agent_loop/mix.exs fake_dep" "fetch still processed after deps.get failure"
+assert_file_contains "$FAKE_STATE/fetched-docs" "fake_dep 1.2.3" "fetch still processed after deps.get failure"
 
 t "update: unknown option is a usage error"
 reset_state

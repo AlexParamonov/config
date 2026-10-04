@@ -4,8 +4,8 @@
 # Tests run the wrapper scripts with fake docker/curl/npm/hexdocs binaries
 # prepended to PATH, so no container, network, or global npm state is touched.
 # FAKE_STATE/dependencies and mix-run-fail configure package enumeration;
-# failing-package selects a package failure. Outcome files record processed
-# packages, failures, and bulk fallbacks. Invocation logs capture call order.
+# failing-package selects a package failure; consume-fetch-stdin simulates a
+# fetch process draining inherited input. Outcome files record fetch results.
 set -uo pipefail
 
 PASS=0
@@ -206,6 +206,9 @@ record_failed_fetch() {
 }
 
 mode="$(cat "$FAKE_STATE/binary-mode" 2>/dev/null || echo ok)"
+if [ -n "$package" ] && [ -f "$FAKE_STATE/consume-fetch-stdin" ]; then
+    cat >/dev/null
+fi
 if [ -n "$package" ] && [ -f "$FAKE_STATE/failing-package" ] && [ "$package" = "$(cat "$FAKE_STATE/failing-package")" ]; then
     record_failed_fetch
     echo "fetch failed for package $package" >&2
@@ -272,7 +275,8 @@ reset_state() {
     rm -f "$FAKE_STATE/ollama-ready" "$FAKE_STATE/model-available" \
           "$FAKE_STATE/no-ready" "$FAKE_STATE/run-fail" "$FAKE_STATE/pull-fail" \
           "$FAKE_STATE/mix-fail" "$FAKE_STATE/failing-package" "$FAKE_STATE/mix-run-fail" \
-          "$FAKE_STATE/failed-docs" "$FAKE_STATE/fetched-docs" "$FAKE_STATE/bulk-fetches"
+          "$FAKE_STATE/failed-docs" "$FAKE_STATE/fetched-docs" "$FAKE_STATE/bulk-fetches" \
+          "$FAKE_STATE/consume-fetch-stdin"
     echo fake_dep > "$FAKE_STATE/dependencies"
     echo ok > "$FAKE_STATE/binary-mode"
     : > "$FAKE_LOG/docker.log"

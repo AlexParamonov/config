@@ -110,6 +110,7 @@ state_container anagen-x-ollama stopped
 touch "$FAKE_STATE/model-available"
 printf 'hackney\ngood_dep\n' > "$FAKE_STATE/dependencies"
 echo hackney > "$FAKE_STATE/failing-package"
+touch "$FAKE_STATE/consume-fetch-stdin"
 ( source "$UPDATE"; main "$REPO2" ) >/dev/null 2>&1
 code=$?
 assert_eq "$code" 0 "exit code"

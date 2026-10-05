@@ -16,6 +16,8 @@ GPU_DEVICES=(
 )
 PACKAGE_MARKER='__HEXDOCS_PACKAGE__:'
 LATEST_VERSION='latest'
+# Credo's duplicate chunk keys crash hexdocs-mcp 0.6.0.
+SKIP_PACKAGES=('credo')
 usage() {
     cat <<'EOF'
 Usage: hexdocs-update [--force] <repo> [repo ...]
@@ -157,6 +159,14 @@ project_hex_packages() {
     )
 }
 
+package_is_skipped() {
+    local package="$1" skipped_package
+    for skipped_package in "${SKIP_PACKAGES[@]}"; do
+        [ "$package" = "$skipped_package" ] && return 0
+    done
+    return 1
+}
+
 fetch_package_docs() {
     local app="$1" package="$2" version="$3" force="$4"
     local force_args=()
@@ -198,6 +208,10 @@ fetch_repo() {
                         version="${version:-$LATEST_VERSION}"
                         [ -n "$package" ] || continue
                         found=1
+                        if package_is_skipped "$package"; then
+                            echo "Skipping excluded package $package $version"
+                            continue
+                        fi
                         fetch_package_docs "$app" "$package" "$version" "$force"
                         ;;
                 esac

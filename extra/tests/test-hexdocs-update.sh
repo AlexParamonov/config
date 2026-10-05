@@ -123,6 +123,17 @@ assert_eq "$code" 0 "exit code"
 assert_file_contains "$FAKE_STATE/failed-docs" "hackney 1.6.0" "failed package recorded"
 assert_file_contains "$FAKE_STATE/fetched-docs" "good_dep 2.0.0" "later package processed successfully"
 
+t "update: skips Credo and continues fetching later dependencies"
+reset_state
+state_container anagen-x-ollama stopped
+touch "$FAKE_STATE/model-available"
+printf 'credo 1.7.19\nsafe_dep 1.0.0\n' > "$FAKE_STATE/dependencies"
+( source "$UPDATE"; main "$REPO2" ) >/dev/null 2>&1
+code=$?
+assert_eq "$code" 0 "exit code"
+assert_not_contains "$(cat "$FAKE_STATE/fetched-docs" 2>/dev/null || true)" "credo" "Credo excluded from fetches"
+assert_file_contains "$FAKE_STATE/fetched-docs" "safe_dep 1.0.0" "later dependency processed"
+
 t "update: fetches locked and latest versions without project dependency parsing"
 reset_state
 state_container anagen-x-ollama stopped

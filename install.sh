@@ -220,6 +220,16 @@ if [ -f "$SCRIPT_DIR/extra/hexdocs" ] && [ -f "$SCRIPT_DIR/extra/hexdocs-update"
         echo "  -> Installed hexdocs wrappers to ~/.local/bin/"
     fi
 fi
+
+# Handy dictation paste script (Wayland clipboard + injected Shift+Insert)
+if [ -f "$SCRIPT_DIR/extra/handy-paste.sh" ]; then
+    if ask_yes_no "Install the Handy paste script to ~/.local/bin/?"; then
+        rm -rf "$HOME/.local/bin/handy-paste.sh" 2>/dev/null || true
+        ln -s "$SCRIPT_DIR/extra/handy-paste.sh" "$HOME/.local/bin/handy-paste.sh"
+        echo "  -> Linked handy-paste.sh to ~/.local/bin/"
+        echo "     Then set Handy: Paste method = External script, path = ~/.local/bin/handy-paste.sh"
+    fi
+fi
     echo ""
 
     # Symlink update_ll.sh to llama.cpp if directory exists
